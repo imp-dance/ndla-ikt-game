@@ -77,7 +77,7 @@ const AssignNetworks: React.FC<Props> = ({
   };
 
   return (
-    <Container>
+    <Container id="ASSIGN_NETWORKS">
       <ul>
         <li>
           <ListIcon src={VLAN1} alt="VLAN 1 Ikon" />

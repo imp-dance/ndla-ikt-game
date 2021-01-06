@@ -1,14 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 
-type Props = {};
+type Props = {
+  style?: React.CSSProperties;
+  className?: string;
+};
 
 const Lines: React.FC<Props> = ({ children }) => {
   return <LinesContainer className="lines">{children}</LinesContainer>;
 };
 
 const LinesContainer = styled.div`
-  --lineSize: 2px;
+  --lineSize: 3px;
   position: relative;
 `;
 

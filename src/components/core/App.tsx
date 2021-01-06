@@ -10,12 +10,15 @@ import CloudWWW from "../common/CloudWWW/CloudWWW";
 import styled from "styled-components";
 import zIndexes from "../../styles/zIndexes";
 import Connector from "../common/Connector/Connector";
+import DisplayWires from "../common/DisplayWires/DisplayWires";
+import Background from "../design/Background/Background";
+import LANToSwitch1 from "../common/Connector/LANtoSwitch1/LANToSwitch1";
 
 function App() {
   const appRef = useRef<HTMLDivElement>(null);
-  const [currentTask, setCurrentTask] = useState(2);
+  const [currentTask, setCurrentTask] = useState(1);
   const [assignedNetworks, setAssignedNetworks] = useState<NetworkState>();
-  const [completedTasks, setCompletedTasks] = useState<number[]>([1]);
+  const [completedTasks, setCompletedTasks] = useState<number[]>([]);
 
   // Task 1
   useEffect(() => {
@@ -71,6 +74,7 @@ function App() {
   return (
     <div className="App" ref={appRef}>
       <Loader images={images} />
+      <Background disabled={!completedTasks.includes(1) || currentTask === 1} />
       <AssignNetworks
         onChange={setAssignedNetworks}
         disabled={currentTask !== 1}
@@ -96,13 +100,17 @@ function App() {
                 left: 63.7,
               }}
             />
+            <F>
+              {/* Wires from */}{" "}
+              <LANToSwitch1 buildingStyles={buildingStyles} />
+            </F>
           </F>
         )}
       />
       <BottomLine
         style={{
           opacity:
-            !completedTasks.includes(1) || currentTask === 1 ? "0.3" : "1",
+            !completedTasks.includes(1) || currentTask === 1 ? "0.6" : "1",
         }}
       />
     </div>
@@ -115,6 +123,7 @@ const BottomLine = styled.div`
   right: 0;
   bottom: 40px;
   height: 3px;
+  transition: opacity 0.2s ease-in-out;
   background: var(--color-blue);
   z-index: ${zIndexes.building + 1};
 `;

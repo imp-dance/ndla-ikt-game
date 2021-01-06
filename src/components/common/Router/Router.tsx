@@ -27,7 +27,7 @@ const Router: React.FC<Props> = ({ buildingStyles }) => {
 const StyledRouter = styled.div`
   position: absolute;
   width: 6%;
-  bottom: calc(calc(var(--bHeight) / 100) * 62);
+  bottom: calc(calc(var(--bHeight) / 100) * 64);
   left: calc(calc(var(--bWidth) / 100) * 31);
   > img {
     width: 100%;
@@ -41,7 +41,7 @@ const StyledRouter = styled.div`
     pointer-events: none;
     top: 50%;
     transform: translate(0px, -50%);
-    padding: 0 var(--padding-s);
+    padding: 0 var(--padding-xs);
     font-weight: bold;
     color: var(--color-blue);
     font-size: clamp(0.7vmin, 0.8em, 1vmax);
@@ -54,22 +54,22 @@ const StyledRouter = styled.div`
   }
   .lines {
     > div:nth-child(1) {
-      height: calc(calc(var(--bHeight) / 100) * 2.1);
+      height: calc(calc(var(--bHeight) / 100) * 4.1);
       top: calc(100% - 1px);
       left: 5px;
     }
     > div:nth-child(2) {
-      height: calc(calc(var(--bHeight) / 100) * 2.1);
+      height: calc(calc(var(--bHeight) / 100) * 4.1);
       top: calc(100% - 1px);
       right: 5px;
     }
     > div:nth-child(3) {
-      top: calc(calc(100% + calc(calc(var(--bHeight) / 100) * 2)) - 2px);
-      width: calc(calc(var(--bWidth) / 100) * 13.97);
+      top: calc(calc(100% + calc(calc(var(--bHeight) / 100) * 4)) - 2px);
+      width: calc(calc(var(--bWidth) / 100) * 13.8);
       right: calc(100% - 7px);
     }
     > div:nth-child(4) {
-      top: calc(calc(100% + calc(calc(var(--bHeight) / 100) * 2)) - 2px);
+      top: calc(calc(100% + calc(calc(var(--bHeight) / 100) * 4)) - 2px);
       width: calc(calc(var(--bWidth) / 100) * 2);
       left: calc(100% - 7px);
     }

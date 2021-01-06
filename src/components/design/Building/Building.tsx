@@ -23,7 +23,7 @@ const Building: React.FC<Props> = ({ disabled, content }) => {
     "--bWidth": buildingWidth + "px",
   } as React.CSSProperties;
   return (
-    <StyledBuilding disabled={disabled}>
+    <StyledBuilding disabled={disabled} id="BUILDING">
       <img
         src={Frame2}
         role="presentation"
@@ -59,12 +59,13 @@ const StyledBuilding = styled.div<Props>`
   bottom: 30px;
   left: 50%;
   transform: translate(-50%, 0px);
-  width: 70%;
+  width: 63%;
   min-width: 1000px;
   max-width: 1500px;
   height: calc(100vh - 200px);
   transition: opacity 0.3s ease-in-out;
   opacity: ${(props) => (props.disabled ? "0.5" : "1")};
+  pointer-events: ${(props) => (props.disabled ? "none" : "all")};
   z-index: ${zIndexes.building};
   @media screen and (max-height: 620px) {
     height: 620px;

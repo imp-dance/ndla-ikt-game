@@ -19,7 +19,7 @@ const Loader: React.FC<Props> = ({ images }) => {
 
   useEffect(() => {
     const interval = setTimeout(() => {
-      if (!mounted.current) {
+      if (!mounted.current || !loading) {
         clearInterval(interval);
       } else {
         switch (ellipsis) {

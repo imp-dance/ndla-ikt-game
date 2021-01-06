@@ -27,7 +27,7 @@ const TaskWindow: React.FC<Props> = ({
     return null;
   }
   return (
-    <Container>
+    <Container id="TASK_WINDOW">
       <TaskTitle>{task.title}</TaskTitle>
       <TaskLabel key={`${task.number}-${taskCompleted}`}>
         {taskCompleted ? task.label.completed : task.label.initial}

@@ -15,16 +15,20 @@ const Connector: React.FC<Props> = ({
   onOutput,
   pos,
   buildingStyles,
+  children,
 }) => {
   return (
-    <StyledButton
+    <ConnectorWrapper
       style={buildingStyles}
       bottom={pos.bottom}
       left={pos.left}
       right={pos.right}
     >
-      <img src={ConnectorIMG} alt="Connect button symbol" />
-    </StyledButton>
+      <StyledButton>
+        <img src={ConnectorIMG} alt="Connect button symbol" />
+        {children}
+      </StyledButton>
+    </ConnectorWrapper>
   );
 };
 
@@ -34,10 +38,7 @@ type Pos = {
   right?: number;
 };
 
-const StyledButton = styled.button<Pos>`
-  border: none;
-  background: transparent;
-  cursor: pointer;
+const ConnectorWrapper = styled.div<Pos>`
   position: absolute;
   width: calc(calc(var(--bWidth) / 100) * 5);
   bottom: calc(calc(var(--bHeight) / 100) * ${(props) => props.bottom});
@@ -45,6 +46,17 @@ const StyledButton = styled.button<Pos>`
     props.left ? `calc(calc(var(--bHeight) / 100) * ${props.left})` : `auto`};
   right: ${(props) =>
     props.right ? `calc(calc(var(--bHeight) / 100) * ${props.right})` : `auto`};
+`;
+
+const StyledButton = styled.button`
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  width: 100%;
+  img {
+    user-select: none;
+    width: 100%;
+  }
 `;
 
 export default Connector;
