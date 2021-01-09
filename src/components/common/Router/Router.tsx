@@ -2,17 +2,23 @@ import React from "react";
 import styled from "styled-components";
 
 import RouterIMG from "../../../assets/symbols/Router.svg";
+import RouterLabel from "../../../assets/labels/ruter_label.svg";
 import Lines, { Line } from "../Lines/Lines";
 
 type Props = {
   buildingStyles: React.CSSProperties;
+  faded?: boolean;
 };
 
-const Router: React.FC<Props> = ({ buildingStyles }) => {
+const Router: React.FC<Props> = ({ buildingStyles, faded }) => {
   return (
-    <StyledRouter className="b-Router" style={buildingStyles}>
+    <StyledRouter
+      className={`b-Router ${faded ? "faded" : ""}`}
+      style={buildingStyles}
+    >
       <span className="leftText">WAN</span>
-      <img src={RouterIMG} alt="Router" />
+      <img src={RouterLabel} className="ruter-label" alt="Router" />
+      <img src={RouterIMG} className="ruter" alt="Router" />
       <span className="rightText">LAN</span>
       <Lines>
         <Line active />
@@ -27,9 +33,18 @@ const Router: React.FC<Props> = ({ buildingStyles }) => {
 const StyledRouter = styled.div`
   position: absolute;
   width: 6%;
-  bottom: calc(calc(var(--bHeight) / 100) * 64);
+  bottom: calc(calc(var(--bHeight) / 100) * 65);
   left: calc(calc(var(--bWidth) / 100) * 31);
-  > img {
+  .ruter-label {
+    position: absolute;
+    bottom: 100%;
+    max-width: calc(calc(var(--bWidth) / 100) * 6.5);
+    left: 50%;
+    transform: translate(-50%, calc(calc(var(--bHeight) / 100) * -1));
+    user-select: none;
+    pointer-events: none;
+  }
+  .ruter {
     width: 100%;
     user-select: none;
     pointer-events: none;
@@ -70,7 +85,7 @@ const StyledRouter = styled.div`
     }
     > div:nth-child(4) {
       top: calc(calc(100% + calc(calc(var(--bHeight) / 100) * 4)) - 2px);
-      width: calc(calc(var(--bWidth) / 100) * 2);
+      width: calc(calc(var(--bWidth) / 100) * 1.3);
       left: calc(100% - 7px);
     }
   }

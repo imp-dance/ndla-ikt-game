@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
+import { Pos } from "../../../types/common";
 import ConnectorIMG from "../../../assets/symbols/Connector.svg";
 
 type Props = {
@@ -8,6 +9,9 @@ type Props = {
   onOutput: (output: [boolean, boolean, boolean]) => void;
   pos: Pos;
   buildingStyles: React.CSSProperties;
+  faded?: boolean;
+  onClick: (id: string) => void;
+  id: string;
 };
 
 const Connector: React.FC<Props> = ({
@@ -16,6 +20,9 @@ const Connector: React.FC<Props> = ({
   pos,
   buildingStyles,
   children,
+  faded,
+  onClick,
+  id,
 }) => {
   return (
     <ConnectorWrapper
@@ -23,8 +30,9 @@ const Connector: React.FC<Props> = ({
       bottom={pos.bottom}
       left={pos.left}
       right={pos.right}
+      className={`${faded ? "faded" : ""}`}
     >
-      <StyledButton>
+      <StyledButton onClick={onClick ? () => onClick(id ?? "") : undefined}>
         <img src={ConnectorIMG} alt="Connect button symbol" />
         {children}
       </StyledButton>
@@ -32,15 +40,9 @@ const Connector: React.FC<Props> = ({
   );
 };
 
-type Pos = {
-  bottom: number;
-  left?: number;
-  right?: number;
-};
-
 const ConnectorWrapper = styled.div<Pos>`
   position: absolute;
-  width: calc(calc(var(--bWidth) / 100) * 5);
+  width: calc(calc(var(--bWidth) / 100) * 4.3);
   bottom: calc(calc(var(--bHeight) / 100) * ${(props) => props.bottom});
   left: ${(props) =>
     props.left ? `calc(calc(var(--bHeight) / 100) * ${props.left})` : `auto`};

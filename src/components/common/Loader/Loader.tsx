@@ -3,9 +3,10 @@ import styled from "styled-components";
 
 type Props = {
   images: string[];
+  onLoadFinished: () => void;
 };
 
-const Loader: React.FC<Props> = ({ images }) => {
+const Loader: React.FC<Props> = ({ images, onLoadFinished }) => {
   const [loading, setLoading] = useState(true);
   const [ellipsis, setEllipsis] = useState("");
   const counter = useRef(0);
@@ -14,6 +15,7 @@ const Loader: React.FC<Props> = ({ images }) => {
     counter.current += 1;
     if (counter.current >= images.length) {
       setTimeout(() => setLoading(false), 100);
+      onLoadFinished();
     }
   };
 
@@ -39,6 +41,7 @@ const Loader: React.FC<Props> = ({ images }) => {
         }
       }
     }, 420);
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ellipsis]);
 
   useEffect(() => {

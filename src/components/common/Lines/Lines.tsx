@@ -6,12 +6,19 @@ type Props = {
   className?: string;
 };
 
-const Lines: React.FC<Props> = ({ children }) => {
-  return <LinesContainer className="lines">{children}</LinesContainer>;
+const Lines: React.FC<Props> = ({ children, className }) => {
+  return (
+    <LinesContainer className={"lines " + className ?? ""}>
+      {children}
+    </LinesContainer>
+  );
 };
 
 const LinesContainer = styled.div`
   --lineSize: 3px;
+  @media screen and (max-width: 1000px) {
+    --lineSize: 2px;
+  }
   position: relative;
 `;
 
@@ -20,10 +27,23 @@ type LineProps = {
   className?: string;
   style?: React.CSSProperties;
   horizontal?: boolean;
+  faded?: boolean;
 };
 
-export const Line: React.FC<LineProps> = ({ active, ...rest }) => {
-  return <StyledLine active={active} className="line" {...rest} />;
+export const Line: React.FC<LineProps> = ({
+  active,
+  style,
+  faded,
+  ...rest
+}) => {
+  return (
+    <StyledLine
+      active={active}
+      className={`line ${faded ? "faded" : ""}`}
+      style={style}
+      {...rest}
+    />
+  );
 };
 
 const StyledLine = styled.div<LineProps>`

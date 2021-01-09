@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="92.022" height="43.074" viewBox="0 0 92.022 43.074">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fde1c8;
+        stroke: #20588f;
+        stroke-width: 3px;
+      }
+
+      .cls-2 {
+        fill: #20588f;
+        font-size: 14px;
+        font-family: SourceSansPro-Bold, Source Sans Pro;
+        font-weight: 700;
+      }
+    </style>
+  </defs>
+  <g id="Label_1" data-name="Label 1" transform="translate(1.5 1.5)">
+    <path id="Union_1" data-name="Union 1" class="cls-1" d="M708.317,405.379l-5.34-8.464h-21.5c-9.529,0-17.255-6.94-17.255-15.5s7.726-15.5,17.255-15.5h54.511c9.531,0,17.255,6.939,17.255,15.5s-7.725,15.5-17.255,15.5h-20.4l-5.34,8.464a1.182,1.182,0,0,1-1.515.378,1.075,1.075,0,0,1-.422-.378Z" transform="translate(-664.218 -365.915)"/>
+    <text id="Drift_PC" data-name="Drift PC" class="cls-2" transform="translate(14.462 6)"><tspan x="6.968" y="14">Drift PC</tspan></text>
+  </g>
+</svg>

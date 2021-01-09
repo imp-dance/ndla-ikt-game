@@ -6,34 +6,35 @@ import { Connection } from "../../../../types/common";
 
 type Props = {
   active?: boolean;
+  faded?: boolean;
   buildingStyles: React.CSSProperties;
   input: Connection;
   output: Connection;
-  faded?: boolean;
 };
 
-const LANToSwitch1: React.FC<Props> = ({
+const SwitchToServer: React.FC<Props> = ({
   active,
   buildingStyles,
+  faded,
   input,
   output,
-  faded,
 }) => {
   return (
     <DisplayWires
       input={input}
       output={output}
-      faded={faded}
       buildingStyles={buildingStyles}
       pos={{
-        bottom: 43.2,
-        left: 63.6,
+        bottom: 33,
+        left: 32,
       }}
+      horizontal
+      faded={faded}
     >
       <LineContainer>
         <Lines>
-          <Line active={active} />
-          <Line active={active} />
+          <Line active={active} horizontal faded={faded} />
+          <Line active={active} horizontal faded={faded} />
         </Lines>
       </LineContainer>
     </DisplayWires>
@@ -42,16 +43,17 @@ const LANToSwitch1: React.FC<Props> = ({
 
 const LineContainer = styled.div`
   .line {
-    left: 50%;
-    transform: translate(-50%, 0px);
+    bottom: calc(calc(var(--bHeight) / 100) * 3);
+    transform: translate(0px, -50%);
     &:nth-child(1) {
-      bottom: calc(calc(var(--bHeight) / 100) * 11);
-      height: calc(calc(var(--bHeight) / 100) * 5);
+      left: 100%;
+      width: calc(calc(var(--bWidth) / 100) * 3.2);
     }
     &:nth-child(2) {
-      height: calc(calc(var(--bHeight) / 100) * 4.5);
+      right: 100%;
+      width: calc(calc(var(--bWidth) / 100) * 7.6);
     }
   }
 `;
 
-export default LANToSwitch1;
+export default SwitchToServer;

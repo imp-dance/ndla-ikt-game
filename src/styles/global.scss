@@ -44,3 +44,8 @@ body {
   background: var(--color-green);
   color: var(--color-white);
 }
+.faded {
+  opacity: 0.3;
+  pointer-events: none;
+  transition: opacity 0.2s ease-in-out;
+}

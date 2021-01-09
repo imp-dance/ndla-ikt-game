@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Cloud2IMG from "../../../assets/background/Cloud_2.svg";
-import Cloud3IMG from "../../../assets/background/Cloud_3.svg";
+import Cloud1IMG from "../../../assets/background/Cloud_3.svg";
 import Tree1IMG from "../../../assets/background/Tree.svg";
 import BirdIMG from "../../../assets/background/Bird.svg";
 import WindIMG from "../../../assets/background/Wind.svg";
@@ -19,12 +19,13 @@ const Background: React.FC<Props> = ({ disabled }) => {
         transition: "all 0.2s ease-in-out",
       }}
     >
-      <Cloud3 src={Cloud3IMG} role="presentation" />
+      <Cloud1 src={Cloud1IMG} role="presentation" />
       <Tree1 src={Tree1IMG} role="presentation" />
       <Bird src={BirdIMG} role="presentation" />
       <Wind1 src={WindIMG} role="presentation" />
       <Wind2 src={WindIMG} role="presentation" />
       <Cloud2 src={Cloud2IMG} role="presentation" />
+      <Cloud3 src={Cloud2IMG} role="presentation" />
       <Sun src={SunIMG} role="presentation" />
     </div>
   );
@@ -33,9 +34,10 @@ const Background: React.FC<Props> = ({ disabled }) => {
 const BGElement = styled.img`
   //pointer-events: none;
   user-select: none;
+  pointer-events: none;
 `;
 
-const Cloud3 = styled(BGElement)`
+const Cloud1 = styled(BGElement)`
   position: absolute;
   top: 25%;
   left: 4%;
@@ -134,6 +136,29 @@ const Cloud2 = styled(BGElement)`
   position: absolute;
   top: 5%;
   left: 37%;
+  transition: transform 0.6s ease-in;
+  animation: windMove 10s ease-in infinite alternate;
+  @keyframes windMove {
+    0% {
+      transform: translate(0px, 0px);
+    }
+    50% {
+      transform: translate(5px, 0px);
+    }
+    100% {
+      transform: translate(0px, 0px);
+    }
+  }
+  @media (max-height: 880px), (max-width: 1300px) {
+    transform: translate(-30px, -300px);
+    animation: none;
+  }
+`;
+
+const Cloud3 = styled(BGElement)`
+  position: absolute;
+  top: 23%;
+  right: 10%;
   transition: transform 0.6s ease-in;
   animation: windMove 10s ease-in infinite alternate;
   @keyframes windMove {

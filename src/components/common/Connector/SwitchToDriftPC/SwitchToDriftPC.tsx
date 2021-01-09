@@ -12,7 +12,7 @@ type Props = {
   faded?: boolean;
 };
 
-const LANToSwitch1: React.FC<Props> = ({
+const SwitchToDriftPC: React.FC<Props> = ({
   active,
   buildingStyles,
   input,
@@ -26,14 +26,15 @@ const LANToSwitch1: React.FC<Props> = ({
       faded={faded}
       buildingStyles={buildingStyles}
       pos={{
-        bottom: 43.2,
-        left: 63.6,
+        bottom: 9,
+        left: 44.3,
       }}
     >
       <LineContainer>
         <Lines>
           <Line active={active} />
           <Line active={active} />
+          <Line active={active} horizontal />
         </Lines>
       </LineContainer>
     </DisplayWires>
@@ -45,13 +46,19 @@ const LineContainer = styled.div`
     left: 50%;
     transform: translate(-50%, 0px);
     &:nth-child(1) {
-      bottom: calc(calc(var(--bHeight) / 100) * 11);
-      height: calc(calc(var(--bHeight) / 100) * 5);
+      bottom: calc(calc(var(--bHeight) / 100) * 10.1);
+      height: calc(calc(var(--bHeight) / 100) * 3);
     }
     &:nth-child(2) {
-      height: calc(calc(var(--bHeight) / 100) * 4.5);
+      height: calc(calc(var(--bHeight) / 100) * 2);
+    }
+    &:nth-child(3) {
+      bottom: calc(calc(var(--bHeight) / 100) * -2);
+      width: calc(calc(var(--bWidth) / 100) * 5);
+      left: calc(calc(var(--bWidth) / 100) * -0.1);
+      right: 50%;
     }
   }
 `;
 
-export default LANToSwitch1;
+export default SwitchToDriftPC;

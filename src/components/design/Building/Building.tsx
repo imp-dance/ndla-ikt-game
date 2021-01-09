@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 
 import useWatchElementSize from "../../../hooks/useWatchElementSize";
@@ -10,9 +10,10 @@ import Window from "../../../assets/foreground/Window.svg";
 type Props = {
   disabled?: boolean;
   content?: (buildingStyles: React.CSSProperties) => React.ReactNode;
+  loading?: boolean;
 };
 
-const Building: React.FC<Props> = ({ disabled, content }) => {
+const Building: React.FC<Props> = ({ disabled, content, loading }) => {
   const buildingRef = useRef<HTMLImageElement>(null);
   const [buildingHeight, buildingWidth] = useWatchElementSize(buildingRef, {
     watchChildChanges: false,
@@ -22,6 +23,9 @@ const Building: React.FC<Props> = ({ disabled, content }) => {
     "--bHeight": buildingHeight + "px",
     "--bWidth": buildingWidth + "px",
   } as React.CSSProperties;
+  useEffect(() => {
+    window.dispatchEvent(new Event("resize"));
+  }, [loading]);
   return (
     <StyledBuilding disabled={disabled} id="BUILDING">
       <img
@@ -46,7 +50,7 @@ const Building: React.FC<Props> = ({ disabled, content }) => {
             style={buildingHeightStyles}
             className="b-window"
           />
-          {content && content(buildingHeightStyles)}
+          {!loading && content && content(buildingHeightStyles)}
         </>
       )}
       <div className="lines-below" />
@@ -59,9 +63,7 @@ const StyledBuilding = styled.div<Props>`
   bottom: 30px;
   left: 50%;
   transform: translate(-50%, 0px);
-  width: 63%;
-  min-width: 1000px;
-  max-width: 1500px;
+  width: 1000px;
   height: calc(100vh - 200px);
   transition: opacity 0.3s ease-in-out;
   opacity: ${(props) => (props.disabled ? "0.5" : "1")};
@@ -69,6 +71,9 @@ const StyledBuilding = styled.div<Props>`
   z-index: ${zIndexes.building};
   @media screen and (max-height: 620px) {
     height: 620px;
+  }
+  @media screen and (min-width: 1400px) {
+    width: 1060px;
   }
   @media screen and (max-width: 1050px) {
     width: calc(100% - 30px);
@@ -85,7 +90,7 @@ const StyledBuilding = styled.div<Props>`
   }
   img[class^="b-f"] {
     // Building frames
-    bottom: 10px;
+    bottom: 13px;
     left: 0;
     right: 0;
     max-height: 100vh;
@@ -100,6 +105,7 @@ const StyledBuilding = styled.div<Props>`
     --offset: 20px;
     width: calc(100% - calc(var(--offset) * 2));
     left: var(--offset);
+    bottom: 10px;
   }
   img.b-window {
     width: 8%;

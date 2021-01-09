@@ -1,0 +1,216 @@
+import React from "react";
+import styled from "styled-components";
+
+import { Pos } from "../../../types/common";
+import Connector from "../Connector/Connector";
+import SwitchImg from "../../../assets/symbols/Switcher.svg";
+import Switch1Label from "../../../assets/labels/svitsj_1_label.svg";
+import Switch2Label from "../../../assets/labels/svitsj_2_label.svg";
+import Switch3Label from "../../../assets/labels/svitsj_3_label.svg";
+import Lines, { Line } from "../Lines/Lines";
+
+type Props = {
+  id: number;
+  pos: Pos;
+  buildingStyles: React.CSSProperties;
+  onConnectorClick: (id: string) => void;
+  output: {
+    topRight: onOutput;
+    bottomRight: onOutput;
+    topLeft: onOutput;
+    bottomLeft: onOutput;
+  };
+  input: {
+    topRight: input;
+    bottomRight: input;
+    topLeft: input;
+    bottomLeft: input;
+  };
+  activeState?: {
+    topRight: boolean;
+    bottomRight: boolean;
+    topLeft: boolean;
+    bottomLeft: boolean;
+  };
+  faded?: boolean;
+};
+
+type onOutput = (data: input) => void;
+
+type input = [boolean, boolean, boolean];
+
+const Switch: React.FC<Props> = ({
+  id,
+  pos,
+  output,
+  input,
+  buildingStyles,
+  activeState,
+  faded,
+  onConnectorClick,
+}) => {
+  const labels = [Switch1Label, Switch2Label, Switch3Label];
+  const linesActive = activeState ?? {
+    topRight: true,
+    bottomRight: true,
+    topLeft: true,
+    bottomLeft: true,
+  };
+  const connectorPos = {
+    topRight: {
+      bottom: 5.8,
+      left: 12,
+    },
+    bottomRight: {
+      bottom: -5.8,
+      left: 12,
+    },
+    bottomLeft: {
+      bottom: -5.8,
+      right: 12,
+    },
+    topLeft: {
+      bottom: 5.8,
+      right: 12,
+    },
+  };
+
+  return (
+    <StyledSwitch
+      {...pos}
+      style={buildingStyles}
+      className={`${faded ? "faded" : ""}`}
+    >
+      <img src={labels[id - 1]} alt="Label" className="label" />
+      <Lines style={buildingStyles} className="topLines">
+        <Line active faded={!linesActive.topRight} />
+        <Line active faded={!linesActive.topLeft} />
+        <Line active faded={!linesActive.topLeft} />
+        <Line active faded={!linesActive.topRight} />
+      </Lines>
+      <img src={SwitchImg} alt="Switch" />
+      <Connector
+        input={input.topRight}
+        onOutput={output.topRight}
+        pos={connectorPos.topRight}
+        buildingStyles={buildingStyles}
+        faded={!linesActive.topRight}
+        id="SwitchLAN"
+        onClick={onConnectorClick}
+      />
+      <Connector
+        input={input.bottomRight}
+        onOutput={output.bottomRight}
+        pos={connectorPos.bottomRight}
+        buildingStyles={buildingStyles}
+        faded={!linesActive.bottomRight}
+        id="Switch1to2"
+        onClick={onConnectorClick}
+      />
+      <Connector
+        input={input.topLeft}
+        onOutput={output.topLeft}
+        pos={connectorPos.topLeft}
+        buildingStyles={buildingStyles}
+        faded={!linesActive.topLeft}
+        id="SwitchServer"
+        onClick={onConnectorClick}
+      />
+      <Connector
+        input={input.bottomLeft}
+        onOutput={output.bottomLeft}
+        pos={connectorPos.bottomLeft}
+        buildingStyles={buildingStyles}
+        faded={!linesActive.bottomLeft}
+        id="SwitchDrift"
+        onClick={onConnectorClick}
+      />
+      <Lines style={buildingStyles} className="bottomLines">
+        <Line active faded={!linesActive.bottomRight} />
+        <Line active faded={!linesActive.bottomLeft} />
+        <Line active faded={!linesActive.bottomLeft} />
+        <Line active faded={!linesActive.bottomRight} />
+      </Lines>
+    </StyledSwitch>
+  );
+};
+
+const StyledSwitch = styled.div<Pos>`
+  > img {
+    width: 100%;
+    user-select: none;
+    pointer-events: none;
+  }
+  .label {
+    position: absolute;
+    bottom: 100%;
+    width: calc(calc(var(--bWidth) / 100) * 7);
+    left: 50%;
+    transform: translate(-50%, calc(calc(var(--bHeight) / 100) * -2.5));
+    user-select: none;
+    pointer-events: none;
+  }
+  position: absolute;
+  width: calc(calc(var(--bWidth) / 100) * 7);
+  bottom: calc(calc(var(--bHeight) / 100) * ${(props) => props.bottom});
+  left: ${(props) =>
+    props.left ? `calc(calc(var(--bHeight) / 100) * ${props.left})` : `auto`};
+  right: ${(props) =>
+    props.right ? `calc(calc(var(--bHeight) / 100) * ${props.right})` : `auto`};
+
+  > .topLines {
+    > div:nth-child(1) {
+      width: calc(calc(var(--bWidth) / 100) * 1.6);
+      left: 100%;
+      margin-left: calc(calc(calc(var(--bWidth) / 100) * 1) * -1);
+      bottom: calc(calc(var(--bHeight) / 100) * 3);
+    }
+    > div:nth-child(2) {
+      width: calc(calc(var(--bWidth) / 100) * 1.6);
+      right: 100%;
+      margin-right: calc(calc(calc(var(--bWidth) / 100) * 1) * -1);
+      bottom: calc(calc(var(--bHeight) / 100) * 3);
+    }
+    > div:nth-child(3) {
+      height: calc(calc(var(--bHeight) / 100) * 3);
+      right: 100%;
+      margin-right: calc(calc(calc(var(--bWidth) / 100) * 1) * -1);
+      bottom: 0;
+    }
+    > div:nth-child(4) {
+      height: calc(calc(var(--bHeight) / 100) * 3);
+      left: 100%;
+      margin-left: calc(calc(calc(var(--bWidth) / 100) * 1) * -1);
+      bottom: 0;
+    }
+  }
+
+  > .bottomLines {
+    > div:nth-child(1) {
+      width: calc(calc(var(--bWidth) / 100) * 1.6);
+      left: 100%;
+      margin-left: calc(calc(calc(var(--bWidth) / 100) * 1) * -1);
+      top: calc(calc(var(--bHeight) / 100) * 3);
+    }
+    > div:nth-child(2) {
+      width: calc(calc(var(--bWidth) / 100) * 1.6);
+      right: 100%;
+      margin-right: calc(calc(calc(var(--bWidth) / 100) * 1) * -1);
+      top: calc(calc(var(--bHeight) / 100) * 3);
+    }
+    > div:nth-child(3) {
+      height: calc(calc(var(--bHeight) / 100) * 3);
+      right: 100%;
+      margin-right: calc(calc(calc(var(--bWidth) / 100) * 1) * -1);
+      top: 0;
+    }
+    > div:nth-child(4) {
+      height: calc(calc(var(--bHeight) / 100) * 3);
+      left: 100%;
+      margin-left: calc(calc(calc(var(--bWidth) / 100) * 1) * -1);
+      top: 0;
+    }
+  }
+`;
+
+export default Switch;

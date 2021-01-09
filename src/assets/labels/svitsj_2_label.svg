@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="83.022" height="43.006" viewBox="0 0 83.022 43.006">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fde1c8;
+        stroke: #20588f;
+        stroke-width: 3px;
+      }
+
+      .cls-2 {
+        fill: #20588f;
+        font-size: 14px;
+        font-family: SourceSansPro-Bold, Source Sans Pro;
+        font-weight: 700;
+      }
+    </style>
+  </defs>
+  <g id="Label_1" data-name="Label 1" transform="translate(1.5 1.5)">
+    <path id="Union_1" data-name="Union 1" class="cls-1" d="M703.859,405.407l-4.8-8.47h-19.33a15.511,15.511,0,0,1,0-31.022h49a15.511,15.511,0,0,1,0,31.022H710.4l-4.8,8.47a1,1,0,0,1-1.362.378,1.011,1.011,0,0,1-.379-.378Z" transform="translate(-664.218 -365.915)"/>
+    <text id="Svitsj_2" data-name="Svitsj 2" class="cls-2" transform="translate(13 6.004)"><tspan x="5.261" y="14">Svitsj 2</tspan></text>
+  </g>
+</svg>
