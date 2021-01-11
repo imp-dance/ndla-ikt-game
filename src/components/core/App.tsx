@@ -22,6 +22,7 @@ import Modal from "../common/Modal/Modal";
 import { Connection } from "../../types/common";
 import SwitchToAnsattGruppe from "../common/Connector/SwitchToAnsattGruppe/SwitchToAnsattGruppe";
 import SwitchToKonsulentGruppe from "../common/Connector/SwitchToKonsulentGruppe/SwitchToKonsulentGruppe";
+import SwitchToSwitch2 from "../common/Connector/SwitchToSwitch2/SwitchToSwitch2";
 
 type ConnectionState = {
   [key: string]:
@@ -192,6 +193,125 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTask, connectionState]);
 
+  // Task 4
+  useEffect(() => {
+    if (currentTask === 4) {
+      const ruterCondition = arraysEqual(
+        [true, true, false],
+        connectionState.ruter as any[]
+      );
+      const driftCondition = arraysEqual(
+        [false, true, false],
+        (connectionState["svitsj1"] as any).bottomLeft as any[]
+      );
+      const switch1Condition1 = arraysEqual(
+        [true, true, false],
+        (connectionState["svitsj1"] as any).topRight as any[]
+      );
+      const switch1Condition2 = arraysEqual(
+        [true, false, false],
+        (connectionState["svitsj1"] as any).bottomRight as any[]
+      );
+      const switch1Condition3 = arraysEqual(
+        [true, true, false],
+        (connectionState["svitsj1"] as any).topLeft as any[]
+      );
+      const switch2Condition1 = arraysEqual(
+        [true, false, false],
+        (connectionState["svitsj2"] as any).topLeft as any[]
+      );
+      const ansattGruppeCondition = arraysEqual(
+        [true, false, false],
+        (connectionState["svitsj2"] as any).bottomLeft as any[]
+      );
+      const serverCondition = arraysEqual(
+        [true, true, false],
+        connectionState["server"] as any[]
+      );
+      if (
+        ruterCondition &&
+        driftCondition &&
+        switch1Condition1 &&
+        switch1Condition2 &&
+        switch1Condition3 &&
+        switch2Condition1 &&
+        ansattGruppeCondition &&
+        serverCondition
+      ) {
+        completeTask(4);
+      } else {
+        unCompleteTask(4);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentTask, connectionState]);
+
+  // Task 5
+  useEffect(() => {
+    const ruterCondition = arraysEqual(
+      [true, true, true],
+      connectionState.ruter as any[]
+    );
+    const driftCondition = arraysEqual(
+      [false, true, false],
+      (connectionState["svitsj1"] as any).bottomLeft as any[]
+    );
+    const switch1Condition1 = arraysEqual(
+      [true, true, true],
+      (connectionState["svitsj1"] as any).topRight as any[]
+    );
+    const switch1Condition2 = arraysEqual(
+      [true, false, true],
+      (connectionState["svitsj1"] as any).bottomRight as any[]
+    );
+    const switch2Condition1 = arraysEqual(
+      [true, false, true],
+      (connectionState["svitsj2"] as any).topLeft as any[]
+    );
+    const switch2Condition2 = arraysEqual(
+      [false, false, true],
+      (connectionState["svitsj2"] as any).bottomRight as any[]
+    );
+    const switch3Condition = arraysEqual(
+      [false, false, true],
+      (connectionState["svitsj3"] as any).topLeft as any[]
+    );
+    const ansattGruppeCondition = arraysEqual(
+      [true, false, false],
+      (connectionState["svitsj2"] as any).bottomLeft as any[]
+    );
+    const switch1Condition3 = arraysEqual(
+      [true, true, false],
+      (connectionState["svitsj1"] as any).topLeft as any[]
+    );
+    const serverCondition = arraysEqual(
+      [true, true, false],
+      connectionState["server"] as any[]
+    );
+    const konsulentGruppeCondition = arraysEqual(
+      [false, false, true],
+      (connectionState["svitsj3"] as any).bottomLeft as any[]
+    );
+    if (
+      ruterCondition &&
+      driftCondition &&
+      switch1Condition1 &&
+      switch1Condition2 &&
+      switch1Condition3 &&
+      switch2Condition1 &&
+      switch2Condition2 &&
+      switch3Condition &&
+      ansattGruppeCondition &&
+      serverCondition &&
+      konsulentGruppeCondition
+    ) {
+      completeTask(5);
+    } else {
+      unCompleteTask(5);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentTask, connectionState]);
+
   // Faded items
   useEffect(() => {
     if (currentTask === 2) {
@@ -215,6 +335,18 @@ function App() {
         "svitsj3",
         "konsulent-gruppe",
       ]);
+    }
+    if (currentTask === 4) {
+      setFadedItems([
+        "aksesspunkt",
+        "ansatt-tradlost",
+        "gjest-tradlost",
+        "svitsj3",
+        "konsulent-gruppe",
+      ]);
+    }
+    if (currentTask === 5) {
+      setFadedItems(["aksesspunkt", "ansatt-tradlost", "gjest-tradlost"]);
     }
   }, [currentTask]);
 
@@ -243,7 +375,7 @@ function App() {
         return ruterCondition && switchCondition && driftCondition;
       }
     }
-    if (currentTask === 3) {
+    if (currentTask === 3 || currentTask === 4) {
       const ruterCondition = arraysEqual(
         [true, true, false],
         connectionState.ruter as any[]
@@ -290,6 +422,137 @@ function App() {
           switch1Condition2 &&
           switch2Condition1 &&
           ansattGruppeCondition
+        );
+      }
+    }
+    if (currentTask === 4) {
+      const ruterCondition = arraysEqual(
+        [true, true, false],
+        connectionState.ruter as any[]
+      );
+      const switch1Condition1 = arraysEqual(
+        [true, true, false],
+        (connectionState["svitsj1"] as any).topRight as any[]
+      );
+      const switch1Condition3 = arraysEqual(
+        [true, true, false],
+        (connectionState["svitsj1"] as any).topLeft as any[]
+      );
+      const serverCondition = arraysEqual(
+        [true, true, false],
+        connectionState["server"] as any[]
+      );
+      if (id === "svitsj1.topLeft") {
+        return ruterCondition && switch1Condition1 && switch1Condition3;
+      }
+      if (id === "server") {
+        return (
+          ruterCondition &&
+          switch1Condition1 &&
+          switch1Condition3 &&
+          serverCondition
+        );
+      }
+    }
+
+    if (currentTask === 5) {
+      const ruterCondition = arraysEqual(
+        [true, true, true],
+        connectionState.ruter as any[]
+      );
+      const driftCondition = arraysEqual(
+        [false, true, false],
+        (connectionState["svitsj1"] as any).bottomLeft as any[]
+      );
+      const switch1Condition1 = arraysEqual(
+        [true, true, true],
+        (connectionState["svitsj1"] as any).topRight as any[]
+      );
+      const switch1Condition2 = arraysEqual(
+        [true, false, true],
+        (connectionState["svitsj1"] as any).bottomRight as any[]
+      );
+      const switch2Condition1 = arraysEqual(
+        [true, false, true],
+        (connectionState["svitsj2"] as any).topLeft as any[]
+      );
+      const switch2Condition2 = arraysEqual(
+        [false, false, true],
+        (connectionState["svitsj2"] as any).bottomRight as any[]
+      );
+      const switch3Condition = arraysEqual(
+        [false, false, true],
+        (connectionState["svitsj3"] as any).topLeft as any[]
+      );
+      const ansattGruppeCondition = arraysEqual(
+        [true, false, false],
+        (connectionState["svitsj2"] as any).bottomLeft as any[]
+      );
+      const switch1Condition3 = arraysEqual(
+        [true, true, false],
+        (connectionState["svitsj1"] as any).topLeft as any[]
+      );
+      const serverCondition = arraysEqual(
+        [true, true, false],
+        connectionState["server"] as any[]
+      );
+      const konsulentGruppeCondition = arraysEqual(
+        [false, false, true],
+        (connectionState["svitsj3"] as any).bottomLeft as any[]
+      );
+      if (id === "ruter") {
+        return ruterCondition;
+      }
+      if (id === "svitsj1.topRight") {
+        return ruterCondition && switch1Condition1;
+      }
+      if (id === "drift-pc") {
+        return ruterCondition && switch1Condition1 && driftCondition;
+      }
+      if (id === "svitsj1.bottomRight") {
+        return ruterCondition && switch1Condition1 && switch1Condition2;
+      }
+      if (id === "svitsj2.topLeft") {
+        return ruterCondition && switch1Condition1 && switch2Condition1;
+      }
+      if (id === "svitsj2.bottomRight") {
+        return (
+          ruterCondition &&
+          switch1Condition1 &&
+          switch2Condition1 &&
+          switch2Condition2
+        );
+      }
+      if (id === "svitsj3.topLeft") {
+        return (
+          ruterCondition &&
+          switch1Condition1 &&
+          switch2Condition1 &&
+          switch3Condition
+        );
+      }
+      if (id === "ansatt-gruppe") {
+        return (
+          ruterCondition &&
+          switch1Condition1 &&
+          switch1Condition2 &&
+          switch2Condition1 &&
+          ansattGruppeCondition
+        );
+      }
+      if (id === "svitsj1.topLeft") {
+        return ruterCondition && switch1Condition1 && switch1Condition3;
+      }
+      if (id === "server") {
+        return ruterCondition && switch1Condition3 && serverCondition;
+      }
+      if (id === "konsulent-gruppe") {
+        return (
+          ruterCondition &&
+          switch1Condition1 &&
+          switch2Condition1 &&
+          switch3Condition &&
+          konsulentGruppeCondition
         );
       }
     }
@@ -419,9 +682,13 @@ function App() {
                 active={getLineActive("drift-pc")}
               />
               <SwitchToServer
-                input={[false, false, false]}
-                output={[false, false, false]}
+                input={getConnection("server")}
+                output={getConnection("svitsj1.topLeft")}
                 buildingStyles={buildingStyles}
+                active={[
+                  getLineActive("server"),
+                  getLineActive("svitsj1.topLeft"),
+                ]}
                 faded={fadedItems.includes("server")}
               />
               <Connector
@@ -431,7 +698,7 @@ function App() {
                   bottom: 33,
                   left: 21.2,
                 }}
-                id="ServerConnector"
+                id="server"
                 onClick={onConnectorClick}
               />
               <Server
@@ -444,6 +711,7 @@ function App() {
               />
               <PC
                 id={2}
+                active={getLineActive("drift-pc")}
                 buildingStyles={buildingStyles}
                 faded={fadedItems.includes("drift-pc")}
                 pos={{
@@ -505,6 +773,16 @@ function App() {
                   left: 162,
                 }}
                 faded={fadedItems.includes("svitsj3")}
+                buildingStyles={buildingStyles}
+              />
+              <SwitchToSwitch2
+                input={getConnection("svitsj2.bottomRight")}
+                output={getConnection("svitsj3.topLeft")}
+                faded={fadedItems.includes("svitsj3")}
+                active={[
+                  getLineActive("svitsj2.bottomRight"),
+                  getLineActive("svitsj3.topLeft"),
+                ]}
                 buildingStyles={buildingStyles}
               />
               <SwitchToKonsulentGruppe

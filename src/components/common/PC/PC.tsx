@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import classnames from "classnames";
 
 import { Pos } from "../../../types/common";
 import PCIMG from "../../../assets/symbols/PC.svg";
@@ -15,9 +16,11 @@ type Props = {
   buildingStyles: React.CSSProperties;
   id: number;
   faded?: boolean;
+  active?: boolean;
 };
 
-const PC: React.FC<Props> = ({ pos, buildingStyles, id, faded }) => {
+const PC: React.FC<Props> = ({ pos, buildingStyles, id, faded, active }) => {
+  const [isActive, setActive] = React.useState(active);
   const labels = [
     PCLabelAnsatt,
     PCLabelDrift,
@@ -36,8 +39,14 @@ const PC: React.FC<Props> = ({ pos, buildingStyles, id, faded }) => {
         return 13;
     }
   };
+  React.useEffect(() => {
+    if (!isActive && active) {
+      setActive(true);
+    }
+  }, [active]);
+  const classname = classnames({ faded: faded }, { blink: isActive });
   return (
-    <StyledPC {...pos} style={buildingStyles} className={faded ? "faded" : ""}>
+    <StyledPC {...pos} style={buildingStyles} className={classname}>
       <img
         src={labels[id - 1]}
         alt=""

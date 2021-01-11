@@ -5,7 +5,7 @@ import DisplayWires from "../../DisplayWires/DisplayWires";
 import { Connection } from "../../../../types/common";
 
 type Props = {
-  active?: boolean;
+  active?: [boolean, boolean];
   faded?: boolean;
   buildingStyles: React.CSSProperties;
   input: Connection;
@@ -33,8 +33,8 @@ const SwitchToServer: React.FC<Props> = ({
     >
       <LineContainer>
         <Lines>
-          <Line active={active} horizontal faded={faded} />
-          <Line active={active} horizontal faded={faded} />
+          <Line active={active && active[1]} horizontal faded={faded} />
+          <Line active={active && active[0]} horizontal faded={faded} />
         </Lines>
       </LineContainer>
     </DisplayWires>
@@ -47,11 +47,11 @@ const LineContainer = styled.div`
     transform: translate(0px, -50%);
     &:nth-child(1) {
       left: 100%;
-      width: calc(calc(var(--bWidth) / 100) * 3.2);
+      width: calc(calc(var(--bWidth) / 100) * 3.4);
     }
     &:nth-child(2) {
       right: 100%;
-      width: calc(calc(var(--bWidth) / 100) * 7.6);
+      width: calc(calc(var(--bWidth) / 100) * 8.1);
     }
   }
 `;

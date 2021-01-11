@@ -49,3 +49,19 @@ body {
   pointer-events: none;
   transition: opacity 0.2s ease-in-out;
 }
+
+.blink {
+  animation: blink 0.4s linear;
+}
+
+@keyframes blink {
+  0%,
+  50%,
+  100% {
+    opacity: 1;
+  }
+  25%,
+  75% {
+    opacity: 0.5;
+  }
+}
