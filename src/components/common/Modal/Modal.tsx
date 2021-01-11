@@ -39,6 +39,7 @@ export default function Modal(props: IModalProps) {
       <ModalContainer>
         {connections.map((value, index) => (
           <ListItem
+            key={index}
             index={index}
             connections={connections}
             assignedNetworks={props.assignedNetworks}

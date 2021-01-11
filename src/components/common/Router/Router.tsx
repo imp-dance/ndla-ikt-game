@@ -80,12 +80,12 @@ const StyledRouter = styled.div`
     }
     > div:nth-child(3) {
       top: calc(calc(100% + calc(calc(var(--bHeight) / 100) * 4)) - 2px);
-      width: calc(calc(var(--bWidth) / 100) * 13.8);
+      width: calc(calc(var(--bWidth) / 100) * 14.1);
       right: calc(100% - 7px);
     }
     > div:nth-child(4) {
       top: calc(calc(100% + calc(calc(var(--bHeight) / 100) * 4)) - 2px);
-      width: calc(calc(var(--bWidth) / 100) * 1.3);
+      width: calc(calc(var(--bWidth) / 100) * 1.9);
       left: calc(100% - 7px);
     }
   }

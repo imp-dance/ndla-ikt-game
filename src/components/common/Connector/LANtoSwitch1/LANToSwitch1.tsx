@@ -49,7 +49,7 @@ const LineContainer = styled.div`
       height: calc(calc(var(--bHeight) / 100) * 6);
     }
     &:nth-child(2) {
-      height: calc(calc(var(--bHeight) / 100) * 4.5);
+      height: calc(calc(var(--bHeight) / 100) * 5);
     }
   }
 `;

@@ -76,8 +76,14 @@ const StyledBuilding = styled.div<Props>`
     width: 1060px;
   }
   @media screen and (max-width: 1050px) {
-    width: calc(100% - 30px);
-    min-width: calc(100% - 30px);
+    width: calc(100vw - 50px);
+    min-width: 620px;
+  }
+  @media screen and (max-width: 725px) {
+    margin-left: -50px;
+  }
+  @media (max-height: 700px) and (max-width: 760px) {
+    bottom: 70px;
   }
   img {
     max-width: 100%;

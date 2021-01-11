@@ -348,6 +348,9 @@ function App() {
     if (currentTask === 5) {
       setFadedItems(["aksesspunkt", "ansatt-tradlost", "gjest-tradlost"]);
     }
+    if (currentTask === 6) {
+      setFadedItems([]);
+    }
   }, [currentTask]);
 
   // Dotted / Active lines
@@ -544,7 +547,12 @@ function App() {
         return ruterCondition && switch1Condition1 && switch1Condition3;
       }
       if (id === "server") {
-        return ruterCondition && switch1Condition3 && serverCondition;
+        return (
+          ruterCondition &&
+          switch1Condition1 &&
+          switch1Condition3 &&
+          serverCondition
+        );
       }
       if (id === "konsulent-gruppe") {
         return (
@@ -848,6 +856,9 @@ const BottomLine = styled.div`
   transition: opacity 0.2s ease-in-out;
   background: var(--color-blue);
   z-index: ${zIndexes.building - 1};
+  @media (max-height: 700px) and (max-width: 760px) {
+    bottom: 80px;
+  }
 `;
 
 function arraysEqual(a: any[], b: any[]) {

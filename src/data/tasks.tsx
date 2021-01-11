@@ -89,6 +89,7 @@ export const tasks: Task[] = [
           Konfigurer <strong>Konsulent Gruppe</strong> og skaff disse tilgang
           til <strong>Gjestenettverk</strong>.
           <br />
+          <br />
           Husk at du samtidig må gi <strong>Drift nettverk</strong> tilgang til{" "}
           <strong>Svitsj 3</strong>
         </F>
@@ -108,6 +109,7 @@ export const tasks: Task[] = [
       initial: (
         <F>
           Kople til <strong>Aksesspunkt</strong> mot alle VLAN.
+          <br />
           <br />
           Opprett <strong>Ansatt-</strong> og <strong>Gjest</strong> trådløst{" "}
           nettverk og tildel disse passende VLAN ved å trykke på{" "}
