@@ -51,6 +51,7 @@ const Loader: React.FC<Props> = ({ images, onLoadFinished }) => {
       }
     };
   }, []);
+  const percent = (counter.current / images.length) * 100;
   return (
     <StyledLoader
       className={loading ? "loading" : "notLoading"}
@@ -59,20 +60,49 @@ const Loader: React.FC<Props> = ({ images, onLoadFinished }) => {
       aria-modal="true"
       aria-hidden={!loading}
     >
-      <h2 id="loadingLabel">Laster inn{ellipsis}</h2>
-      <div style={{ display: "none" }}>
-        {images.map((url) => (
-          <img
-            key={url}
-            alt="Ignore, just for loading"
-            src={url}
-            onLoad={imageLoaded}
-          />
-        ))}
+      <div>
+        <h2 id="loadingLabel">Laster inn{ellipsis}</h2>
+        <ProgressBar percent={percent} />
+        <div style={{ display: "none" }}>
+          {images.map((url) => (
+            <img
+              key={url}
+              alt="Ignore, just for loading"
+              src={url}
+              onLoad={imageLoaded}
+            />
+          ))}
+        </div>
       </div>
     </StyledLoader>
   );
 };
+
+type ProgressBarProps = {
+  percent: number;
+};
+
+const ProgressBar = styled.div<ProgressBarProps>`
+  width: 70vw;
+  max-width: 700px;
+  height: 4px;
+  border-radius: 4px;
+  position: relative;
+  background: #eee;
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 4px;
+    background: var(--color-blue);
+    transition: width 0.2s ease-in;
+    width: ${(props) => props.percent}%;
+  }
+`;
 
 const StyledLoader = styled.div`
   position: fixed;

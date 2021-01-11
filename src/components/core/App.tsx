@@ -20,6 +20,8 @@ import SwitchToServer from "../common/Connector/SwitchToServer/SwitchToServer";
 import SwitchToSwitch from "../common/Connector/SwitchToSwitch/SwitchToSwitch";
 import Modal from "../common/Modal/Modal";
 import { Connection } from "../../types/common";
+import SwitchToAnsattGruppe from "../common/Connector/SwitchToAnsattGruppe/SwitchToAnsattGruppe";
+import SwitchToKonsulentGruppe from "../common/Connector/SwitchToKonsulentGruppe/SwitchToKonsulentGruppe";
 
 type ConnectionState = {
   [key: string]:
@@ -147,6 +149,49 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTask, connectionState]);
 
+  // Task 3
+  useEffect(() => {
+    if (currentTask === 3) {
+      const ruterCondition = arraysEqual(
+        [true, true, false],
+        connectionState.ruter as any[]
+      );
+      const driftCondition = arraysEqual(
+        [false, true, false],
+        (connectionState["svitsj1"] as any).bottomLeft as any[]
+      );
+      const switch1Condition1 = arraysEqual(
+        [true, true, false],
+        (connectionState["svitsj1"] as any).topRight as any[]
+      );
+      const switch1Condition2 = arraysEqual(
+        [true, false, false],
+        (connectionState["svitsj1"] as any).bottomRight as any[]
+      );
+      const switch2Condition1 = arraysEqual(
+        [true, false, false],
+        (connectionState["svitsj2"] as any).topLeft as any[]
+      );
+      const ansattGruppeCondition = arraysEqual(
+        [true, false, false],
+        (connectionState["svitsj2"] as any).bottomLeft as any[]
+      );
+      if (
+        ruterCondition &&
+        driftCondition &&
+        switch1Condition1 &&
+        switch1Condition2 &&
+        switch2Condition1 &&
+        ansattGruppeCondition
+      ) {
+        completeTask(3);
+      } else {
+        unCompleteTask(3);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentTask, connectionState]);
+
   // Faded items
   useEffect(() => {
     if (currentTask === 2) {
@@ -169,7 +214,6 @@ function App() {
         "gjest-tradlost",
         "svitsj3",
         "konsulent-gruppe",
-        "ansatt-gruppe",
       ]);
     }
   }, [currentTask]);
@@ -204,18 +248,49 @@ function App() {
         [true, true, false],
         connectionState.ruter as any[]
       );
-      const switch1Condition = arraysEqual(
+      const driftCondition = arraysEqual(
+        [false, true, false],
+        (connectionState["svitsj1"] as any).bottomLeft as any[]
+      );
+      const switch1Condition1 = arraysEqual(
         [true, true, false],
         (connectionState["svitsj1"] as any).topRight as any[]
+      );
+      const switch1Condition2 = arraysEqual(
+        [true, false, false],
+        (connectionState["svitsj1"] as any).bottomRight as any[]
+      );
+      const switch2Condition1 = arraysEqual(
+        [true, false, false],
+        (connectionState["svitsj2"] as any).topLeft as any[]
+      );
+      const ansattGruppeCondition = arraysEqual(
+        [true, false, false],
+        (connectionState["svitsj2"] as any).bottomLeft as any[]
       );
       if (id === "ruter") {
         return ruterCondition;
       }
       if (id === "svitsj1.topRight") {
-        return ruterCondition && switch1Condition;
+        return ruterCondition && switch1Condition1;
+      }
+      if (id === "drift-pc") {
+        return ruterCondition && switch1Condition1 && driftCondition;
       }
       if (id === "svitsj1.bottomRight") {
-        return ruterCondition && switch1Condition;
+        return ruterCondition && switch1Condition1 && switch1Condition2;
+      }
+      if (id === "svitsj2.topLeft") {
+        return ruterCondition && switch1Condition1 && switch2Condition1;
+      }
+      if (id === "ansatt-gruppe") {
+        return (
+          ruterCondition &&
+          switch1Condition1 &&
+          switch1Condition2 &&
+          switch2Condition1 &&
+          ansattGruppeCondition
+        );
       }
     }
     return false;
@@ -224,13 +299,17 @@ function App() {
   const completeTask = (taskNumber: number) => {
     if (!completedTasks.includes(taskNumber)) {
       setCompletedTasks([...completedTasks, taskNumber]);
+      return true;
     }
+    return false;
   };
 
   const unCompleteTask = (taskNumber: number) => {
     if (completedTasks.includes(taskNumber)) {
       setCompletedTasks(completedTasks.filter((tn) => tn !== taskNumber));
+      return true;
     }
+    return false;
   };
 
   const goToNextTask = () => {
@@ -240,7 +319,9 @@ function App() {
   const goToPrevTask = () => {
     if (currentTask - 1 !== 0) {
       setCurrentTask(currentTask - 1);
+      return true;
     }
+    return false;
   };
 
   const onConnectorClick = (id: string) => {
@@ -367,7 +448,7 @@ function App() {
                 faded={fadedItems.includes("drift-pc")}
                 pos={{
                   bottom: 5,
-                  left: 26,
+                  left: 28.2,
                 }}
               />
             </F>
@@ -375,10 +456,13 @@ function App() {
               {" "}
               {/* Right side building */}
               <SwitchToSwitch
-                input={[false, false, false]}
-                output={[false, false, false]}
+                input={getConnection("svitsj1.bottomRight")}
+                output={getConnection("svitsj2.topLeft")}
                 faded={fadedItems.includes("svitsj2")}
-                active={[getLineActive("svitsj1.bottomRight"), getLineActive("svitsj2.topLeft")]}
+                active={[
+                  getLineActive("svitsj1.bottomRight"),
+                  getLineActive("svitsj2.topLeft"),
+                ]}
                 buildingStyles={buildingStyles}
               />
               <Switch
@@ -386,10 +470,58 @@ function App() {
                 onConnectorClick={onConnectorClick}
                 pos={{
                   bottom: 27,
-                  left: 112,
+                  left: 108,
                 }}
                 faded={fadedItems.includes("svitsj2")}
                 buildingStyles={buildingStyles}
+                activeState={{
+                  topRight: !fadedItems.includes("aksesspunkt"),
+                  bottomRight: !fadedItems.includes("konsulent-gruppe"),
+                  bottomLeft: !fadedItems.includes("ansatt-gruppe"),
+                  topLeft: !fadedItems.includes("svitsj1"),
+                }}
+              />
+              <SwitchToAnsattGruppe
+                input={getConnection("svitsj2.bottomLeft")}
+                output={getConnection("svitsj2.bottomLeft")}
+                buildingStyles={buildingStyles}
+                faded={fadedItems.includes("ansatt-gruppe")}
+                active={getLineActive("ansatt-gruppe")}
+              />
+              <PC
+                id={4}
+                buildingStyles={buildingStyles}
+                faded={fadedItems.includes("ansatt-gruppe")}
+                pos={{
+                  bottom: 5,
+                  left: 84,
+                }}
+              />
+              <Switch
+                id={3}
+                onConnectorClick={onConnectorClick}
+                pos={{
+                  bottom: 24.5,
+                  left: 162,
+                }}
+                faded={fadedItems.includes("svitsj3")}
+                buildingStyles={buildingStyles}
+              />
+              <SwitchToKonsulentGruppe
+                input={getConnection("svitsj3.bottomLeft")}
+                output={getConnection("svitsj3.bottomLeft")}
+                buildingStyles={buildingStyles}
+                faded={fadedItems.includes("konsulent-gruppe")}
+                active={getLineActive("konsulent-gruppe")}
+              />
+              <PC
+                id={5}
+                buildingStyles={buildingStyles}
+                faded={fadedItems.includes("konsulent-gruppe")}
+                pos={{
+                  bottom: 5,
+                  left: 137,
+                }}
               />
             </F>
             <BottomLineBreaker style={buildingStyles} />

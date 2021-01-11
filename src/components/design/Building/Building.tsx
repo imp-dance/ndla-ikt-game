@@ -109,8 +109,8 @@ const StyledBuilding = styled.div<Props>`
   }
   img.b-window {
     width: 8%;
-    bottom: calc(calc(var(--bHeight) / 100) * 40);
-    right: calc(calc(var(--bWidth) / 100) * 7);
+    bottom: calc(calc(var(--bHeight) / 100) * 55);
+    right: calc(calc(var(--bWidth) / 100) * 6);
   }
 `;
 

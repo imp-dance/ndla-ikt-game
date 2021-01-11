@@ -8,8 +8,12 @@ import VLAN3 from "../assets/symbols/VLAN3_Guest_Network.svg";
 import WWW from "../assets/symbols/www.svg";
 import Connector from "../assets/symbols/Connector.svg";
 import Router from "../assets/symbols/Router.svg";
+import Switcher from "../assets/symbols/Switcher.svg";
 import WiresVertical from "../assets/symbols/Wires_Vertical.svg";
+import WiresHorizontal from "../assets/symbols/Wires_Horizontal.svg";
 import Server from "../assets/symbols/Server.svg";
+import PC from "../assets/symbols/PC.svg";
+import PCs from "../assets/symbols/PCs.svg";
 
 import Cloud3IMG from "../assets/background/Cloud_3.svg";
 import Cloud2IMG from "../assets/background/Cloud_2.svg";
@@ -38,12 +42,14 @@ export const images = [
   VLAN3,
   WWW,
   WiresVertical,
+  WiresHorizontal,
   Cloud3IMG,
   Cloud2IMG,
   Tree1IMG,
   BirdIMG,
   Connector,
   Server,
+  Switcher,
   Label1,
   Label2,
   Label3,
@@ -57,4 +63,6 @@ export const images = [
   Wind,
   Sun,
   Router,
+  PC,
+  PCs,
 ];

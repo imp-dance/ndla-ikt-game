@@ -48,11 +48,11 @@ const Switch: React.FC<Props> = ({
       left: 12,
     },
     bottomLeft: {
-      bottom: -5.8,
+      bottom: id === 3 ? -3.8 : -5.8,
       right: 12,
     },
     topLeft: {
-      bottom: 5.8,
+      bottom: id === 3 ? 8.8 : 5.8,
       right: 12,
     },
   };
@@ -65,26 +65,31 @@ const Switch: React.FC<Props> = ({
     >
       <img src={labels[id - 1]} alt="Label" className="label" />
       <Lines style={buildingStyles} className="topLines">
-        <Line active faded={!linesActive.topRight} />
+        {id !== 3 ? <Line active faded={!linesActive.topRight} /> : <div />}
         <Line active faded={!linesActive.topLeft} />
         <Line active faded={!linesActive.topLeft} />
-        <Line active faded={!linesActive.topRight} />
+        {id !== 3 ? <Line active faded={!linesActive.topRight} /> : <div />}
       </Lines>
       <img src={SwitchImg} alt="Switch" />
-      <Connector
-        pos={connectorPos.topRight}
-        buildingStyles={buildingStyles}
-        faded={!linesActive.topRight}
-        id="SwitchRuter"
-        onClick={() => onConnectorClick(`svitsj${id}.topRight`)}
-      />
-      <Connector
-        pos={connectorPos.bottomRight}
-        buildingStyles={buildingStyles}
-        faded={!linesActive.bottomRight}
-        id="Switch1to2"
-        onClick={() => onConnectorClick(`svitsj${id}.bottomRight`)}
-      />
+      {id !== 3 && (
+        <Connector
+          pos={connectorPos.topRight}
+          buildingStyles={buildingStyles}
+          faded={!linesActive.topRight}
+          id="SwitchRuter"
+          onClick={() => onConnectorClick(`svitsj${id}.topRight`)}
+        />
+      )}
+
+      {id !== 3 && (
+        <Connector
+          pos={connectorPos.bottomRight}
+          buildingStyles={buildingStyles}
+          faded={!linesActive.bottomRight}
+          id="Switch1to2"
+          onClick={() => onConnectorClick(`svitsj${id}.bottomRight`)}
+        />
+      )}
       <Connector
         pos={connectorPos.topLeft}
         buildingStyles={buildingStyles}
@@ -100,10 +105,10 @@ const Switch: React.FC<Props> = ({
         onClick={() => onConnectorClick(`svitsj${id}.bottomLeft`)}
       />
       <Lines style={buildingStyles} className="bottomLines">
-        <Line active faded={!linesActive.bottomRight} />
+        {id !== 3 ? <Line active faded={!linesActive.bottomRight} /> : <div />}
         <Line active faded={!linesActive.bottomLeft} />
         <Line active faded={!linesActive.bottomLeft} />
-        <Line active faded={!linesActive.bottomRight} />
+        {id !== 3 ? <Line active faded={!linesActive.bottomRight} /> : <div />}
       </Lines>
     </StyledSwitch>
   );

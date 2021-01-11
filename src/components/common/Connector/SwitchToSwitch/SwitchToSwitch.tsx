@@ -49,13 +49,13 @@ const LineContainer = styled.div`
     transform: translate(-50%, 0px);
     &:nth-child(1) {
       bottom: calc(calc(var(--bHeight) / 100) * 3.3);
-      left: calc(calc(var(--bWidth) / 100) * 8.7);
-      width: calc(calc(var(--bWidth) / 100) * 8);
+      left: calc(calc(var(--bWidth) / 100) * 7.8);
+      width: calc(calc(var(--bWidth) / 100) * 5.5);
     }
     &:nth-child(2) {
       width: calc(calc(var(--bWidth) / 100) * 5);
       bottom: calc(calc(var(--bHeight) / 100) * 3.3);
-      left: calc(calc(var(--bWidth) / 100) * -2.5);
+      left: calc(calc(var(--bWidth) / 100) * -2.4);
     }
     &:nth-child(3) {
       height: calc(calc(var(--bHeight) / 100) * 12.4);
@@ -64,7 +64,7 @@ const LineContainer = styled.div`
     }
     &:nth-child(4) {
       bottom: calc(calc(var(--bHeight) / 100) * -8.8);
-      width: calc(calc(var(--bWidth) / 100) * 2.9);
+      width: calc(calc(var(--bWidth) / 100) * 3.4);
       left: calc(calc(var(--bWidth) / 100) * -6.4);
       right: 50%;
     }
