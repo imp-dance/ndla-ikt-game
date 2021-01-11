@@ -101,7 +101,7 @@ const StyledIn = styled.div<InOutProps>`
   flex-direction: ${(props) => (props.horizontal ? "row" : "column")};
   width: ${(props) => (props.horizontal ? "15.5%" : "17.9%")};
   position: absolute;
-  top: 14.5%;
+  top: 14%;
   > img {
     margin: ${(props) => (props.horizontal ? "0 25% 0 0" : "0 0 35% 0")};
     user-select: none;
@@ -117,7 +117,7 @@ const StyledIn = styled.div<InOutProps>`
       right: 40%;
     }
     &.__gjest {
-      right: 67%;
+      right: 66%;
     }
   `}
   ${(props) =>
@@ -158,7 +158,7 @@ const StyledUt = styled.div<InOutProps>`
       right: 40%;
     }
     &.__gjest {
-      right: 67%;
+      right: 66%;
     }
   `}
   ${(props) =>

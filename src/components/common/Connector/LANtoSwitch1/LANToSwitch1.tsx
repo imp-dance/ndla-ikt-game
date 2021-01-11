@@ -5,7 +5,7 @@ import DisplayWires from "../../DisplayWires/DisplayWires";
 import { Connection } from "../../../../types/common";
 
 type Props = {
-  active?: boolean;
+  active?: [boolean, boolean];
   buildingStyles: React.CSSProperties;
   input: Connection;
   output: Connection;
@@ -32,8 +32,8 @@ const LANToSwitch1: React.FC<Props> = ({
     >
       <LineContainer>
         <Lines>
-          <Line active={active} />
-          <Line active={active} />
+          <Line active={active ? active[0] : false} />
+          <Line active={active ? active[1] : false} />
         </Lines>
       </LineContainer>
     </DisplayWires>
@@ -45,8 +45,8 @@ const LineContainer = styled.div`
     left: 50%;
     transform: translate(-50%, 0px);
     &:nth-child(1) {
-      bottom: calc(calc(var(--bHeight) / 100) * 11);
-      height: calc(calc(var(--bHeight) / 100) * 5);
+      bottom: calc(calc(var(--bHeight) / 100) * 10);
+      height: calc(calc(var(--bHeight) / 100) * 6);
     }
     &:nth-child(2) {
       height: calc(calc(var(--bHeight) / 100) * 4.5);

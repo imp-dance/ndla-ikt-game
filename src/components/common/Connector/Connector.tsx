@@ -5,8 +5,6 @@ import { Pos } from "../../../types/common";
 import ConnectorIMG from "../../../assets/symbols/Connector.svg";
 
 type Props = {
-  input: [boolean, boolean, boolean];
-  onOutput: (output: [boolean, boolean, boolean]) => void;
   pos: Pos;
   buildingStyles: React.CSSProperties;
   faded?: boolean;
@@ -15,8 +13,6 @@ type Props = {
 };
 
 const Connector: React.FC<Props> = ({
-  input,
-  onOutput,
   pos,
   buildingStyles,
   children,

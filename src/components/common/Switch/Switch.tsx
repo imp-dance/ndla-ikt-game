@@ -14,18 +14,6 @@ type Props = {
   pos: Pos;
   buildingStyles: React.CSSProperties;
   onConnectorClick: (id: string) => void;
-  output: {
-    topRight: onOutput;
-    bottomRight: onOutput;
-    topLeft: onOutput;
-    bottomLeft: onOutput;
-  };
-  input: {
-    topRight: input;
-    bottomRight: input;
-    topLeft: input;
-    bottomLeft: input;
-  };
   activeState?: {
     topRight: boolean;
     bottomRight: boolean;
@@ -35,15 +23,9 @@ type Props = {
   faded?: boolean;
 };
 
-type onOutput = (data: input) => void;
-
-type input = [boolean, boolean, boolean];
-
 const Switch: React.FC<Props> = ({
   id,
   pos,
-  output,
-  input,
   buildingStyles,
   activeState,
   faded,
@@ -90,40 +72,32 @@ const Switch: React.FC<Props> = ({
       </Lines>
       <img src={SwitchImg} alt="Switch" />
       <Connector
-        input={input.topRight}
-        onOutput={output.topRight}
         pos={connectorPos.topRight}
         buildingStyles={buildingStyles}
         faded={!linesActive.topRight}
-        id="SwitchLAN"
-        onClick={onConnectorClick}
+        id="SwitchRuter"
+        onClick={() => onConnectorClick(`svitsj${id}.topRight`)}
       />
       <Connector
-        input={input.bottomRight}
-        onOutput={output.bottomRight}
         pos={connectorPos.bottomRight}
         buildingStyles={buildingStyles}
         faded={!linesActive.bottomRight}
         id="Switch1to2"
-        onClick={onConnectorClick}
+        onClick={() => onConnectorClick(`svitsj${id}.bottomRight`)}
       />
       <Connector
-        input={input.topLeft}
-        onOutput={output.topLeft}
         pos={connectorPos.topLeft}
         buildingStyles={buildingStyles}
         faded={!linesActive.topLeft}
         id="SwitchServer"
-        onClick={onConnectorClick}
+        onClick={() => onConnectorClick(`svitsj${id}.topLeft`)}
       />
       <Connector
-        input={input.bottomLeft}
-        onOutput={output.bottomLeft}
         pos={connectorPos.bottomLeft}
         buildingStyles={buildingStyles}
         faded={!linesActive.bottomLeft}
-        id="SwitchDrift"
-        onClick={onConnectorClick}
+        id="drift-pc"
+        onClick={() => onConnectorClick(`svitsj${id}.bottomLeft`)}
       />
       <Lines style={buildingStyles} className="bottomLines">
         <Line active faded={!linesActive.bottomRight} />

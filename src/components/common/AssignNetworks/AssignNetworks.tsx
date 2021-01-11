@@ -4,6 +4,7 @@ import zIndexes from "../../../styles/zIndexes";
 import VLAN1 from "../../../assets/symbols/VLAN1_Employee_Network.svg";
 import VLAN2 from "../../../assets/symbols/VLAN2_Admin_Network.svg";
 import VLAN3 from "../../../assets/symbols/VLAN3_Guest_Network.svg";
+import NetworkIcon from "../NetworkIcon/NetworkIcon";
 
 type Props = {
   onChange: (newVal: State) => void;
@@ -80,7 +81,7 @@ const AssignNetworks: React.FC<Props> = ({
     <Container id="ASSIGN_NETWORKS">
       <ul>
         <li>
-          <ListIcon src={VLAN1} alt="VLAN 1 Ikon" />
+          <NetworkIcon src={VLAN1} alt="VLAN 1 Ikon" />
           <strong>VLAN</strong>
           <input
             type="text"
@@ -92,7 +93,7 @@ const AssignNetworks: React.FC<Props> = ({
           - Ansatt nettverk
         </li>
         <li>
-          <ListIcon src={VLAN2} alt="VLAN 2 Ikon" />
+          <NetworkIcon src={VLAN2} alt="VLAN 2 Ikon" />
           <strong>VLAN</strong>
           <input
             type="text"
@@ -101,10 +102,10 @@ const AssignNetworks: React.FC<Props> = ({
             disabled={disabled}
             className={multipleSame("admin") ? "wrong" : ""}
           />
-          - Admin nettverk
+          - Drift nettverk
         </li>
         <li>
-          <ListIcon src={VLAN3} alt="VLAN 3 Ikon" />
+          <NetworkIcon src={VLAN3} alt="VLAN 3 Ikon" />
           <strong>VLAN</strong>
           <input
             type="text"
@@ -119,13 +120,6 @@ const AssignNetworks: React.FC<Props> = ({
     </Container>
   );
 };
-
-const ListIcon = styled.img`
-  user-select: none;
-  pointer-events: none;
-  margin-right: var(--margin-s);
-  transform: scale(0.8);
-`;
 
 const Container = styled.div`
   border: 3px solid var(--color-blue);
