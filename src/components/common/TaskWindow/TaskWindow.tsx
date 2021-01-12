@@ -28,6 +28,7 @@ const TaskWindow: React.FC<Props> = ({
   }
   return (
     <Container id="TASK_WINDOW">
+      <BackButton onClick={onPrevTask} />
       <TaskTitle>{task.title}</TaskTitle>
       <TaskLabel key={`${task.number}-${taskCompleted}`}>
         {taskCompleted ? task.label.completed : task.label.initial}
@@ -46,6 +47,35 @@ const TaskWindow: React.FC<Props> = ({
     </Container>
   );
 };
+
+const BackButton = styled.button`
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-blue);
+  position: absolute;
+  top: var(--padding-m);
+  right: var(--padding-m);
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  @media (max-height: 700px) and (max-width: 770px) {
+    right: 40px;
+  }
+  &::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-right: 4px solid #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+`;
 
 const Container = styled.div`
   background: var(--color-white);

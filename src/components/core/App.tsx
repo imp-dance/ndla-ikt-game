@@ -23,6 +23,10 @@ import { Connection } from "../../types/common";
 import SwitchToAnsattGruppe from "../common/Connector/SwitchToAnsattGruppe/SwitchToAnsattGruppe";
 import SwitchToKonsulentGruppe from "../common/Connector/SwitchToKonsulentGruppe/SwitchToKonsulentGruppe";
 import SwitchToSwitch2 from "../common/Connector/SwitchToSwitch2/SwitchToSwitch2";
+import AccessPoint from "../common/Accesspoint/Accesspoint";
+import SwitchToAccesspoint from "../common/Connector/SwitchToAccesspoint/SwitchToAccesspoint";
+import APToAnsatt from "../common/Connector/APToAnsatt/APToAnsatt";
+import APToGuest from "../common/Connector/APToGuest/APToGuest";
 
 type ConnectionState = {
   [key: string]:
@@ -756,6 +760,71 @@ function App() {
                   bottomLeft: !fadedItems.includes("ansatt-gruppe"),
                   topLeft: !fadedItems.includes("svitsj1"),
                 }}
+              />
+              <SwitchToAccesspoint
+                input={getConnection("aksesspunkt")}
+                output={getConnection("svitsj2.topRight")}
+                buildingStyles={buildingStyles}
+                faded={fadedItems.includes("aksesspunkt")}
+                active={getLineActive("aksesspunkt")}
+              />
+              <AccessPoint
+                buildingStyles={buildingStyles}
+                faded={fadedItems.includes("aksesspunkt")}
+                pos={{
+                  right: 61.5,
+                  bottom: 60,
+                }}
+              />
+              <APToAnsatt
+                input={getConnection("ansatt-tradlost")}
+                output={getConnection("aksesspunkt")}
+                buildingStyles={buildingStyles}
+                active={[
+                  getLineActive("ansatt-tradlost"),
+                  getLineActive("aksesspunkt"),
+                ]}
+                faded={fadedItems.includes("ansatt-tradlost")}
+              />
+              <APToGuest
+                input={getConnection("aksesspunkt")}
+                output={getConnection("gjest-tradlost")}
+                buildingStyles={buildingStyles}
+                active={[
+                  getLineActive("aksesspunkt"),
+                  getLineActive("gjest-tradlost"),
+                ]}
+                faded={fadedItems.includes("gjest-tradlost")}
+              />
+              <Connector
+                buildingStyles={buildingStyles}
+                pos={{
+                  bottom: 69,
+                  right: 60.8,
+                }}
+                id="aksesspunkt"
+                faded={fadedItems.includes("aksesspunkt")}
+                onClick={onConnectorClick}
+              />
+              <Connector
+                buildingStyles={buildingStyles}
+                pos={{
+                  bottom: 69,
+                  right: 85.8,
+                }}
+                id="ansatt-tradlost"
+                faded={fadedItems.includes("ansatt-tradlost")}
+                onClick={onConnectorClick}
+              />
+              <Connector
+                buildingStyles={buildingStyles}
+                pos={{
+                  bottom: 69,
+                  right: 35.8,
+                }}
+                id="gjest-tradlost"
+                faded={fadedItems.includes("gjest-tradlost")}
+                onClick={onConnectorClick}
               />
               <SwitchToAnsattGruppe
                 input={getConnection("svitsj2.bottomLeft")}
