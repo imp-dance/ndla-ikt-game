@@ -25,7 +25,7 @@ const StyledCloud = styled.div`
   position: absolute;
   width: calc(calc(var(--bWidth) / 100) * 21);
   bottom: calc(calc(var(--bHeight) / 100) * 67);
-  left: calc(calc(var(--bWidth) / 100) * 4);
+  left: calc(calc(var(--bWidth) / 100) * 3.9);
   .WWW-label {
     width: calc(calc(var(--bWidth) / 100) * 7);
     position: absolute;

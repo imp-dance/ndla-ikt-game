@@ -8,7 +8,7 @@ body {
   background: var(--color-light-blue-2);
   overflow-x: hidden;
   @media (max-height: 700px) and (max-width: 760px) {
-    overflow: hidden;
+    // overflow: hidden;
   }
 }
 
@@ -23,7 +23,7 @@ body {
   min-height: 100vh;
   --minHeightBreak: 620px;
   position: relative;
-  min-width: 790px;
+  min-width: 720px;
 }
 
 .App {

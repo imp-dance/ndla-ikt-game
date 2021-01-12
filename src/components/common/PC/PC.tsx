@@ -43,6 +43,7 @@ const PC: React.FC<Props> = ({ pos, buildingStyles, id, faded, active }) => {
     if (!isActive && active) {
       setActive(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active]);
   const classname = classnames({ faded: faded }, { blink: isActive });
   return (
