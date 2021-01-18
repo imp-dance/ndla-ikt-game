@@ -7,8 +7,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: var(--color-light-blue-2);
   overflow-x: hidden;
-  @media (max-height: 700px) and (max-width: 760px) {
-    // overflow: hidden;
+  @media (max-height: 700px), (max-width: 760px) {
+    overflow: hidden;
   }
 }
 
@@ -66,5 +66,9 @@ body {
   25%,
   75% {
     opacity: 0.5;
+    transform: rotate(3deg);
+  }
+  75% {
+    transform: rotate(-3deg);
   }
 }

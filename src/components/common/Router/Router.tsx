@@ -21,10 +21,10 @@ const Router: React.FC<Props> = ({ buildingStyles, faded }) => {
       <img src={RouterIMG} className="ruter" alt="Router" />
       <span className="rightText">LAN</span>
       <Lines>
-        <Line active />
-        <Line active />
-        <Line horizontal active />
-        <Line horizontal active />
+        <Line active faded={faded} />
+        <Line active faded={faded} />
+        <Line horizontal active faded={faded} />
+        <Line horizontal active faded={faded} />
       </Lines>
     </StyledRouter>
   );

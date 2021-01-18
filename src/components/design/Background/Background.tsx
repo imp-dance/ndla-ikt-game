@@ -2,10 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import Cloud2IMG from "../../../assets/background/Cloud_2.svg";
 import Cloud1IMG from "../../../assets/background/Cloud_3.svg";
-import Tree1IMG from "../../../assets/background/Tree.svg";
+import SmallTreeIMG from "../../../assets/background/tree_1.svg";
+import LargeTreeIMG from "../../../assets/background/tree_2.svg";
+import MediumTreeIMG from "../../../assets/background/tree_3.svg";
 import BirdIMG from "../../../assets/background/Bird.svg";
 import WindIMG from "../../../assets/background/Wind.svg";
 import SunIMG from "../../../assets/background/Sun.svg";
+import LargeCircleIMG from "../../../assets/background/Circle_Large.svg";
+import SmallCircleIMG from "../../../assets/background/Circle_Small.svg";
 
 type Props = {
   disabled: boolean;
@@ -20,10 +24,13 @@ const Background: React.FC<Props> = ({ disabled }) => {
       }}
     >
       <Cloud1 src={Cloud1IMG} role="presentation" />
-      <Tree1 src={Tree1IMG} role="presentation" />
+      <Tree1 src={SmallTreeIMG} role="presentation" />
+      <Tree2 src={LargeTreeIMG} role="presentation" />
       <Bird src={BirdIMG} role="presentation" />
       <Wind1 src={WindIMG} role="presentation" />
       <Wind2 src={WindIMG} role="presentation" />
+      <Tree3 src={SmallTreeIMG} role="presentation" />
+      <Tree4 src={MediumTreeIMG} role="presentation" />
       <Cloud2 src={Cloud2IMG} role="presentation" />
       <Cloud3 src={Cloud2IMG} role="presentation" />
       <Sun src={SunIMG} role="presentation" />
@@ -57,6 +64,35 @@ const Tree1 = styled(BGElement)`
   transition: transform 0.6s ease-in-out;
   @media screen and (max-width: 1400px) {
     transform: translate(-300px, -10px);
+  }
+`;
+
+const Tree2 = styled(BGElement)`
+  position: absolute;
+  bottom: 40px;
+  left: 8%;
+  transition: transform 0.6s ease-in-out;
+  @media screen and (max-width: 1400px) {
+    transform: translate(-300px, -10px);
+  }
+`;
+const Tree3 = styled(BGElement)`
+  position: absolute;
+  bottom: 40px;
+  right: 6%;
+  transition: transform 0.6s ease-in-out;
+  @media screen and (max-width: 1500px) {
+    transform: translate(300px, -10px);
+  }
+`;
+
+const Tree4 = styled(BGElement)`
+  position: absolute;
+  bottom: 40px;
+  right: 10%;
+  transition: transform 0.6s ease-in-out;
+  @media screen and (max-width: 1500px) {
+    transform: translate(400px, -10px);
   }
 `;
 
@@ -98,8 +134,8 @@ const Wind1 = styled(BGElement)`
 
 const Wind2 = styled(BGElement)`
   position: absolute;
-  top: 20%;
-  left: 30%;
+  bottom: 40%;
+  right: 4%;
   transition: transform 0.6s ease-in;
   animation: windMove 6s ease-in infinite alternate;
   @keyframes windMove {
@@ -113,8 +149,8 @@ const Wind2 = styled(BGElement)`
       transform: translate(0px, 0px);
     }
   }
-  @media (max-height: 930px), (max-width: 1300px) {
-    transform: translate(-30px, -300px);
+  @media (max-height: 800px), (max-width: 1600px) {
+    transform: translate(500px, -300px);
     animation: none;
   }
 `;

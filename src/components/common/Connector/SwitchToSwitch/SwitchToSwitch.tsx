@@ -33,10 +33,10 @@ const SwitchToSwitch: React.FC<Props> = ({
     >
       <LineContainer>
         <Lines>
-          <Line active={active && active[1]} horizontal />
-          <Line active={active && active[0]} horizontal />
-          <Line active={active && active[0]} />
-          <Line active={active && active[0]} horizontal />
+          <Line active={active && active[1]} faded={faded} horizontal />
+          <Line active={active && active[0]} faded={faded} horizontal />
+          <Line active={active && active[0]} faded={faded} />
+          <Line active={active && active[0]} faded={faded} horizontal />
         </Lines>
       </LineContainer>
     </DisplayWires>
@@ -49,8 +49,8 @@ const LineContainer = styled.div`
     transform: translate(-50%, 0px);
     &:nth-child(1) {
       bottom: calc(calc(var(--bHeight) / 100) * 3.3);
-      left: calc(calc(var(--bWidth) / 100) * 7.8);
-      width: calc(calc(var(--bWidth) / 100) * 5.5);
+      left: calc(calc(var(--bWidth) / 100) * 8);
+      width: calc(calc(var(--bWidth) / 100) * 4.3);
     }
     &:nth-child(2) {
       width: calc(calc(var(--bWidth) / 100) * 5);

@@ -51,7 +51,7 @@ const LineContainer = styled.div`
     }
     &:nth-child(2) {
       right: 100%;
-      width: calc(calc(var(--bWidth) / 100) * 8.1);
+      width: calc(calc(var(--bWidth) / 100) * 7.1);
     }
   }
 `;

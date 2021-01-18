@@ -62,6 +62,10 @@ const BackButton = styled.button`
   @media (max-height: 700px) and (max-width: 770px) {
     right: 40px;
   }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
   &::after {
     content: "";
     display: block;

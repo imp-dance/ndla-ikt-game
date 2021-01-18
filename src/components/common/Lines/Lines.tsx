@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import classnames from "classnames";
 
 type Props = {
   style?: React.CSSProperties;
@@ -34,15 +35,12 @@ export const Line: React.FC<LineProps> = ({
   active,
   style,
   faded,
+  className,
   ...rest
 }) => {
+  const classname = classnames("line", { faded }, className);
   return (
-    <StyledLine
-      active={active}
-      className={`line ${faded ? "faded" : ""}`}
-      style={style}
-      {...rest}
-    />
+    <StyledLine active={active} className={classname} style={style} {...rest} />
   );
 };
 

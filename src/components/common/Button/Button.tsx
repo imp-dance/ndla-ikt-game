@@ -21,6 +21,7 @@ const StyledButton = styled.button`
 
   &:disabled {
     background: var(--color-light-blue);
+    cursor: not-allowed;
   }
 `;
 

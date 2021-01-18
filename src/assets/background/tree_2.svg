@@ -1,0 +1,40 @@
+<svg id="Tree_2" xmlns="http://www.w3.org/2000/svg" width="49" height="273" viewBox="0 0 49 273">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #d0e8de;
+      }
+
+      .cls-1, .cls-2 {
+        stroke: #20588f;
+        stroke-linecap: round;
+        stroke-width: 3px;
+      }
+
+      .cls-2, .cls-4 {
+        fill: none;
+      }
+
+      .cls-3 {
+        stroke: none;
+      }
+    </style>
+  </defs>
+  <g id="Group_33" data-name="Group 33">
+    <g id="Rectangle_7" data-name="Rectangle 7" class="cls-1">
+      <rect class="cls-3" width="49" height="105" rx="24.5"/>
+      <rect class="cls-4" x="1.5" y="1.5" width="46" height="102" rx="23"/>
+    </g>
+    <line id="Line_16" data-name="Line 16" class="cls-2" y1="89" transform="translate(24.352 16.5)"/>
+    <line id="Line_93" data-name="Line 93" class="cls-2" y1="89" transform="translate(24.352 16.5)"/>
+    <line id="Line_56" data-name="Line 56" class="cls-2" y1="19.125" transform="translate(38.114 76.603) rotate(45)"/>
+    <line id="Line_61" data-name="Line 61" class="cls-2" y2="19.125" transform="translate(24.114 90.127) rotate(135)"/>
+    <line id="Line_57" data-name="Line 57" class="cls-2" y1="19.125" transform="translate(38.114 57.603) rotate(45)"/>
+    <line id="Line_62" data-name="Line 62" class="cls-2" y2="19.125" transform="translate(24.114 71.127) rotate(135)"/>
+    <line id="Line_58" data-name="Line 58" class="cls-2" y1="19.125" transform="translate(38.114 38.603) rotate(45)"/>
+    <line id="Line_63" data-name="Line 63" class="cls-2" y2="19.125" transform="translate(24.114 52.127) rotate(135)"/>
+    <line id="Line_59" data-name="Line 59" class="cls-2" y1="19.125" transform="translate(38.114 19.603) rotate(45)"/>
+    <line id="Line_60" data-name="Line 60" class="cls-2" y2="19.125" transform="translate(24.114 33.127) rotate(135)"/>
+  </g>
+  <line id="Line_94" data-name="Line 94" class="cls-2" y1="166" transform="translate(24.352 105.5)"/>
+</svg>

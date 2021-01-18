@@ -25,8 +25,8 @@ const APToGuest: React.FC<Props> = ({
       output={output}
       buildingStyles={buildingStyles}
       pos={{
-        bottom: 69,
-        right: 48.5,
+        bottom: 66,
+        left: 122.5,
       }}
       horizontal
       faded={faded}

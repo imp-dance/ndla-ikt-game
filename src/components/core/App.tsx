@@ -19,6 +19,7 @@ import PC from "../common/PC/PC";
 import SwitchToServer from "../common/Connector/SwitchToServer/SwitchToServer";
 import SwitchToSwitch from "../common/Connector/SwitchToSwitch/SwitchToSwitch";
 import Modal from "../common/Modal/Modal";
+import APModal from "../common/Modal/APModal";
 import { Connection } from "../../types/common";
 import SwitchToAnsattGruppe from "../common/Connector/SwitchToAnsattGruppe/SwitchToAnsattGruppe";
 import SwitchToKonsulentGruppe from "../common/Connector/SwitchToKonsulentGruppe/SwitchToKonsulentGruppe";
@@ -27,6 +28,9 @@ import AccessPoint from "../common/Accesspoint/Accesspoint";
 import SwitchToAccesspoint from "../common/Connector/SwitchToAccesspoint/SwitchToAccesspoint";
 import APToAnsatt from "../common/Connector/APToAnsatt/APToAnsatt";
 import APToGuest from "../common/Connector/APToGuest/APToGuest";
+import Laptop from "../common/Laptop/Laptop";
+import { start } from "repl";
+import MainMenu from "../common/MainMenu/MainMenu";
 
 type ConnectionState = {
   [key: string]:
@@ -39,40 +43,57 @@ type ConnectionState = {
       };
 };
 
+const initialConnectionState = {
+  server: [false, false, false],
+  aksesspunkt: [false, false, false],
+  "ansatt-tradlost": [false, false, false],
+  "gjest-tradlost": [false, false, false],
+  svitsj1: {
+    topRight: [false, false, false],
+    bottomRight: [false, false, false],
+    bottomLeft: [false, false, false],
+    topLeft: [false, false, false],
+  },
+  svitsj2: {
+    topRight: [false, false, false],
+    bottomRight: [false, false, false],
+    bottomLeft: [false, false, false],
+    topLeft: [false, false, false],
+  },
+  svitsj3: {
+    bottomLeft: [false, false, false],
+    topLeft: [false, false, false],
+  },
+  "konsulent-gruppe": [false, false, false],
+  "ansatt-gruppe": [false, false, false],
+  ruter: [false, false, false],
+  "drift-pc": [false, false, false],
+} as ConnectionState;
+
 function App() {
   const appRef = useRef<HTMLDivElement>(null);
-  const [connectionState, setConnectionState] = useState<ConnectionState>({
-    server: [false, false, false],
-    aksesspunkt: [false, false, false],
-    "ansatt-tradlost": [false, false, false],
-    "gjest-tradlost": [false, false, false],
-    svitsj1: {
-      topRight: [false, false, false],
-      bottomRight: [false, false, false],
-      bottomLeft: [false, false, false],
-      topLeft: [false, false, false],
-    },
-    svitsj2: {
-      topRight: [false, false, false],
-      bottomRight: [false, false, false],
-      bottomLeft: [false, false, false],
-      topLeft: [false, false, false],
-    },
-    svitsj3: {
-      bottomLeft: [false, false, false],
-      topLeft: [false, false, false],
-    },
-    "konsulent-gruppe": [false, false, false],
-    "ansatt-gruppe": [false, false, false],
-    ruter: [false, false, false],
-    "drift-pc": [false, false, false],
+  const [menuOpen, setMenuOpen] = useState(true);
+  const [expertMode, setExpertMode] = useState(false);
+  const [connectionState, setConnectionState] = useState<ConnectionState>(
+    initialConnectionState
+  );
+  const [apState, setAPState] = useState({
+    enabled: [false, false, false],
+    networks: ["", "", ""],
   });
+  const [parsedAPState, setParsedAPState] = useState<Connection>([
+    false,
+    false,
+    false,
+  ]);
   const [loading, setLoading] = useState(true);
   const [currentTask, setCurrentTask] = useState(1);
   const [assignedNetworks, setAssignedNetworks] = useState<NetworkState>();
   const [completedTasks, setCompletedTasks] = useState<number[]>([]);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [modalID, setModalID] = useState<string>("");
+  const [wifiModalOpen, setWifiModalOpen] = useState<boolean>(false);
+  const [wifiModalID, setWifiModalID] = useState<string>("");
   const [fadedItems, setFadedItems] = useState<string[]>([
     "server",
     "aksesspunkt",
@@ -86,6 +107,11 @@ function App() {
     "ruter",
     "drift-pc",
   ]);
+
+  const startTask = (expertMode: boolean) => {
+    setExpertMode(expertMode);
+    setMenuOpen(false);
+  };
 
   const updateConnection = (id: string, values: Connection) => {
     // id: svitsj1.topLeft | konsulent-gruppe | etc...
@@ -170,11 +196,11 @@ function App() {
         (connectionState["svitsj1"] as any).topRight as any[]
       );
       const switch1Condition2 = arraysEqual(
-        [true, false, false],
+        [true, true, false],
         (connectionState["svitsj1"] as any).bottomRight as any[]
       );
       const switch2Condition1 = arraysEqual(
-        [true, false, false],
+        [true, true, false],
         (connectionState["svitsj2"] as any).topLeft as any[]
       );
       const ansattGruppeCondition = arraysEqual(
@@ -213,7 +239,7 @@ function App() {
         (connectionState["svitsj1"] as any).topRight as any[]
       );
       const switch1Condition2 = arraysEqual(
-        [true, false, false],
+        [true, true, false],
         (connectionState["svitsj1"] as any).bottomRight as any[]
       );
       const switch1Condition3 = arraysEqual(
@@ -221,7 +247,7 @@ function App() {
         (connectionState["svitsj1"] as any).topLeft as any[]
       );
       const switch2Condition1 = arraysEqual(
-        [true, false, false],
+        [true, true, false],
         (connectionState["svitsj2"] as any).topLeft as any[]
       );
       const ansattGruppeCondition = arraysEqual(
@@ -252,66 +278,159 @@ function App() {
 
   // Task 5
   useEffect(() => {
-    const ruterCondition = arraysEqual(
-      [true, true, true],
-      connectionState.ruter as any[]
-    );
-    const driftCondition = arraysEqual(
-      [false, true, false],
-      (connectionState["svitsj1"] as any).bottomLeft as any[]
-    );
-    const switch1Condition1 = arraysEqual(
-      [true, true, true],
-      (connectionState["svitsj1"] as any).topRight as any[]
-    );
-    const switch1Condition2 = arraysEqual(
-      [true, false, true],
-      (connectionState["svitsj1"] as any).bottomRight as any[]
-    );
-    const switch2Condition1 = arraysEqual(
-      [true, false, true],
-      (connectionState["svitsj2"] as any).topLeft as any[]
-    );
-    const switch2Condition2 = arraysEqual(
-      [false, false, true],
-      (connectionState["svitsj2"] as any).bottomRight as any[]
-    );
-    const switch3Condition = arraysEqual(
-      [false, false, true],
-      (connectionState["svitsj3"] as any).topLeft as any[]
-    );
-    const ansattGruppeCondition = arraysEqual(
-      [true, false, false],
-      (connectionState["svitsj2"] as any).bottomLeft as any[]
-    );
-    const switch1Condition3 = arraysEqual(
-      [true, true, false],
-      (connectionState["svitsj1"] as any).topLeft as any[]
-    );
-    const serverCondition = arraysEqual(
-      [true, true, false],
-      connectionState["server"] as any[]
-    );
-    const konsulentGruppeCondition = arraysEqual(
-      [false, false, true],
-      (connectionState["svitsj3"] as any).bottomLeft as any[]
-    );
-    if (
-      ruterCondition &&
-      driftCondition &&
-      switch1Condition1 &&
-      switch1Condition2 &&
-      switch1Condition3 &&
-      switch2Condition1 &&
-      switch2Condition2 &&
-      switch3Condition &&
-      ansattGruppeCondition &&
-      serverCondition &&
-      konsulentGruppeCondition
-    ) {
-      completeTask(5);
-    } else {
-      unCompleteTask(5);
+    if (currentTask === 5) {
+      const ruterCondition = arraysEqual(
+        [true, true, true],
+        connectionState.ruter as any[]
+      );
+      const driftCondition = arraysEqual(
+        [false, true, false],
+        (connectionState["svitsj1"] as any).bottomLeft as any[]
+      );
+      const switch1Condition1 = arraysEqual(
+        [true, true, true],
+        (connectionState["svitsj1"] as any).topRight as any[]
+      );
+      const switch1Condition2 = arraysEqual(
+        [true, true, true],
+        (connectionState["svitsj1"] as any).bottomRight as any[]
+      );
+      const switch2Condition1 = arraysEqual(
+        [true, true, true],
+        (connectionState["svitsj2"] as any).topLeft as any[]
+      );
+      const switch2Condition2 = arraysEqual(
+        [false, true, true],
+        (connectionState["svitsj2"] as any).bottomRight as any[]
+      );
+      const switch3Condition = arraysEqual(
+        [false, true, true],
+        (connectionState["svitsj3"] as any).topLeft as any[]
+      );
+      const ansattGruppeCondition = arraysEqual(
+        [true, false, false],
+        (connectionState["svitsj2"] as any).bottomLeft as any[]
+      );
+      const switch1Condition3 = arraysEqual(
+        [true, true, false],
+        (connectionState["svitsj1"] as any).topLeft as any[]
+      );
+      const serverCondition = arraysEqual(
+        [true, true, false],
+        connectionState["server"] as any[]
+      );
+      const konsulentGruppeCondition = arraysEqual(
+        [false, false, true],
+        (connectionState["svitsj3"] as any).bottomLeft as any[]
+      );
+      if (
+        ruterCondition &&
+        driftCondition &&
+        switch1Condition1 &&
+        switch1Condition2 &&
+        switch1Condition3 &&
+        switch2Condition1 &&
+        switch2Condition2 &&
+        switch3Condition &&
+        ansattGruppeCondition &&
+        serverCondition &&
+        konsulentGruppeCondition
+      ) {
+        completeTask(5);
+      } else {
+        unCompleteTask(5);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentTask, connectionState]);
+
+  // Task 6
+  useEffect(() => {
+    if (currentTask === 6) {
+      const ruterCondition = arraysEqual(
+        [true, true, true],
+        connectionState.ruter as any[]
+      );
+      const driftCondition = arraysEqual(
+        [false, true, false],
+        (connectionState["svitsj1"] as any).bottomLeft as any[]
+      );
+      const switch1Condition1 = arraysEqual(
+        [true, true, true],
+        (connectionState["svitsj1"] as any).topRight as any[]
+      );
+      const switch1Condition2 = arraysEqual(
+        [true, true, true],
+        (connectionState["svitsj1"] as any).bottomRight as any[]
+      );
+      const switch2Condition1 = arraysEqual(
+        [true, true, true],
+        (connectionState["svitsj2"] as any).topLeft as any[]
+      );
+      const switch2Condition2 = arraysEqual(
+        [false, true, true],
+        (connectionState["svitsj2"] as any).bottomRight as any[]
+      );
+      const switch3Condition = arraysEqual(
+        [false, true, true],
+        (connectionState["svitsj3"] as any).topLeft as any[]
+      );
+      const ansattGruppeCondition = arraysEqual(
+        [true, false, false],
+        (connectionState["svitsj2"] as any).bottomLeft as any[]
+      );
+      const switch1Condition3 = arraysEqual(
+        [true, true, false],
+        (connectionState["svitsj1"] as any).topLeft as any[]
+      );
+      const serverCondition = arraysEqual(
+        [true, true, false],
+        connectionState["server"] as any[]
+      );
+      const konsulentGruppeCondition = arraysEqual(
+        [false, false, true],
+        (connectionState["svitsj3"] as any).bottomLeft as any[]
+      );
+      const accessCondition = arraysEqual(
+        [true, false, true],
+        parsedAPState as any
+      );
+      let accessCondition2 = false;
+      if (
+        apState.networks[0] === assignedNetworks?.ansatt &&
+        apState.networks[2] === assignedNetworks.gjest
+      ) {
+        accessCondition2 = true;
+      }
+      const ansattTradCondition = arraysEqual(
+        [true, false, false],
+        connectionState["ansatt-tradlost"] as any
+      );
+      const guestTradCondition = arraysEqual(
+        [false, false, true],
+        connectionState["gjest-tradlost"] as any
+      );
+      if (
+        ruterCondition &&
+        driftCondition &&
+        switch1Condition1 &&
+        switch1Condition2 &&
+        switch1Condition3 &&
+        switch2Condition1 &&
+        switch2Condition2 &&
+        switch3Condition &&
+        ansattGruppeCondition &&
+        serverCondition &&
+        konsulentGruppeCondition &&
+        accessCondition &&
+        accessCondition2 &&
+        ansattTradCondition &&
+        guestTradCondition
+      ) {
+        completeTask(6);
+      } else {
+        unCompleteTask(6);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTask, connectionState]);
@@ -396,11 +515,11 @@ function App() {
         (connectionState["svitsj1"] as any).topRight as any[]
       );
       const switch1Condition2 = arraysEqual(
-        [true, false, false],
+        [true, true, false],
         (connectionState["svitsj1"] as any).bottomRight as any[]
       );
       const switch2Condition1 = arraysEqual(
-        [true, false, false],
+        [true, true, false],
         (connectionState["svitsj2"] as any).topLeft as any[]
       );
       const ansattGruppeCondition = arraysEqual(
@@ -420,7 +539,12 @@ function App() {
         return ruterCondition && switch1Condition1 && switch1Condition2;
       }
       if (id === "svitsj2.topLeft") {
-        return ruterCondition && switch1Condition1 && switch2Condition1;
+        return (
+          ruterCondition &&
+          switch1Condition1 &&
+          switch1Condition2 &&
+          switch2Condition1
+        );
       }
       if (id === "ansatt-gruppe") {
         return (
@@ -476,19 +600,19 @@ function App() {
         (connectionState["svitsj1"] as any).topRight as any[]
       );
       const switch1Condition2 = arraysEqual(
-        [true, false, true],
+        [true, true, true],
         (connectionState["svitsj1"] as any).bottomRight as any[]
       );
       const switch2Condition1 = arraysEqual(
-        [true, false, true],
+        [true, true, true],
         (connectionState["svitsj2"] as any).topLeft as any[]
       );
       const switch2Condition2 = arraysEqual(
-        [false, false, true],
+        [false, true, true],
         (connectionState["svitsj2"] as any).bottomRight as any[]
       );
       const switch3Condition = arraysEqual(
-        [false, false, true],
+        [false, true, true],
         (connectionState["svitsj3"] as any).topLeft as any[]
       );
       const ansattGruppeCondition = arraysEqual(
@@ -568,6 +692,180 @@ function App() {
         );
       }
     }
+    if (currentTask === 6) {
+      const ruterCondition = arraysEqual(
+        [true, true, true],
+        connectionState.ruter as any[]
+      );
+      const driftCondition = arraysEqual(
+        [false, true, false],
+        (connectionState["svitsj1"] as any).bottomLeft as any[]
+      );
+      const switch1Condition1 = arraysEqual(
+        [true, true, true],
+        (connectionState["svitsj1"] as any).topRight as any[]
+      );
+      const switch1Condition2 = arraysEqual(
+        [true, true, true],
+        (connectionState["svitsj1"] as any).bottomRight as any[]
+      );
+      const switch2Condition1 = arraysEqual(
+        [true, true, true],
+        (connectionState["svitsj2"] as any).topLeft as any[]
+      );
+      const switch2Condition2 = arraysEqual(
+        [false, true, true],
+        (connectionState["svitsj2"] as any).bottomRight as any[]
+      );
+      const switch2Condition3 = arraysEqual(
+        [true, false, true],
+        (connectionState["svitsj2"] as any).topRight as any[]
+      );
+      const switch3Condition = arraysEqual(
+        [false, true, true],
+        (connectionState["svitsj3"] as any).topLeft as any[]
+      );
+      const ansattGruppeCondition = arraysEqual(
+        [true, false, false],
+        (connectionState["svitsj2"] as any).bottomLeft as any[]
+      );
+      const switch1Condition3 = arraysEqual(
+        [true, true, false],
+        (connectionState["svitsj1"] as any).topLeft as any[]
+      );
+      const serverCondition = arraysEqual(
+        [true, true, false],
+        connectionState["server"] as any[]
+      );
+      const konsulentGruppeCondition = arraysEqual(
+        [false, false, true],
+        (connectionState["svitsj3"] as any).bottomLeft as any[]
+      );
+      const accessCondition = arraysEqual(
+        [true, false, true],
+        parsedAPState as any
+      );
+      let accessCondition2 = false;
+      if (
+        apState.networks[0] === assignedNetworks?.ansatt &&
+        apState.networks[2] === assignedNetworks.gjest
+      ) {
+        accessCondition2 = true;
+      }
+      const ansattTradCondition = arraysEqual(
+        [true, false, false],
+        connectionState["ansatt-tradlost"] as any
+      );
+      const guestTradCondition = arraysEqual(
+        [false, false, true],
+        connectionState["gjest-tradlost"] as any
+      );
+      if (id === "ruter") {
+        return ruterCondition;
+      }
+      if (id === "svitsj1.topRight") {
+        return ruterCondition && switch1Condition1;
+      }
+      if (id === "drift-pc") {
+        return ruterCondition && switch1Condition1 && driftCondition;
+      }
+      if (id === "svitsj1.bottomRight") {
+        return ruterCondition && switch1Condition1 && switch1Condition2;
+      }
+      if (id === "svitsj2.topLeft") {
+        return (
+          ruterCondition &&
+          switch1Condition1 &&
+          switch1Condition2 &&
+          switch2Condition1
+        );
+      }
+      if (id === "svitsj2.topRight") {
+        return (
+          ruterCondition &&
+          switch1Condition1 &&
+          switch2Condition1 &&
+          switch2Condition3
+        );
+      }
+      if (id === "aksesspunkt") {
+        return (
+          ruterCondition &&
+          switch1Condition1 &&
+          switch2Condition1 &&
+          switch2Condition3 &&
+          accessCondition &&
+          accessCondition2
+        );
+      }
+      if (id === "ansatt-tradlost") {
+        return (
+          ruterCondition &&
+          switch1Condition1 &&
+          switch2Condition1 &&
+          switch2Condition3 &&
+          accessCondition &&
+          accessCondition2 &&
+          ansattTradCondition
+        );
+      }
+      if (id === "gjest-tradlost") {
+        return (
+          ruterCondition &&
+          switch1Condition1 &&
+          switch2Condition1 &&
+          switch2Condition3 &&
+          accessCondition &&
+          accessCondition2 &&
+          guestTradCondition
+        );
+      }
+      if (id === "svitsj2.bottomRight") {
+        return (
+          ruterCondition &&
+          switch1Condition1 &&
+          switch2Condition1 &&
+          switch2Condition2
+        );
+      }
+      if (id === "svitsj3.topLeft") {
+        return (
+          ruterCondition &&
+          switch1Condition1 &&
+          switch2Condition1 &&
+          switch3Condition
+        );
+      }
+      if (id === "ansatt-gruppe") {
+        return (
+          ruterCondition &&
+          switch1Condition1 &&
+          switch1Condition2 &&
+          switch2Condition1 &&
+          ansattGruppeCondition
+        );
+      }
+      if (id === "svitsj1.topLeft") {
+        return ruterCondition && switch1Condition1 && switch1Condition3;
+      }
+      if (id === "server") {
+        return (
+          ruterCondition &&
+          switch1Condition1 &&
+          switch1Condition3 &&
+          serverCondition
+        );
+      }
+      if (id === "konsulent-gruppe") {
+        return (
+          ruterCondition &&
+          switch1Condition1 &&
+          switch2Condition1 &&
+          switch3Condition &&
+          konsulentGruppeCondition
+        );
+      }
+    }
     return false;
   };
 
@@ -587,6 +885,10 @@ function App() {
     return false;
   };
 
+  const resetState = () => {
+    setConnectionState(initialConnectionState);
+  };
+
   const goToNextTask = () => {
     setCurrentTask(currentTask + 1);
   };
@@ -595,19 +897,61 @@ function App() {
     if (currentTask - 1 !== 0) {
       setCurrentTask(currentTask - 1);
       return true;
+    } else {
+      setExpertMode(false);
+      setMenuOpen(true);
     }
     return false;
   };
 
-  const onConnectorClick = (id: string) => {
-    setModalID(id);
-    setModalOpen(true);
+  const onConnectorClick = (id: string, type?: string, needsID?: boolean) => {
+    if (needsID) {
+      setWifiModalID(id);
+      setWifiModalOpen(true);
+    } else {
+      setModalID(id);
+      setModalOpen(true);
+    }
   };
 
   const onModalSave = (newValues: Connection) => {
     updateConnection(modalID, newValues);
     setModalOpen(false);
   };
+
+  type APConnection = {
+    enabled: [boolean, boolean, boolean];
+    networks: [string, string, string];
+  };
+
+  const onWifiModalSave = (newValues: APConnection) => {
+    setAPState(newValues);
+    setWifiModalOpen(false);
+  };
+
+  useEffect(() => {
+    if (apState.enabled) {
+      const parsed: Connection = [false, false, false];
+      if (apState.networks[0] === assignedNetworks?.ansatt) {
+        parsed[0] = apState.enabled[0];
+      }
+      if (apState.networks[1] === assignedNetworks?.admin) {
+        parsed[1] = apState.enabled[1];
+      }
+      if (apState.networks[2] === assignedNetworks?.gjest) {
+        parsed[2] = apState.enabled[2];
+      }
+      setParsedAPState(parsed);
+    }
+  }, [apState]);
+  /* 
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.setProperty("overflow", "hidden");
+    } else {
+      document.body.style.setProperty("overflow", "auto");
+    }
+  }, [menuOpen]); */
 
   /*   const requestFullscreen = () => {
     if (appRef && appRef.current && !document.fullscreenElement) {
@@ -625,265 +969,315 @@ function App() {
     <div className="App" ref={appRef}>
       <Loader images={images} onLoadFinished={() => setLoading(false)} />
       <Background disabled={!completedTasks.includes(1) || currentTask === 1} />
-      <AssignNetworks
-        onChange={setAssignedNetworks}
-        disabled={currentTask !== 1}
-      />
-      <TaskWindow
-        currentTask={currentTask}
-        onNextTask={goToNextTask}
-        onPrevTask={goToPrevTask}
-        taskCompleted={completedTasks.includes(currentTask)}
-      />
-      <Building
-        disabled={false}
-        content={(buildingStyles: React.CSSProperties) => (
-          <F>
+      {!menuOpen && (
+        <F>
+          <AssignNetworks
+            onChange={setAssignedNetworks}
+            disabled={currentTask !== 1}
+          />
+          <TaskWindow
+            currentTask={currentTask}
+            onNextTask={goToNextTask}
+            onPrevTask={goToPrevTask}
+            taskCompleted={completedTasks.includes(currentTask)}
+          />
+        </F>
+      )}
+
+      {menuOpen && (
+        <MainMenu
+          onOppgave={() => startTask(false)}
+          onEkspert={() => startTask(true)}
+        />
+      )}
+      {!menuOpen && (
+        <Building
+          disabled={false}
+          content={(buildingStyles: React.CSSProperties) => (
             <F>
-              {" "}
-              {/* Left side building */}
-              <CloudWWW
-                buildingStyles={buildingStyles}
-                faded={fadedItems.includes("ruter")}
-              />
-              <Router
-                buildingStyles={buildingStyles}
-                faded={fadedItems.includes("ruter")}
-              />
-              <Connector
-                buildingStyles={buildingStyles}
-                pos={{
-                  bottom: 58,
-                  left: 64.2,
-                }}
-                id="ruter"
-                faded={fadedItems.includes("ruter")}
-                onClick={onConnectorClick}
-              />
-              <LANToSwitch1
-                input={getConnection("ruter")}
-                output={getConnection("svitsj1.topRight")}
-                faded={fadedItems.includes("ruter")}
-                buildingStyles={buildingStyles}
-                active={[
-                  getLineActive("ruter"),
-                  getLineActive("svitsj1.topRight"),
-                ]}
-              />
-              <Switch
-                onConnectorClick={onConnectorClick}
-                id={1}
-                pos={{
-                  bottom: 27,
-                  left: 52.1,
-                }}
-                buildingStyles={buildingStyles}
-                faded={fadedItems.includes("svitsj1")}
-                activeState={{
-                  topRight: !fadedItems.includes("ruter"),
-                  bottomRight: !fadedItems.includes("svitsj2"),
-                  bottomLeft: !fadedItems.includes("drift-pc"),
-                  topLeft: !fadedItems.includes("server"),
-                }}
-              />
-              <SwitchToDriftPC
-                input={getConnection("svitsj1.bottomLeft")}
-                output={getConnection("svitsj1.bottomLeft")}
-                buildingStyles={buildingStyles}
-                faded={fadedItems.includes("drift-pc")}
-                active={getLineActive("drift-pc")}
-              />
-              <SwitchToServer
-                input={getConnection("server")}
-                output={getConnection("svitsj1.topLeft")}
-                buildingStyles={buildingStyles}
-                active={[
-                  getLineActive("server"),
-                  getLineActive("svitsj1.topLeft"),
-                ]}
-                faded={fadedItems.includes("server")}
-              />
-              <Connector
-                buildingStyles={buildingStyles}
-                faded={fadedItems.includes("server")}
-                pos={{
-                  bottom: 33,
-                  left: 21.2,
-                }}
-                id="server"
-                onClick={onConnectorClick}
-              />
-              <Server
-                buildingStyles={buildingStyles}
-                pos={{
-                  bottom: 28,
-                  left: 3.8,
-                }}
-                faded={fadedItems.includes("server")}
-              />
-              <PC
-                id={2}
-                active={getLineActive("drift-pc")}
-                buildingStyles={buildingStyles}
-                faded={fadedItems.includes("drift-pc")}
-                pos={{
-                  bottom: 5,
-                  left: 28.2,
-                }}
-              />
+              <F>
+                {" "}
+                {/* Left side building */}
+                <CloudWWW
+                  buildingStyles={buildingStyles}
+                  faded={fadedItems.includes("ruter")}
+                />
+                <Router
+                  buildingStyles={buildingStyles}
+                  faded={fadedItems.includes("ruter")}
+                />
+                <Connector
+                  buildingStyles={buildingStyles}
+                  pos={{
+                    bottom: 58,
+                    left: 64.2,
+                  }}
+                  id="ruter"
+                  faded={fadedItems.includes("ruter")}
+                  onClick={onConnectorClick}
+                />
+                <LANToSwitch1
+                  input={getConnection("ruter")}
+                  output={getConnection("svitsj1.topRight")}
+                  faded={fadedItems.includes("ruter")}
+                  buildingStyles={buildingStyles}
+                  active={[
+                    getLineActive("ruter"),
+                    getLineActive("svitsj1.topRight"),
+                  ]}
+                />
+                <Switch
+                  onConnectorClick={onConnectorClick}
+                  id={1}
+                  pos={{
+                    bottom: 27,
+                    left: 52.1,
+                  }}
+                  buildingStyles={buildingStyles}
+                  faded={fadedItems.includes("svitsj1")}
+                  activeState={{
+                    topRight: !fadedItems.includes("ruter"),
+                    bottomRight: !fadedItems.includes("svitsj2"),
+                    bottomLeft: !fadedItems.includes("drift-pc"),
+                    topLeft: !fadedItems.includes("server"),
+                  }}
+                />
+                <SwitchToDriftPC
+                  input={getConnection("svitsj1.bottomLeft")}
+                  output={getConnection("svitsj1.bottomLeft")}
+                  buildingStyles={buildingStyles}
+                  faded={fadedItems.includes("drift-pc")}
+                  active={getLineActive("drift-pc")}
+                />
+                <SwitchToServer
+                  input={getConnection("server")}
+                  output={getConnection("svitsj1.topLeft")}
+                  buildingStyles={buildingStyles}
+                  active={[
+                    getLineActive("server"),
+                    getLineActive("svitsj1.topLeft"),
+                  ]}
+                  faded={fadedItems.includes("server")}
+                />
+                <Connector
+                  buildingStyles={buildingStyles}
+                  faded={fadedItems.includes("server")}
+                  pos={{
+                    bottom: 33,
+                    left: 21.2,
+                  }}
+                  id="server"
+                  onClick={onConnectorClick}
+                />
+                <Server
+                  buildingStyles={buildingStyles}
+                  pos={{
+                    bottom: 28,
+                    left: 4.5,
+                  }}
+                  faded={fadedItems.includes("server")}
+                  active={getLineActive("server")}
+                />
+                <PC
+                  id={2}
+                  active={getLineActive("drift-pc")}
+                  buildingStyles={buildingStyles}
+                  faded={fadedItems.includes("drift-pc")}
+                  pos={{
+                    bottom: 5,
+                    left: 28.2,
+                  }}
+                />
+              </F>
+              <F>
+                {" "}
+                {/* Right side building */}
+                <SwitchToSwitch
+                  input={getConnection("svitsj1.bottomRight")}
+                  output={getConnection("svitsj2.topLeft")}
+                  faded={fadedItems.includes("svitsj2")}
+                  active={[
+                    getLineActive("svitsj1.bottomRight"),
+                    getLineActive("svitsj2.topLeft"),
+                  ]}
+                  buildingStyles={buildingStyles}
+                />
+                <Switch
+                  id={2}
+                  onConnectorClick={onConnectorClick}
+                  pos={{
+                    bottom: 27,
+                    left: 108,
+                  }}
+                  faded={fadedItems.includes("svitsj2")}
+                  buildingStyles={buildingStyles}
+                  activeState={{
+                    topRight: !fadedItems.includes("aksesspunkt"),
+                    bottomRight: !fadedItems.includes("konsulent-gruppe"),
+                    bottomLeft: !fadedItems.includes("ansatt-gruppe"),
+                    topLeft:
+                      !fadedItems.includes("svitsj1") &&
+                      !fadedItems.includes("svitsj2"),
+                  }}
+                />
+                <SwitchToAccesspoint
+                  input={getConnection("svitsj2.topRight")}
+                  output={getConnection("svitsj2.topRight")}
+                  buildingStyles={buildingStyles}
+                  faded={fadedItems.includes("aksesspunkt")}
+                  active={[
+                    getLineActive("svitsj2.topRight"),
+                    getLineActive("svitsj2.topRight"),
+                  ]}
+                />
+                <AccessPoint
+                  buildingStyles={buildingStyles}
+                  faded={fadedItems.includes("aksesspunkt")}
+                  pos={{
+                    left: 64.7,
+                    bottom: 56.5,
+                  }}
+                />
+                <APToAnsatt
+                  input={getConnection("ansatt-tradlost")}
+                  output={parsedAPState as any}
+                  buildingStyles={buildingStyles}
+                  active={[
+                    getLineActive("ansatt-tradlost"),
+                    getLineActive("aksesspunkt"),
+                  ]}
+                  faded={fadedItems.includes("ansatt-tradlost")}
+                />
+                <APToGuest
+                  input={parsedAPState as any}
+                  output={getConnection("gjest-tradlost")}
+                  buildingStyles={buildingStyles}
+                  active={[
+                    getLineActive("aksesspunkt"),
+                    getLineActive("gjest-tradlost"),
+                  ]}
+                  faded={fadedItems.includes("gjest-tradlost")}
+                />
+                <Laptop
+                  buildingStyles={buildingStyles}
+                  faded={fadedItems.includes("ansatt-tradlost")}
+                  pos={{
+                    bottom: 75,
+                    left: 87,
+                  }}
+                  active={getLineActive("ansatt-tradlost")}
+                />
+                <Laptop
+                  buildingStyles={buildingStyles}
+                  faded={fadedItems.includes("gjest-tradlost")}
+                  hasPhone={true}
+                  active={getLineActive("gjest-tradlost")}
+                  pos={{
+                    bottom: 75,
+                    left: 132.5,
+                  }}
+                />
+                <Connector
+                  buildingStyles={buildingStyles}
+                  pos={{
+                    bottom: 66,
+                    left: 110.8,
+                  }}
+                  id="aksesspunkt"
+                  type="wifi"
+                  needsID={true}
+                  faded={fadedItems.includes("aksesspunkt")}
+                  onClick={onConnectorClick}
+                />
+                <Connector
+                  buildingStyles={buildingStyles}
+                  pos={{
+                    bottom: 66,
+                    left: 85.7,
+                  }}
+                  id="ansatt-tradlost"
+                  type="wifi"
+                  faded={fadedItems.includes("ansatt-tradlost")}
+                  onClick={onConnectorClick}
+                />
+                <Connector
+                  buildingStyles={buildingStyles}
+                  pos={{
+                    bottom: 66,
+                    left: 135.9,
+                  }}
+                  id="gjest-tradlost"
+                  type="wifi"
+                  faded={fadedItems.includes("gjest-tradlost")}
+                  onClick={onConnectorClick}
+                />
+                <SwitchToAnsattGruppe
+                  input={getConnection("svitsj2.bottomLeft")}
+                  output={getConnection("svitsj2.bottomLeft")}
+                  buildingStyles={buildingStyles}
+                  faded={fadedItems.includes("ansatt-gruppe")}
+                  active={getLineActive("ansatt-gruppe")}
+                />
+                <PC
+                  id={4}
+                  buildingStyles={buildingStyles}
+                  faded={fadedItems.includes("ansatt-gruppe")}
+                  active={getLineActive("ansatt-gruppe")}
+                  pos={{
+                    bottom: 5,
+                    left: 84,
+                  }}
+                />
+                <Switch
+                  id={3}
+                  onConnectorClick={onConnectorClick}
+                  pos={{
+                    bottom: 24.5,
+                    left: 162,
+                  }}
+                  activeState={{
+                    topLeft: !fadedItems.includes("svitsj3"),
+                    bottomLeft: !fadedItems.includes("svitsj3"),
+                    topRight: !fadedItems.includes("svitsj3"), // right side aren't active but throw em in for typescript's sake
+                    bottomRight: !fadedItems.includes("svitsj3"),
+                  }}
+                  faded={fadedItems.includes("svitsj3")}
+                  buildingStyles={buildingStyles}
+                />
+                <SwitchToSwitch2
+                  input={getConnection("svitsj2.bottomRight")}
+                  output={getConnection("svitsj3.topLeft")}
+                  faded={fadedItems.includes("svitsj3")}
+                  active={[
+                    getLineActive("svitsj2.bottomRight"),
+                    getLineActive("svitsj3.topLeft"),
+                  ]}
+                  buildingStyles={buildingStyles}
+                />
+                <SwitchToKonsulentGruppe
+                  input={getConnection("svitsj3.bottomLeft")}
+                  output={getConnection("svitsj3.bottomLeft")}
+                  buildingStyles={buildingStyles}
+                  faded={fadedItems.includes("konsulent-gruppe")}
+                  active={getLineActive("konsulent-gruppe")}
+                />
+                <PC
+                  id={5}
+                  buildingStyles={buildingStyles}
+                  faded={fadedItems.includes("konsulent-gruppe")}
+                  active={getLineActive("konsulent-gruppe")}
+                  pos={{
+                    bottom: 5,
+                    left: 137,
+                  }}
+                />
+              </F>
+              <BottomLineBreaker style={buildingStyles} />
             </F>
-            <F>
-              {" "}
-              {/* Right side building */}
-              <SwitchToSwitch
-                input={getConnection("svitsj1.bottomRight")}
-                output={getConnection("svitsj2.topLeft")}
-                faded={fadedItems.includes("svitsj2")}
-                active={[
-                  getLineActive("svitsj1.bottomRight"),
-                  getLineActive("svitsj2.topLeft"),
-                ]}
-                buildingStyles={buildingStyles}
-              />
-              <Switch
-                id={2}
-                onConnectorClick={onConnectorClick}
-                pos={{
-                  bottom: 27,
-                  left: 108,
-                }}
-                faded={fadedItems.includes("svitsj2")}
-                buildingStyles={buildingStyles}
-                activeState={{
-                  topRight: !fadedItems.includes("aksesspunkt"),
-                  bottomRight: !fadedItems.includes("konsulent-gruppe"),
-                  bottomLeft: !fadedItems.includes("ansatt-gruppe"),
-                  topLeft: !fadedItems.includes("svitsj1"),
-                }}
-              />
-              <SwitchToAccesspoint
-                input={getConnection("aksesspunkt")}
-                output={getConnection("svitsj2.topRight")}
-                buildingStyles={buildingStyles}
-                faded={fadedItems.includes("aksesspunkt")}
-                active={getLineActive("aksesspunkt")}
-              />
-              <AccessPoint
-                buildingStyles={buildingStyles}
-                faded={fadedItems.includes("aksesspunkt")}
-                pos={{
-                  right: 61.5,
-                  bottom: 60,
-                }}
-              />
-              <APToAnsatt
-                input={getConnection("ansatt-tradlost")}
-                output={getConnection("aksesspunkt")}
-                buildingStyles={buildingStyles}
-                active={[
-                  getLineActive("ansatt-tradlost"),
-                  getLineActive("aksesspunkt"),
-                ]}
-                faded={fadedItems.includes("ansatt-tradlost")}
-              />
-              <APToGuest
-                input={getConnection("aksesspunkt")}
-                output={getConnection("gjest-tradlost")}
-                buildingStyles={buildingStyles}
-                active={[
-                  getLineActive("aksesspunkt"),
-                  getLineActive("gjest-tradlost"),
-                ]}
-                faded={fadedItems.includes("gjest-tradlost")}
-              />
-              <Connector
-                buildingStyles={buildingStyles}
-                pos={{
-                  bottom: 69,
-                  right: 60.8,
-                }}
-                id="aksesspunkt"
-                faded={fadedItems.includes("aksesspunkt")}
-                onClick={onConnectorClick}
-              />
-              <Connector
-                buildingStyles={buildingStyles}
-                pos={{
-                  bottom: 69,
-                  right: 85.8,
-                }}
-                id="ansatt-tradlost"
-                faded={fadedItems.includes("ansatt-tradlost")}
-                onClick={onConnectorClick}
-              />
-              <Connector
-                buildingStyles={buildingStyles}
-                pos={{
-                  bottom: 69,
-                  right: 35.8,
-                }}
-                id="gjest-tradlost"
-                faded={fadedItems.includes("gjest-tradlost")}
-                onClick={onConnectorClick}
-              />
-              <SwitchToAnsattGruppe
-                input={getConnection("svitsj2.bottomLeft")}
-                output={getConnection("svitsj2.bottomLeft")}
-                buildingStyles={buildingStyles}
-                faded={fadedItems.includes("ansatt-gruppe")}
-                active={getLineActive("ansatt-gruppe")}
-              />
-              <PC
-                id={4}
-                buildingStyles={buildingStyles}
-                faded={fadedItems.includes("ansatt-gruppe")}
-                pos={{
-                  bottom: 5,
-                  left: 84,
-                }}
-              />
-              <Switch
-                id={3}
-                onConnectorClick={onConnectorClick}
-                pos={{
-                  bottom: 24.5,
-                  left: 162,
-                }}
-                faded={fadedItems.includes("svitsj3")}
-                buildingStyles={buildingStyles}
-              />
-              <SwitchToSwitch2
-                input={getConnection("svitsj2.bottomRight")}
-                output={getConnection("svitsj3.topLeft")}
-                faded={fadedItems.includes("svitsj3")}
-                active={[
-                  getLineActive("svitsj2.bottomRight"),
-                  getLineActive("svitsj3.topLeft"),
-                ]}
-                buildingStyles={buildingStyles}
-              />
-              <SwitchToKonsulentGruppe
-                input={getConnection("svitsj3.bottomLeft")}
-                output={getConnection("svitsj3.bottomLeft")}
-                buildingStyles={buildingStyles}
-                faded={fadedItems.includes("konsulent-gruppe")}
-                active={getLineActive("konsulent-gruppe")}
-              />
-              <PC
-                id={5}
-                buildingStyles={buildingStyles}
-                faded={fadedItems.includes("konsulent-gruppe")}
-                pos={{
-                  bottom: 5,
-                  left: 137,
-                }}
-              />
-            </F>
-            <BottomLineBreaker style={buildingStyles} />
-          </F>
-        )}
-        loading={loading}
-      />
+          )}
+          loading={loading}
+        />
+      )}
       <BottomLine
         style={{
           opacity:
@@ -898,6 +1292,16 @@ function App() {
           onClose={() => setModalOpen(false)}
           value={getConnection(modalID)}
           currentID={modalID}
+        />
+      )}
+      {wifiModalID && getConnection(wifiModalID) && (
+        <APModal
+          open={wifiModalOpen}
+          assignedNetworks={assignedNetworks}
+          onSave={onWifiModalSave}
+          onClose={() => setWifiModalOpen(false)}
+          value={apState as any}
+          currentID={wifiModalID}
         />
       )}
     </div>

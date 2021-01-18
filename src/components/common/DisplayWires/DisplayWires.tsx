@@ -47,6 +47,7 @@ const DisplayWires: React.FC<Props> = ({
       bottom={pos.bottom}
       right={pos.right}
       className={`${faded ? "faded" : ""}`}
+      horizontal={horizontal === true}
     >
       <img src={horizontal ? WiresHorizontal : WiresVertical} alt={altText} />
       {ansattInn && (
@@ -117,7 +118,7 @@ const StyledIn = styled.div<InOutProps>`
       right: 40%;
     }
     &.__gjest {
-      right: 66%;
+      right: 67%;
     }
   `}
   ${(props) =>
@@ -158,7 +159,7 @@ const StyledUt = styled.div<InOutProps>`
       right: 40%;
     }
     &.__gjest {
-      right: 66%;
+      right: 67%;
     }
   `}
   ${(props) =>
@@ -178,9 +179,16 @@ const StyledUt = styled.div<InOutProps>`
   `}
 `;
 
-const StyledWires = styled.div<Pos>`
+type StyledWiresProps = Pos & {
+  horizontal: boolean;
+};
+
+const StyledWires = styled.div<StyledWiresProps>`
   position: absolute;
-  width: calc(calc(var(--bWidth) / 100) * 5);
+  width: ${(props) =>
+    props.horizontal
+      ? "calc(calc(var(--bWidth) / 100) * 5.8)"
+      : "calc(calc(var(--bWidth) / 100) * 5)"};
   bottom: calc(calc(var(--bHeight) / 100) * ${(props) => props.bottom});
   left: ${(props) =>
     props.left ? `calc(calc(var(--bHeight) / 100) * ${props.left})` : `auto`};

@@ -32,9 +32,9 @@ const SwitchToAnsattGruppe: React.FC<Props> = ({
     >
       <LineContainer>
         <Lines>
-          <Line active={active} />
-          <Line active={active} />
-          <Line active={active} horizontal />
+          <Line active={active} faded={faded} />
+          <Line active={active} faded={faded} />
+          <Line active={active} faded={faded} horizontal />
         </Lines>
       </LineContainer>
     </DisplayWires>

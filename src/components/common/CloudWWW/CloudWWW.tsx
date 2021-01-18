@@ -15,7 +15,7 @@ const CloudWWW: React.FC<Props> = ({ buildingStyles, faded }) => {
       <img src={WWWLabel} alt="Internet label" className="WWW-label" />
       <img src={WWW} alt="Internet symbol" className="WWW" />
       <Lines>
-        <Line active />
+        <Line active faded={faded} />
       </Lines>
     </StyledCloud>
   );

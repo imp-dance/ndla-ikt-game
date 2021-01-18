@@ -5,7 +5,7 @@ import DisplayWires from "../../DisplayWires/DisplayWires";
 import { Connection } from "../../../../types/common";
 
 type Props = {
-  active?: boolean;
+  active?: [boolean, boolean];
   buildingStyles: React.CSSProperties;
   input: Connection;
   output: Connection;
@@ -26,15 +26,15 @@ const SwitchToAccesspoint: React.FC<Props> = ({
       faded={faded}
       buildingStyles={buildingStyles}
       pos={{
-        bottom: 45,
-        right: 50.9,
+        bottom: 42,
+        left: 119.3,
       }}
     >
       <LineContainer>
         <Lines>
-          <Line active={active} />
-          <Line active={active} />
-          <Line active={active} horizontal />
+          <Line active={active && active[0]} faded={faded} />
+          <Line active={active && active[1]} faded={faded} />
+          <Line active={active && active[0]} faded={faded} horizontal />
         </Lines>
       </LineContainer>
     </DisplayWires>
@@ -46,7 +46,7 @@ const LineContainer = styled.div`
     left: 50%;
     transform: translate(-50%, 0px);
     &:nth-child(2) {
-      height: calc(calc(var(--bHeight) / 100) * 6.4);
+      height: calc(calc(var(--bHeight) / 100) * 3.4);
     }
     &:nth-child(1) {
       bottom: calc(calc(var(--bHeight) / 100) * 10.1);
@@ -54,8 +54,8 @@ const LineContainer = styled.div`
     }
     &:nth-child(3) {
       bottom: calc(calc(var(--bHeight) / 100) * 17.1);
-      width: calc(calc(var(--bWidth) / 100) * 3.5);
-      left: calc(calc(var(--bWidth) / 100) * 0.9);
+      width: calc(calc(var(--bWidth) / 100) * 3.7);
+      left: calc(calc(var(--bWidth) / 100) * 0.7);
     }
   }
 `;

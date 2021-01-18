@@ -32,8 +32,8 @@ const LANToSwitch1: React.FC<Props> = ({
     >
       <LineContainer>
         <Lines>
-          <Line active={active ? active[0] : false} />
-          <Line active={active ? active[1] : false} />
+          <Line active={active ? active[0] : false} faded={faded} />
+          <Line active={active ? active[1] : false} faded={faded} />
         </Lines>
       </LineContainer>
     </DisplayWires>

@@ -3,13 +3,16 @@ import styled from "styled-components";
 
 import { Pos } from "../../../types/common";
 import ConnectorIMG from "../../../assets/symbols/Connector.svg";
+import WifiIMG from "../../../assets/symbols/Wifi_Connection.svg";
 
 type Props = {
   pos: Pos;
   buildingStyles: React.CSSProperties;
   faded?: boolean;
-  onClick: (id: string) => void;
+  onClick: (id: string, type?: string, needsID?: boolean) => void;
   id: string;
+  type?: "wire" | "wifi";
+  needsID?: boolean;
 };
 
 const Connector: React.FC<Props> = ({
@@ -19,7 +22,13 @@ const Connector: React.FC<Props> = ({
   faded,
   onClick,
   id,
+  type,
+  needsID,
 }) => {
+  if (!type) {
+    type = "wire"; // default
+  }
+  const img = type === "wire" ? ConnectorIMG : WifiIMG;
   return (
     <ConnectorWrapper
       style={buildingStyles}
@@ -28,8 +37,13 @@ const Connector: React.FC<Props> = ({
       right={pos.right}
       className={`${faded ? "faded" : ""}`}
     >
-      <StyledButton onClick={onClick ? () => onClick(id ?? "") : undefined}>
-        <img src={ConnectorIMG} alt="Connect button symbol" />
+      <StyledButton
+        onClick={onClick ? () => onClick(id ?? "", type, needsID) : undefined}
+      >
+        <img
+          src={img}
+          alt={`${type === "wire" ? "Connect" : "Wifi"} button symbol`}
+        />
         {children}
       </StyledButton>
     </ConnectorWrapper>
@@ -51,6 +65,7 @@ const StyledButton = styled.button`
   background: transparent;
   cursor: pointer;
   width: 100%;
+  transition: transform 0.2s ease-in-out;
   img {
     user-select: none;
     width: 100%;

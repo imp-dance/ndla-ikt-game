@@ -63,17 +63,28 @@ const StyledBuilding = styled.div<Props>`
   bottom: 30px;
   left: 50%;
   transform: translate(-50%, 0px);
-  width: 1000px;
   height: calc(100vh - 200px);
   transition: opacity 0.3s ease-in-out;
   opacity: ${(props) => (props.disabled ? "0.5" : "1")};
   pointer-events: ${(props) => (props.disabled ? "none" : "all")};
   z-index: ${zIndexes.building};
+  animation: fadeInBuilding 0.4s ease-in-out;
+  width: 65vw;
+  min-width: 850px;
+  max-width: 1350px;
+  @keyframes fadeInBuilding {
+    from {
+      opacity: 0;
+    }
+  }
   @media screen and (max-height: 620px) {
     height: 620px;
-  }
+  } /* 
   @media screen and (min-width: 1400px) {
     width: 1060px;
+  } */
+  @media screen and (max-width: 1300px) {
+    width: 80vw;
   }
   @media screen and (max-width: 1050px) {
     width: 95vw;

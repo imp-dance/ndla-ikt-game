@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import classnames from "classnames";
 
 import { Pos } from "../../../types/common";
 import ServerIMG from "../../../assets/symbols/Server.svg";
@@ -9,15 +10,20 @@ type Props = {
   pos: Pos;
   buildingStyles: React.CSSProperties;
   faded?: boolean;
+  active?: boolean;
 };
 
-const Server: React.FC<Props> = ({ pos, buildingStyles, faded }) => {
+const Server: React.FC<Props> = ({ pos, buildingStyles, faded, active }) => {
+  const [isActive, setActive] = React.useState(active);
+  React.useEffect(() => {
+    if (!isActive && active) {
+      setActive(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active]);
+  const classname = classnames({ faded }, { blink: isActive });
   return (
-    <StyledServer
-      {...pos}
-      style={buildingStyles}
-      className={`${faded ? "faded" : ""}`}
-    >
+    <StyledServer {...pos} style={buildingStyles} className={classname}>
       <img className="label" src={ServerLabel} alt="" />
       <img src={ServerIMG} alt="Server" />
     </StyledServer>
