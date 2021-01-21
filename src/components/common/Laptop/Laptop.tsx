@@ -73,7 +73,7 @@ const StyledPC = styled.div<Pos>`
     width: calc(calc(var(--bWidth) / 100) * 9);
   }
   .line {
-    height: calc(calc(var(--bHeight) / 100) * 3);
+    height: calc(calc(var(--bHeight) / 100) * 3.7);
     left: 50%;
     &.left {
       left: 15%;

@@ -1,0 +1,19 @@
+<svg id="Home_button" data-name="Home button" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #20588f;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <circle id="Ellipse_44" data-name="Ellipse 44" class="cls-1" cx="15" cy="15" r="15"/>
+  <g id="Group_123" data-name="Group 123" transform="translate(19616 21261.428)">
+    <g id="Group_123-2" data-name="Group 123" transform="translate(-19609 -21254)">
+      <path id="Path_196" data-name="Path 196" class="cls-2" d="M8,32,0,39.412H2.4V46h4V41.059H9.6V46h4V39.412H16Z" transform="translate(0 -32)"/>
+    </g>
+  </g>
+</svg>

@@ -27,7 +27,7 @@ const SwitchToKonsulentGruppe: React.FC<Props> = ({
       buildingStyles={buildingStyles}
       pos={{
         bottom: 9,
-        left: 154,
+        left: 152.2,
       }}
     >
       <LineContainer>

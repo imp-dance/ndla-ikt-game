@@ -94,7 +94,7 @@ const StyledBuilding = styled.div<Props>`
     //margin-left: -50px;
   }
   @media (max-height: 700px) and (max-width: 760px) {
-    bottom: 70px;
+    bottom: 20px;
   }
   img {
     max-width: 100%;

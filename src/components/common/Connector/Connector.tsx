@@ -52,7 +52,8 @@ const Connector: React.FC<Props> = ({
 
 const ConnectorWrapper = styled.div<Pos>`
   position: absolute;
-  width: calc(calc(var(--bWidth) / 100) * 4.3);
+  transform: translate(calc(calc(var(--bWidth) / 100) * 0.7), 0px);
+  width: calc(calc(var(--bWidth) / 100) * 3);
   bottom: calc(calc(var(--bHeight) / 100) * ${(props) => props.bottom});
   left: ${(props) =>
     props.left ? `calc(calc(var(--bHeight) / 100) * ${props.left})` : `auto`};
@@ -66,6 +67,8 @@ const StyledButton = styled.button`
   cursor: pointer;
   width: 100%;
   transition: transform 0.2s ease-in-out;
+  padding: 0;
+  margin: 0;
   img {
     user-select: none;
     width: 100%;

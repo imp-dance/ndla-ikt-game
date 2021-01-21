@@ -48,12 +48,12 @@ const Switch: React.FC<Props> = ({
       left: 12,
     },
     bottomLeft: {
-      bottom: id === 3 ? -3.8 : -5.8,
-      right: 12,
+      bottom: id === 3 ? -3.4 : -5.8,
+      right: 14.2,
     },
     topLeft: {
       bottom: id === 3 ? 8.8 : 5.8,
-      right: 12,
+      right: 14.2,
     },
   };
 
@@ -139,13 +139,13 @@ const StyledSwitch = styled.div<Pos>`
 
   > .topLines {
     > div:nth-child(1) {
-      width: calc(calc(var(--bWidth) / 100) * 1.6);
+      width: calc(calc(var(--bWidth) / 100) * 1.8);
       left: 100%;
       margin-left: calc(calc(calc(var(--bWidth) / 100) * 1) * -1);
       bottom: calc(calc(var(--bHeight) / 100) * 3);
     }
     > div:nth-child(2) {
-      width: calc(calc(var(--bWidth) / 100) * 1.6);
+      width: calc(calc(var(--bWidth) / 100) * 1.8);
       right: 100%;
       margin-right: calc(calc(calc(var(--bWidth) / 100) * 1) * -1);
       bottom: calc(calc(var(--bHeight) / 100) * 3);
@@ -166,13 +166,13 @@ const StyledSwitch = styled.div<Pos>`
 
   > .bottomLines {
     > div:nth-child(1) {
-      width: calc(calc(var(--bWidth) / 100) * 1.6);
+      width: calc(calc(var(--bWidth) / 100) * 1.8);
       left: 100%;
       margin-left: calc(calc(calc(var(--bWidth) / 100) * 1) * -1);
       top: calc(calc(var(--bHeight) / 100) * 3);
     }
     > div:nth-child(2) {
-      width: calc(calc(var(--bWidth) / 100) * 1.6);
+      width: calc(calc(var(--bWidth) / 100) * 1.8);
       right: 100%;
       margin-right: calc(calc(calc(var(--bWidth) / 100) * 1) * -1);
       top: calc(calc(var(--bHeight) / 100) * 3);

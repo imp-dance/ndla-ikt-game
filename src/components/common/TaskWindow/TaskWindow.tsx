@@ -2,20 +2,41 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getTask, Task } from "../../../data/tasks";
 import zIndexes from "../../../styles/zIndexes";
+import TimerIMG from "../../../assets/symbols/timer.svg";
+import HomeIMG from "../../../assets/symbols/home.svg";
+import HelpIMG from "../../../assets/symbols/help.svg";
 import Button from "../Button/Button";
 
 type Props = {
   currentTask: number;
   onNextTask: () => void;
   onPrevTask: () => void;
+  onHelp: () => void;
+  onHome: () => void;
+  onReset: () => void;
   taskCompleted: boolean;
+  expertMode?: boolean;
+  startExpertMode: () => void;
+  expertModeStarted: boolean;
+  time: number;
+  finishedTime?: number;
+  isNN: boolean;
 };
 
 const TaskWindow: React.FC<Props> = ({
   currentTask: taskNumber,
   onNextTask,
   onPrevTask,
+  onHome,
+  onReset,
+  onHelp,
   taskCompleted,
+  expertMode,
+  startExpertMode,
+  expertModeStarted,
+  time,
+  finishedTime,
+  isNN,
 }) => {
   const [task, setTask] = useState<Task>();
 
@@ -26,58 +47,142 @@ const TaskWindow: React.FC<Props> = ({
   if (!task) {
     return null;
   }
+  const minutes = Math.floor(time / 60);
+  const seconds = time - minutes * 60;
+  const doubleDigitify = (input: number) => {
+    return input.toString().padStart(2, "0");
+  };
+  const displayTime = `${doubleDigitify(minutes)}:${doubleDigitify(seconds)}`;
+  let displayFinishedTime = "";
+  if (finishedTime) {
+    const minutes = Math.floor(time / 60);
+    const seconds = time - minutes * 60;
+    displayFinishedTime = `${doubleDigitify(minutes)}:${doubleDigitify(
+      seconds
+    )}`;
+  }
+  const label = isNN ? task.labelNN : task.label;
   return (
     <Container id="TASK_WINDOW">
-      <BackButton onClick={onPrevTask} />
-      <TaskTitle>{task.title}</TaskTitle>
-      <TaskLabel key={`${task.number}-${taskCompleted}`}>
-        {taskCompleted ? task.label.completed : task.label.initial}
-      </TaskLabel>
-
-      <footer>
-        <TaskAmount>
-          <span>{task.number} /</span> 6
-        </TaskAmount>
-        <NextTaskContainer>
-          <Button disabled={!taskCompleted} onClick={onNextTask}>
-            Neste oppgave
-          </Button>
-        </NextTaskContainer>
-      </footer>
+      <TopMenu>
+        <button onClick={onHome}>
+          <img src={HomeIMG} alt="Tilbake til hjem" />
+        </button>
+        <button onClick={onHelp}>
+          <img src={HelpIMG} alt="Hjelp" />
+        </button>
+      </TopMenu>
+      {!expertMode && (
+        <>
+          <TaskTitle>{isNN ? "Oppgåvene" : task.title}</TaskTitle>
+          <TaskLabel key={`${task.number}-${taskCompleted}`}>
+            {taskCompleted ? label.completed : label.initial}
+          </TaskLabel>
+          <footer>
+            <TaskAmount>
+              <span>{task.number} /</span> 6{" "}
+            </TaskAmount>
+            <NextTaskContainer>
+              {taskNumber > 1 && (
+                <Button
+                  onClick={onReset}
+                  disabled={taskCompleted}
+                  style={
+                    {
+                      marginRight: "var(--margin-s)",
+                      opacity: "0.9",
+                    } as React.CSSProperties
+                  }
+                >
+                  Reset
+                </Button>
+              )}
+              {taskNumber === 6 ? (
+                <Button onClick={onHome} disabled={!taskCompleted}>
+                  Avslutt
+                </Button>
+              ) : (
+                <Button disabled={!taskCompleted} onClick={onNextTask}>
+                  {isNN ? "Neste oppgåve" : "Neste oppgave"}
+                </Button>
+              )}
+            </NextTaskContainer>
+          </footer>
+        </>
+      )}
+      {expertMode && (
+        <>
+          <TaskTitle>Ekspertkonfigurasjon</TaskTitle>
+          <TaskLabel>
+            {finishedTime ? (
+              <>
+                <p>
+                  <strong>Imponerende!</strong>{" "}
+                  <span className="icon-green">✔</span> Du har konfigurert
+                  nettverket {isNN ? "heilt" : "helt"} riktig{" "}
+                  {isNN ? "utan" : "uten"} hjelp i det hele tatt.
+                </p>
+                <p>
+                  {isNN ? "Di" : "Din"} tid:{" "}
+                  <strong>
+                    <u>{finishedTime} sekunder</u>
+                  </strong>
+                  .
+                </p>
+                <p>
+                  Trykk <strong>Avslutt</strong> for å gå tilbake til{" "}
+                  {isNN ? "hovudmenyen" : "hovedmenyen"}.
+                </p>
+              </>
+            ) : (
+              <p>
+                {isNN
+                  ? "Konfigurer heile nettverket utan hjelp. Sjå kor raskt du kan gjera dette"
+                  : "Konfigurer hele nettverket uten hjelp. Se hvor raskt du kan gjøre dette."}
+              </p>
+            )}
+          </TaskLabel>
+          <footer>
+            <TaskAmount>
+              <img src={TimerIMG} alt="Illustration of clock" />
+              {finishedTime ? displayFinishedTime : displayTime}
+            </TaskAmount>
+            <NextTaskContainer>
+              {finishedTime ? (
+                <Button onClick={onPrevTask}>Avslutt</Button>
+              ) : (
+                <Button disabled={expertModeStarted} onClick={startExpertMode}>
+                  Start konfigurering
+                </Button>
+              )}
+            </NextTaskContainer>
+          </footer>
+        </>
+      )}
     </Container>
   );
 };
 
-const BackButton = styled.button`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: var(--color-blue);
+const TopMenu = styled.div`
   position: absolute;
-  top: var(--padding-m);
-  right: var(--padding-m);
-  border: none;
-  cursor: pointer;
-  opacity: 0.8;
+  top: 30px;
+  right: 50px;
+  display: flex;
+  align-items: center;
+  gap: var(
+    --margin-xs
+  ); /* 
   @media (max-height: 700px) and (max-width: 770px) {
     right: 40px;
-  }
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-  &::after {
-    content: "";
-    display: block;
-    width: 0;
-    height: 0;
-    border-top: 4px solid transparent;
-    border-bottom: 4px solid transparent;
-    border-right: 4px solid #fff;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  } */
+  button {
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    img {
+      max-height: 20px;
+    }
   }
 `;
 
@@ -111,8 +216,16 @@ const TaskAmount = styled.div`
   font-weight: bold;
   color: var(--color-blue);
   margin-right: auto;
+  display: flex;
+  align-items: center;
   span {
     color: var(--color-light-blue);
+    display: inline-block;
+    margin-right: 3px;
+  }
+  img {
+    max-width: 2em;
+    margin-right: 0.5em;
   }
 `;
 

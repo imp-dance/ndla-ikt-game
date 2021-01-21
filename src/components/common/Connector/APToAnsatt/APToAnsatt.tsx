@@ -26,7 +26,7 @@ const APToAnsatt: React.FC<Props> = ({
       buildingStyles={buildingStyles}
       pos={{
         bottom: 66,
-        left: 98,
+        left: 97.35,
       }}
       horizontal
       faded={faded}
@@ -43,7 +43,7 @@ const APToAnsatt: React.FC<Props> = ({
 
 const LineContainer = styled.div`
   .line {
-    bottom: calc(calc(var(--bHeight) / 100) * 3);
+    bottom: calc(calc(var(--bHeight) / 100) * 3.6);
     transform: translate(0px, -50%);
     &:nth-child(1) {
       left: 100%;
@@ -51,7 +51,7 @@ const LineContainer = styled.div`
     }
     &:nth-child(2) {
       right: 100%;
-      width: calc(calc(var(--bWidth) / 100) * 3.4);
+      width: calc(calc(var(--bWidth) / 100) * 3.8);
     }
   }
 `;

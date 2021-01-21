@@ -194,6 +194,11 @@ const StyledWires = styled.div<StyledWiresProps>`
     props.left ? `calc(calc(var(--bHeight) / 100) * ${props.left})` : `auto`};
   right: ${(props) =>
     props.right ? `calc(calc(var(--bHeight) / 100) * ${props.right})` : `auto`};
+  ${(props) =>
+    props.horizontal &&
+    `
+  transform:translate(0px, 12%);
+  `}
   img {
     width: 100%;
     user-select: none;

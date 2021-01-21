@@ -1,4 +1,5 @@
 import React, { useEffect, useState, Fragment as F, useRef } from "react";
+import { useTimer } from "use-timer";
 import AssignNetworks from "../common/AssignNetworks/AssignNetworks";
 import TaskWindow from "../common/TaskWindow/TaskWindow";
 import { State as NetworkState } from "../common/AssignNetworks/AssignNetworks";
@@ -20,6 +21,7 @@ import SwitchToServer from "../common/Connector/SwitchToServer/SwitchToServer";
 import SwitchToSwitch from "../common/Connector/SwitchToSwitch/SwitchToSwitch";
 import Modal from "../common/Modal/Modal";
 import APModal from "../common/Modal/APModal";
+import WifiModal from "../common/Modal/WifiModal";
 import { Connection } from "../../types/common";
 import SwitchToAnsattGruppe from "../common/Connector/SwitchToAnsattGruppe/SwitchToAnsattGruppe";
 import SwitchToKonsulentGruppe from "../common/Connector/SwitchToKonsulentGruppe/SwitchToKonsulentGruppe";
@@ -29,18 +31,19 @@ import SwitchToAccesspoint from "../common/Connector/SwitchToAccesspoint/SwitchT
 import APToAnsatt from "../common/Connector/APToAnsatt/APToAnsatt";
 import APToGuest from "../common/Connector/APToGuest/APToGuest";
 import Laptop from "../common/Laptop/Laptop";
-import { start } from "repl";
 import MainMenu from "../common/MainMenu/MainMenu";
+import Help from "../common/Help/Help";
+import resetStates from "../../data/resetStates";
 
 type ConnectionState = {
-  [key: string]:
-    | [boolean, boolean, boolean]
-    | {
-        topRight?: [boolean, boolean, boolean];
-        bottomRight?: [boolean, boolean, boolean];
-        bottomLeft: [boolean, boolean, boolean];
-        topLeft: [boolean, boolean, boolean];
-      };
+  [key: string]: Connection | SwitchConnection;
+};
+
+type SwitchConnection = {
+  topRight?: [boolean, boolean, boolean];
+  bottomRight?: [boolean, boolean, boolean];
+  bottomLeft: [boolean, boolean, boolean];
+  topLeft: [boolean, boolean, boolean];
 };
 
 const initialConnectionState = {
@@ -70,6 +73,20 @@ const initialConnectionState = {
   "drift-pc": [false, false, false],
 } as ConnectionState;
 
+const initialFadedItems = [
+  "server",
+  "aksesspunkt",
+  "ansatt-tradlost",
+  "gjest-tradlost",
+  "svitsj1",
+  "svitsj2",
+  "svitsj3",
+  "konsulent-gruppe",
+  "ansatt-gruppe",
+  "ruter",
+  "drift-pc",
+];
+
 function App() {
   const appRef = useRef<HTMLDivElement>(null);
   const [menuOpen, setMenuOpen] = useState(true);
@@ -93,20 +110,40 @@ function App() {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [modalID, setModalID] = useState<string>("");
   const [wifiModalOpen, setWifiModalOpen] = useState<boolean>(false);
+  const [wifiInputModalOpen, setWifiInputModalOpen] = useState<boolean>(false);
   const [wifiModalID, setWifiModalID] = useState<string>("");
-  const [fadedItems, setFadedItems] = useState<string[]>([
-    "server",
-    "aksesspunkt",
-    "ansatt-tradlost",
-    "gjest-tradlost",
-    "svitsj1",
-    "svitsj2",
-    "svitsj3",
-    "konsulent-gruppe",
-    "ansatt-gruppe",
-    "ruter",
-    "drift-pc",
-  ]);
+  const [wifiInputModalID, setWifiInputModalID] = useState<string>("");
+  const [fadedItems, setFadedItems] = useState<string[]>(initialFadedItems);
+  const timer = useTimer();
+  const [finishedTime, setFinishedTime] = useState<number>();
+  const [expertModeStarted, setExpertModeStarted] = useState(false);
+  const [helpOpen, setHelpOpen] = useState(false);
+  const [isNyNorsk, setNyNorsk] = useState(false);
+
+  const resetTask = () => {
+    const state = resetStates[`${currentTask}`];
+    setConnectionState({
+      ...state,
+      svitsj1: {
+        topLeft: state["svitsj1"].topLeft,
+        topRight: state["svitsj1"].topRight,
+        bottomRight: state["svitsj1"].bottomRight,
+        bottomLeft: state["svitsj1"].bottomLeft,
+      },
+      svitsj2: {
+        topLeft: state["svitsj2"].topLeft,
+        topRight: state["svitsj2"].topRight,
+        bottomRight: state["svitsj2"].bottomRight,
+        bottomLeft: state["svitsj2"].bottomLeft,
+      },
+      svitsj3: {
+        topLeft: state["svitsj3"].topLeft,
+        topRight: state["svitsj3"].topRight,
+        bottomRight: state["svitsj3"].bottomRight,
+        bottomLeft: state["svitsj3"].bottomLeft,
+      },
+    });
+  };
 
   const startTask = (expertMode: boolean) => {
     setExpertMode(expertMode);
@@ -126,7 +163,7 @@ function App() {
     setConnectionState(newState);
   };
 
-  const getConnection = (id: string) => {
+  const getConnection = (id: string): any => {
     const isSwitch = id.startsWith("svitsj");
     if (!isSwitch) {
       return (connectionState as any)[id];
@@ -164,12 +201,13 @@ function App() {
       // Switch 1 -> LAN
       const condition2 = arraysEqual(
         [false, true, false],
-        (connectionState["svitsj1"] as any).topRight as any[]
+        (connectionState["svitsj1"] as SwitchConnection).topRight as Connection
       );
       // Switch 1 -> DriftPC
       const condition3 = arraysEqual(
         [false, true, false],
-        (connectionState["svitsj1"] as any).bottomLeft as any[]
+        (connectionState["svitsj1"] as SwitchConnection)
+          .bottomLeft as Connection
       );
       if (condition1 && condition2 && condition3) {
         completeTask(2);
@@ -428,6 +466,9 @@ function App() {
         guestTradCondition
       ) {
         completeTask(6);
+        if (expertMode) {
+          completeExpertMode();
+        }
       } else {
         unCompleteTask(6);
       }
@@ -435,8 +476,18 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTask, connectionState]);
 
+  const completeExpertMode = () => {
+    if (!finishedTime) {
+      setFinishedTime(timer.time);
+      timer.pause();
+    }
+  };
+
   // Faded items
   useEffect(() => {
+    if (currentTask === 1) {
+      setFadedItems(initialFadedItems);
+    }
     if (currentTask === 2) {
       setFadedItems([
         "server",
@@ -886,7 +937,30 @@ function App() {
   };
 
   const resetState = () => {
-    setConnectionState(initialConnectionState);
+    const defaultSwitchObject: SwitchConnection = {
+      topLeft: [false, false, false],
+      topRight: [false, false, false],
+      bottomRight: [false, false, false],
+      bottomLeft: [false, false, false],
+    };
+    setConnectionState({
+      ...initialConnectionState,
+      svitsj1: { ...defaultSwitchObject },
+      svitsj2: { ...defaultSwitchObject },
+      svitsj3: { ...defaultSwitchObject },
+    });
+    setAssignedNetworks(undefined);
+    setAPState({
+      enabled: [false, false, false],
+      networks: ["", "", ""],
+    });
+    setHelpOpen(false);
+    setFadedItems(initialFadedItems);
+    setParsedAPState([false, false, false]);
+    setCompletedTasks([]);
+    setExpertModeStarted(false);
+    setFinishedTime(undefined);
+    timer.reset();
   };
 
   const goToNextTask = () => {
@@ -894,18 +968,28 @@ function App() {
   };
 
   const goToPrevTask = () => {
-    if (currentTask - 1 !== 0) {
-      setCurrentTask(currentTask - 1);
-      return true;
-    } else {
+    if (expertMode) {
       setExpertMode(false);
       setMenuOpen(true);
+    } else {
+      if (currentTask - 1 !== 0) {
+        setCurrentTask(currentTask - 1);
+      } else {
+        goToMenu();
+      }
     }
-    return false;
+  };
+
+  const goToMenu = () => {
+    setExpertMode(false);
+    resetState();
+    setCurrentTask(1);
+    setMenuOpen(true);
   };
 
   const onConnectorClick = (id: string, type?: string, needsID?: boolean) => {
     if (needsID) {
+      // we are in accesspoint
       setWifiModalID(id);
       setWifiModalOpen(true);
     } else {
@@ -914,9 +998,19 @@ function App() {
     }
   };
 
+  const onWifiInputClick = (id: string) => {
+    setWifiInputModalID(id);
+    setWifiInputModalOpen(true);
+  };
+
   const onModalSave = (newValues: Connection) => {
     updateConnection(modalID, newValues);
     setModalOpen(false);
+  };
+
+  const onWifiInputSave = (newValues: Connection) => {
+    updateConnection(wifiInputModalID, newValues);
+    setWifiInputModalOpen(false);
   };
 
   type APConnection = {
@@ -942,8 +1036,62 @@ function App() {
         parsed[2] = apState.enabled[2];
       }
       setParsedAPState(parsed);
+      // reset wifis if disabled
+      parsed.forEach((isEnabled, index) => {
+        if (!isEnabled) {
+          // Connection is disabled
+          // Disconnect on computers as well.
+          let existingAnsatt = getConnection("ansatt-tradlost") as Connection;
+          let existingGuest = getConnection("gjest-tradlost") as Connection;
+          console.log(existingAnsatt, existingGuest);
+          if (existingAnsatt[index]) {
+            existingAnsatt[index] = false;
+            updateConnection("ansatt-tradlost", existingAnsatt as Connection);
+          }
+          if (existingGuest[index]) {
+            existingGuest[index] = false;
+            updateConnection("gjest-tradlost", existingGuest as Connection);
+          }
+        }
+      });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apState]);
+
+  useEffect(() => {
+    if (expertMode) {
+      setCurrentTask(6);
+      setExpertModeStarted(false);
+      timer.reset();
+    } else {
+      timer.pause();
+      setCurrentTask(1);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [expertMode]);
+
+  useEffect(() => {
+    if (expertModeStarted) {
+      timer.start();
+    } else {
+      timer.pause();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [expertModeStarted]);
+
+  useEffect(() => {
+    resetState();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [menuOpen]);
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const isNN = urlParams.get("nn");
+    if (isNN === "y") {
+      setNyNorsk(true);
+    }
+  }, []);
+
   /* 
   useEffect(() => {
     if (menuOpen) {
@@ -965,21 +1113,53 @@ function App() {
     }
   }; */
 
+  const areNetworksConfigured = () => {
+    if (
+      assignedNetworks?.admin &&
+      assignedNetworks?.ansatt &&
+      assignedNetworks?.gjest
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   return (
     <div className="App" ref={appRef}>
+      {helpOpen && <Help onClose={() => setHelpOpen(false)} isNN={isNyNorsk} />}
       <Loader images={images} onLoadFinished={() => setLoading(false)} />
-      <Background disabled={!completedTasks.includes(1) || currentTask === 1} />
+      <Background
+        disabled={
+          expertMode
+            ? !areNetworksConfigured()
+            : !completedTasks.includes(1) || currentTask === 1
+        }
+      />
       {!menuOpen && (
         <F>
           <AssignNetworks
             onChange={setAssignedNetworks}
-            disabled={currentTask !== 1}
+            disabled={
+              expertMode
+                ? !expertModeStarted || areNetworksConfigured()
+                : currentTask !== 1
+            }
           />
           <TaskWindow
             currentTask={currentTask}
             onNextTask={goToNextTask}
             onPrevTask={goToPrevTask}
+            onReset={resetTask}
             taskCompleted={completedTasks.includes(currentTask)}
+            expertMode={expertMode}
+            time={timer.time}
+            startExpertMode={() => setExpertModeStarted(true)}
+            expertModeStarted={expertModeStarted}
+            finishedTime={finishedTime}
+            onHelp={() => setHelpOpen(true)}
+            onHome={goToMenu}
+            isNN={isNyNorsk}
           />
         </F>
       )}
@@ -988,11 +1168,14 @@ function App() {
         <MainMenu
           onOppgave={() => startTask(false)}
           onEkspert={() => startTask(true)}
+          isNN={isNyNorsk}
         />
       )}
       {!menuOpen && (
         <Building
-          disabled={false}
+          disabled={
+            expertMode ? !expertModeStarted || !areNetworksConfigured() : false
+          }
           content={(buildingStyles: React.CSSProperties) => (
             <F>
               <F>
@@ -1063,8 +1246,8 @@ function App() {
                   buildingStyles={buildingStyles}
                   faded={fadedItems.includes("server")}
                   pos={{
-                    bottom: 33,
-                    left: 21.2,
+                    bottom: 32.7,
+                    left: 22,
                   }}
                   id="server"
                   onClick={onConnectorClick}
@@ -1198,7 +1381,7 @@ function App() {
                   id="ansatt-tradlost"
                   type="wifi"
                   faded={fadedItems.includes("ansatt-tradlost")}
-                  onClick={onConnectorClick}
+                  onClick={onWifiInputClick}
                 />
                 <Connector
                   buildingStyles={buildingStyles}
@@ -1209,7 +1392,7 @@ function App() {
                   id="gjest-tradlost"
                   type="wifi"
                   faded={fadedItems.includes("gjest-tradlost")}
-                  onClick={onConnectorClick}
+                  onClick={onWifiInputClick}
                 />
                 <SwitchToAnsattGruppe
                   input={getConnection("svitsj2.bottomLeft")}
@@ -1233,7 +1416,7 @@ function App() {
                   onConnectorClick={onConnectorClick}
                   pos={{
                     bottom: 24.5,
-                    left: 162,
+                    left: 160,
                   }}
                   activeState={{
                     topLeft: !fadedItems.includes("svitsj3"),
@@ -1268,7 +1451,7 @@ function App() {
                   active={getLineActive("konsulent-gruppe")}
                   pos={{
                     bottom: 5,
-                    left: 137,
+                    left: 135,
                   }}
                 />
               </F>
@@ -1304,6 +1487,17 @@ function App() {
           currentID={wifiModalID}
         />
       )}
+      {wifiInputModalID && getConnection(wifiInputModalID) && (
+        <WifiModal
+          open={wifiInputModalOpen}
+          assignedNetworks={assignedNetworks}
+          onSave={onWifiInputSave}
+          onClose={() => setWifiInputModalOpen(false)}
+          value={getConnection(wifiInputModalID)}
+          currentID={wifiInputModalID}
+          currentActive={parsedAPState as any}
+        />
+      )}
     </div>
   );
 }
@@ -1330,7 +1524,7 @@ const BottomLine = styled.div`
   background: var(--color-blue);
   z-index: ${zIndexes.building - 1};
   @media (max-height: 700px) and (max-width: 760px) {
-    bottom: 80px;
+    bottom: 30px;
   }
 `;
 

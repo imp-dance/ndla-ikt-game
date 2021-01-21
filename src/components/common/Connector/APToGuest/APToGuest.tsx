@@ -26,7 +26,7 @@ const APToGuest: React.FC<Props> = ({
       buildingStyles={buildingStyles}
       pos={{
         bottom: 66,
-        left: 122.5,
+        left: 122.1,
       }}
       horizontal
       faded={faded}
@@ -43,7 +43,7 @@ const APToGuest: React.FC<Props> = ({
 
 const LineContainer = styled.div`
   .line {
-    bottom: calc(calc(var(--bHeight) / 100) * 3);
+    bottom: calc(calc(var(--bHeight) / 100) * 3.6);
     transform: translate(0px, -50%);
     &:nth-child(1) {
       left: 100%;

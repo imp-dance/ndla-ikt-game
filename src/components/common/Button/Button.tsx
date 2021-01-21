@@ -4,6 +4,7 @@ import styled from "styled-components";
 type Props = {
   onClick?: () => void;
   disabled?: boolean;
+  style?: React.CSSProperties;
 };
 
 const Button: React.FC<Props> = ({ ...rest }) => {

@@ -26,8 +26,8 @@ const SwitchToSwitch2: React.FC<Props> = ({
       faded={faded}
       buildingStyles={buildingStyles}
       pos={{
-        bottom: 32.5,
-        left: 138,
+        bottom: 32.8,
+        left: 137,
       }}
       horizontal
     >
@@ -48,22 +48,22 @@ const LineContainer = styled.div`
     left: 50%;
     transform: translate(-50%, 0px);
     &:nth-child(1) {
-      bottom: calc(calc(var(--bHeight) / 100) * 3.3);
+      bottom: calc(calc(var(--bHeight) / 100) * 4.2);
       left: calc(calc(var(--bWidth) / 100) * 8);
-      width: calc(calc(var(--bWidth) / 100) * 4.5);
+      width: calc(calc(var(--bWidth) / 100) * 4.8);
     }
     &:nth-child(2) {
       width: calc(calc(var(--bWidth) / 100) * 5);
-      bottom: calc(calc(var(--bHeight) / 100) * 3.3);
+      bottom: calc(calc(var(--bHeight) / 100) * 4);
       left: calc(calc(var(--bWidth) / 100) * -2.4);
     }
     &:nth-child(3) {
-      height: calc(calc(var(--bHeight) / 100) * 12.4);
-      bottom: calc(calc(var(--bHeight) / 100) * -8.6);
+      height: calc(calc(var(--bHeight) / 100) * 12);
+      bottom: calc(calc(var(--bHeight) / 100) * -8);
       left: calc(calc(var(--bWidth) / 100) * -4.8);
     }
     &:nth-child(4) {
-      bottom: calc(calc(var(--bHeight) / 100) * -8.8);
+      bottom: calc(calc(var(--bHeight) / 100) * -8);
       width: calc(calc(var(--bWidth) / 100) * 2.2);
       left: calc(calc(var(--bWidth) / 100) * -5.9);
       right: 50%;

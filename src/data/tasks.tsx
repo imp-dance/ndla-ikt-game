@@ -7,6 +7,10 @@ export type Task = {
     initial: React.ReactNode;
     completed: React.ReactNode;
   };
+  labelNN: {
+    initial: React.ReactNode;
+    completed: React.ReactNode;
+  };
 };
 
 export const tasks: Task[] = [
@@ -14,11 +18,20 @@ export const tasks: Task[] = [
     number: 1,
     title: "Oppgavene",
     label: {
-      initial: "Sett VLAN nummer på alle tre nettverkene i simuleringen",
+      initial: "Sett VLAN nummer på alle tre nettverkene i simuleringen.",
       completed: (
         <F>
           <strong>Flott!</strong> <span className="icon-green">✔</span> Gå til
           neste oppgave.
+        </F>
+      ),
+    },
+    labelNN: {
+      initial: "Sett VLAN nummer på alle tre nettverka i simuleringen.",
+      completed: (
+        <F>
+          <strong>Flott!</strong> <span className="icon-green">✔</span> Gå til
+          neste oppgåve.
         </F>
       ),
     },
@@ -38,6 +51,21 @@ export const tasks: Task[] = [
         <F>
           <strong>Riktig!</strong> <span className="icon-green">✔</span> Gå til
           neste oppgave.
+        </F>
+      ),
+    },
+    labelNN: {
+      initial: (
+        <F>
+          Lag gyldig samband mellom <strong>Ruter</strong> via{" "}
+          <strong>Svitsj 1</strong> til <strong>Drift PC</strong>. Berre{" "}
+          <strong>Drift nettverk</strong> skal førebels ha tilgang.
+        </F>
+      ),
+      completed: (
+        <F>
+          <strong>Riktig!</strong> <span className="icon-green">✔</span> Gå til
+          neste oppgåve.
         </F>
       ),
     },
@@ -61,6 +89,22 @@ export const tasks: Task[] = [
         </F>
       ),
     },
+    labelNN: {
+      initial: (
+        <F>
+          Konfigurer korrekt VLAN samband frå <strong>Ruter</strong>, via{" "}
+          <strong>Svitsj 1</strong> og <strong>Svitsj 2</strong> til{" "}
+          <strong>Ansatt Gruppe</strong>. Hugs at du samtidig må utvida{" "}
+          <strong>Drift nettverk</strong> til <strong>Svitsj 2</strong>.
+        </F>
+      ),
+      completed: (
+        <F>
+          <strong>Bra jobba!</strong> <span className="icon-green">✔</span> Gå
+          til neste oppgåve.
+        </F>
+      ),
+    },
   },
   {
     number: 4,
@@ -79,6 +123,20 @@ export const tasks: Task[] = [
         </F>
       ),
     },
+    labelNN: {
+      initial: (
+        <F>
+          Konfigurer korrekt VLAN mot <strong>Server</strong>, slik at både{" "}
+          <strong>tilsette</strong> og <strong>drift</strong> får tilgang.
+        </F>
+      ),
+      completed: (
+        <F>
+          <strong>Heilt riktig!</strong> <span className="icon-green">✔</span>{" "}
+          Gå til neste oppgåve.
+        </F>
+      ),
+    },
   },
   {
     number: 5,
@@ -91,13 +149,31 @@ export const tasks: Task[] = [
           <br />
           <br />
           Husk at du samtidig må gi <strong>Drift nettverk</strong> tilgang til{" "}
-          <strong>Svitsj 3</strong>
+          <strong>Svitsj 3</strong>.
         </F>
       ),
       completed: (
         <F>
           <strong>Bra jobba!</strong> <span className="icon-green">✔</span> Gå
           til neste oppgave.
+        </F>
+      ),
+    },
+    labelNN: {
+      initial: (
+        <F>
+          Konfigurer <strong>Konsulent Gruppe</strong> og skaff desse tilgang
+          til <strong>Gjestenettverk</strong>.
+          <br />
+          <br />
+          Hugs at du samtidig må gi <strong>Drift nettverk</strong> tilgang til{" "}
+          <strong>Svitsj 3</strong>.
+        </F>
+      ),
+      completed: (
+        <F>
+          <strong>Flott!</strong> <span className="icon-green">✔</span> Gå til
+          neste oppgåve.
         </F>
       ),
     },
@@ -118,8 +194,24 @@ export const tasks: Task[] = [
       ),
       completed: (
         <F>
-          <strong>Helt riktig!</strong> <span className="icon-green">✔</span> Gå{" "}
-          til neste oppgave.
+          <strong>Helt riktig!</strong> <span className="icon-green">✔</span>
+        </F>
+      ),
+    },
+    labelNN: {
+      initial: (
+        <F>
+          Kopl til <strong>Aksesspunkt</strong> mot alle VLAN.
+          <br />
+          <br />
+          Opprett <strong>Tilsett-</strong> og <strong>Gjest</strong> trådlaust{" "}
+          nettverk og tildel desse passande VLAN ved å trykka på{" "}
+          <strong>trådlaus ikonet</strong> over <strong>Aksesspunkt</strong>.
+        </F>
+      ),
+      completed: (
+        <F>
+          <strong>Helt riktig!</strong> <span className="icon-green">✔</span>
         </F>
       ),
     },

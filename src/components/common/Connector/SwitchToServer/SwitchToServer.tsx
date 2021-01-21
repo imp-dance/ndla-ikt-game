@@ -25,7 +25,7 @@ const SwitchToServer: React.FC<Props> = ({
       output={output}
       buildingStyles={buildingStyles}
       pos={{
-        bottom: 33,
+        bottom: 32.5,
         left: 32,
       }}
       horizontal
@@ -43,15 +43,15 @@ const SwitchToServer: React.FC<Props> = ({
 
 const LineContainer = styled.div`
   .line {
-    bottom: calc(calc(var(--bHeight) / 100) * 3);
+    bottom: calc(calc(var(--bHeight) / 100) * 3.7);
     transform: translate(0px, -50%);
     &:nth-child(1) {
       left: 100%;
-      width: calc(calc(var(--bWidth) / 100) * 3.4);
+      width: calc(calc(var(--bWidth) / 100) * 3);
     }
     &:nth-child(2) {
       right: 100%;
-      width: calc(calc(var(--bWidth) / 100) * 7.1);
+      width: calc(calc(var(--bWidth) / 100) * 7.3);
     }
   }
 `;

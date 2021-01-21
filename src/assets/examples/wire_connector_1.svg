@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="47" height="117" viewBox="0 0 47 117">
+  <defs>
+    <style>
+      .cls-1, .cls-5 {
+        fill: none;
+      }
+
+      .cls-1, .cls-2 {
+        stroke: #20588f;
+        stroke-linecap: round;
+        stroke-width: 3px;
+      }
+
+      .cls-1 {
+        stroke-dasharray: 2 6;
+      }
+
+      .cls-2 {
+        fill: #fff;
+        stroke-linejoin: round;
+      }
+
+      .cls-3 {
+        fill: #a5bcd3;
+      }
+
+      .cls-4 {
+        stroke: none;
+      }
+    </style>
+  </defs>
+  <g id="Group_124" data-name="Group 124" transform="translate(-625.15 -588)">
+    <line id="Line_122" data-name="Line 122" class="cls-1" y2="114" transform="translate(649.5 589.5)"/>
+    <g id="VLAN_wires" transform="translate(625.15 617)">
+      <g id="Group_66" data-name="Group 66">
+        <g id="Rectangle_72" data-name="Rectangle 72" class="cls-2">
+          <rect class="cls-4" width="47" height="57" rx="8"/>
+          <rect class="cls-5" x="1.5" y="1.5" width="44" height="54" rx="6.5"/>
+        </g>
+        <g id="Group_63" data-name="Group 63" transform="translate(7 7)">
+          <g id="VLAN1_Employee_Network" transform="translate(25 1)">
+            <circle id="Ellipse_36" data-name="Ellipse 36" class="cls-3" cx="4" cy="4" r="4"/>
+          </g>
+          <g id="VLAN1_Employee_Network-2" data-name="VLAN1_Employee_Network" transform="translate(25 12)">
+            <circle id="Ellipse_36-2" data-name="Ellipse 36" class="cls-3" cx="4" cy="4" r="4"/>
+          </g>
+          <g id="VLAN2_Admin_Network" transform="translate(13 1)">
+            <rect id="Rectangle_71" data-name="Rectangle 71" class="cls-3" width="8" height="8" rx="1"/>
+          </g>
+          <g id="VLAN2_Admin_Network-2" data-name="VLAN2_Admin_Network" transform="translate(13 12)">
+            <rect id="Rectangle_71-2" data-name="Rectangle 71" class="cls-3" width="8" height="8" rx="1"/>
+          </g>
+          <g id="VLAN3_Guest_Network">
+            <path id="Polygon_7" data-name="Polygon 7" class="cls-3" d="M3.606,1.789a1,1,0,0,1,1.789,0L8.276,7.553A1,1,0,0,1,7.382,9H1.618A1,1,0,0,1,.724,7.553Z"/>
+          </g>
+          <g id="VLAN3_Guest_Network-2" data-name="VLAN3_Guest_Network" transform="translate(0 11)">
+            <path id="Polygon_7-2" data-name="Polygon 7" class="cls-3" d="M3.606,1.789a1,1,0,0,1,1.789,0L8.276,7.553A1,1,0,0,1,7.382,9H1.618A1,1,0,0,1,.724,7.553Z"/>
+          </g>
+          <g id="VLAN1_Employee_Network-3" data-name="VLAN1_Employee_Network" transform="translate(25 23)">
+            <circle id="Ellipse_36-3" data-name="Ellipse 36" class="cls-3" cx="4" cy="4" r="4"/>
+          </g>
+          <g id="VLAN1_Employee_Network-4" data-name="VLAN1_Employee_Network" transform="translate(25 34)">
+            <circle id="Ellipse_36-4" data-name="Ellipse 36" class="cls-3" cx="4" cy="4" r="4"/>
+          </g>
+          <g id="VLAN2_Admin_Network-3" data-name="VLAN2_Admin_Network" transform="translate(13 23)">
+            <rect id="Rectangle_71-3" data-name="Rectangle 71" class="cls-3" width="8" height="8" rx="1"/>
+          </g>
+          <g id="VLAN2_Admin_Network-4" data-name="VLAN2_Admin_Network" transform="translate(13 34)">
+            <rect id="Rectangle_71-4" data-name="Rectangle 71" class="cls-3" width="8" height="8" rx="1"/>
+          </g>
+          <g id="VLAN3_Guest_Network-3" data-name="VLAN3_Guest_Network" transform="translate(0 22)">
+            <path id="Polygon_7-3" data-name="Polygon 7" class="cls-3" d="M3.606,1.789a1,1,0,0,1,1.789,0L8.276,7.553A1,1,0,0,1,7.382,9H1.618A1,1,0,0,1,.724,7.553Z"/>
+          </g>
+          <g id="VLAN3_Guest_Network-4" data-name="VLAN3_Guest_Network" transform="translate(0 33)">
+            <path id="Polygon_7-4" data-name="Polygon 7" class="cls-3" d="M3.606,1.789a1,1,0,0,1,1.789,0L8.276,7.553A1,1,0,0,1,7.382,9H1.618A1,1,0,0,1,.724,7.553Z"/>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

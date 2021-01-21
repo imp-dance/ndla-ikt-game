@@ -71,22 +71,22 @@ const StyledRouter = styled.div`
     > div:nth-child(1) {
       height: calc(calc(var(--bHeight) / 100) * 4.1);
       top: calc(100% - 1px);
-      left: 5px;
+      left: 13%;
     }
     > div:nth-child(2) {
       height: calc(calc(var(--bHeight) / 100) * 4.1);
       top: calc(100% - 1px);
-      right: 5px;
+      right: 13%;
     }
     > div:nth-child(3) {
       top: calc(calc(100% + calc(calc(var(--bHeight) / 100) * 4)) - 2px);
       width: calc(calc(var(--bWidth) / 100) * 14.1);
-      right: calc(100% - 7px);
+      right: calc(100% - 14%);
     }
     > div:nth-child(4) {
       top: calc(calc(100% + calc(calc(var(--bHeight) / 100) * 4)) - 2px);
       width: calc(calc(var(--bWidth) / 100) * 1.9);
-      left: calc(100% - 7px);
+      left: calc(100% - 14%);
     }
   }
 `;

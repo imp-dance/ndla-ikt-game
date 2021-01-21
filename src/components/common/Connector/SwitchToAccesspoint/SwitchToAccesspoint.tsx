@@ -26,7 +26,7 @@ const SwitchToAccesspoint: React.FC<Props> = ({
       faded={faded}
       buildingStyles={buildingStyles}
       pos={{
-        bottom: 42,
+        bottom: 43.3,
         left: 119.3,
       }}
     >
@@ -46,14 +46,14 @@ const LineContainer = styled.div`
     left: 50%;
     transform: translate(-50%, 0px);
     &:nth-child(2) {
-      height: calc(calc(var(--bHeight) / 100) * 3.4);
+      height: calc(calc(var(--bHeight) / 100) * 5.1);
     }
     &:nth-child(1) {
       bottom: calc(calc(var(--bHeight) / 100) * 10.1);
-      height: calc(calc(var(--bHeight) / 100) * 7);
+      height: calc(calc(var(--bHeight) / 100) * 5.9);
     }
     &:nth-child(3) {
-      bottom: calc(calc(var(--bHeight) / 100) * 17.1);
+      bottom: calc(calc(var(--bHeight) / 100) * 15.6);
       width: calc(calc(var(--bWidth) / 100) * 3.7);
       left: calc(calc(var(--bWidth) / 100) * 0.7);
     }

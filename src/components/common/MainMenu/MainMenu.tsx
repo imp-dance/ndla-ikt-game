@@ -5,6 +5,7 @@ import Button from "../Button/Button";
 export interface IMainMenuProps {
   onOppgave: () => void;
   onEkspert: () => void;
+  isNN: boolean;
 }
 
 export function MainMenu(props: IMainMenuProps) {
@@ -12,20 +13,41 @@ export function MainMenu(props: IMainMenuProps) {
     <StyledMainMenu>
       <h1>Velkommen</h1>
       <h3>
-        Simuleringen vil gi en forståelse for hvordan VLAN skal konfigureres i
-        et tenkt nettverk.
+        {props.isNN
+          ? "Simuleringen vil gi ei forståing for korleis VLAN skal konfigurerast i eit tenkt nettverk."
+          : "Simuleringen vil gi en forståelse for hvordan VLAN skal konfigureres i et tenkt nettverk."}
       </h3>
       <p>
-        Vi anbefaler alle å trykke <strong>Oppgaver</strong> først for å få en
-        trinnvis innføring med 6 korte oppgaver.
+        {props.isNN ? (
+          <>
+            Me tilrår alle å trykka <strong>Oppgåve</strong> først for å få ei
+            trinnvis innføring med 6 korte oppgåver.
+          </>
+        ) : (
+          <>
+            Vi anbefaler alle å trykke <strong>Oppgave</strong> først for å få
+            en trinnvis innføring med 6 korte oppgaver.
+          </>
+        )}
       </p>
       <p>
-        Velg <strong>Ekspertkonfigurasjon</strong> dersom du ønsker å teste
-        simuleringen uten hjelp.
+        {props.isNN ? (
+          <>
+            Vel <strong>Ekspertkonfigurasjon</strong> dersom du ønsker å testa
+            simuleringen utan hjelp.
+          </>
+        ) : (
+          <>
+            Velg <strong>Ekspertkonfigurasjon</strong> dersom du ønsker å teste
+            simuleringen uten hjelp.
+          </>
+        )}
       </p>
       <p>Lykke til!</p>
       <footer>
-        <Button onClick={props.onOppgave}>Oppgave</Button>
+        <Button onClick={props.onOppgave}>
+          {props.isNN ? "Oppgåve" : "Oppgave"}
+        </Button>
         <Button onClick={props.onEkspert}>Ekspertkonfigurasjon</Button>
       </footer>
     </StyledMainMenu>
@@ -40,6 +62,9 @@ const StyledMainMenu = styled.div`
   color: var(--color-blue);
   text-align: center;
   min-width: 550px;
+  @media screen and (max-height: 670px) {
+    transform: translate(-50%, -60%);
+  }
   h1 {
     font-size: 3rem;
   }

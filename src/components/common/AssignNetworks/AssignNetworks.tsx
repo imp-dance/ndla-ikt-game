@@ -9,6 +9,7 @@ import NetworkIcon from "../NetworkIcon/NetworkIcon";
 type Props = {
   onChange: (newVal: State) => void;
   disabled?: boolean;
+  faded?: boolean;
 };
 
 export type State = {
@@ -22,6 +23,7 @@ type StateKey = "admin" | "ansatt" | "gjest";
 const AssignNetworks: React.FC<Props> = ({
   onChange: onValuesUpdate,
   disabled,
+  faded,
 }) => {
   const [state, setState] = useState<State>({
     admin: "",
@@ -77,8 +79,10 @@ const AssignNetworks: React.FC<Props> = ({
     return multipleSame;
   };
 
+  const classname = faded ? "faded" : "";
+
   return (
-    <Container id="ASSIGN_NETWORKS">
+    <Container id="ASSIGN_NETWORKS" className={classname}>
       <ul>
         <li>
           <NetworkIcon src={VLAN1} alt="VLAN 1 Ikon" />
@@ -130,6 +134,9 @@ const Container = styled.div`
   left: 5vmin;
   border-radius: 16px;
   font-size: 0.8rem;
+  @media screen and (max-width: 1600px) {
+    border-width: 2px;
+  }
 
   z-index: ${zIndexes.assignNetwork};
   ul {

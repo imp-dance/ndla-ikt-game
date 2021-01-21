@@ -3,38 +3,28 @@ import * as React from "react";
 import VLAN1 from "../../../assets/symbols/VLAN1_Employee_Network.svg";
 import VLAN2 from "../../../assets/symbols/VLAN2_Admin_Network.svg";
 import VLAN3 from "../../../assets/symbols/VLAN3_Guest_Network.svg";
-import { State as NetworkState } from "../AssignNetworks/AssignNetworks";
+import { State as NetworkState } from "../../common/AssignNetworks/AssignNetworks";
+import { Connection } from "../../../types/common";
 import NetworkIcon from "../NetworkIcon/NetworkIcon";
 import styled from "styled-components";
 import zIndexes from "../../../styles/zIndexes";
 
 export interface IModalProps {
   open: boolean;
-  value: APConnection;
+  value: Connection;
   currentID: string;
-  onSave: (newValues: APConnection) => void;
+  onSave: (newValues: Connection) => void;
   onClose: () => void;
   assignedNetworks?: NetworkState;
+  currentActive: Connection;
 }
 
-type APConnection = {
-  enabled: [boolean, boolean, boolean];
-  networks: [string, string, string];
-};
-
-export default function Modal(props: IModalProps) {
-  const [connections, setConnections] = React.useState<APConnection>(
-    props.value
-  );
-  const onChange = (index: number, value: any) => {
-    const newConnection = { ...props.value };
-    if (value.network !== undefined) {
-      newConnection.networks[index] = value.network;
-    }
-    if (value.checked !== undefined) {
-      newConnection.enabled[index] = value.checked;
-    }
-    setConnections(newConnection as APConnection);
+export default function WifiModal(props: IModalProps) {
+  const [connections, setConnections] = React.useState<Connection>(props.value);
+  const onChange = (index: number, value: string) => {
+    const newConnections: any = [false, false, false];
+    newConnections[index] = value;
+    setConnections(newConnections as Connection);
   };
 
   React.useEffect(() => {
@@ -48,28 +38,22 @@ export default function Modal(props: IModalProps) {
     <>
       <ModalBackdrop />
       <ModalContainer>
-        <h3>Aksesspunkt konfigurasjon</h3>
-        <br />
-        <table>
-          <thead>
-            <tr>
-              <th>Aktiver</th>
-              <th>Nettverksnavn</th>
-              <th>VLAN</th>
-            </tr>
-          </thead>
-          <tbody>
-            {[2, 1, 0].map((value) => (
-              <ListItem
-                key={value}
-                index={value}
-                connections={connections}
-                assignedNetworks={props.assignedNetworks}
-                onChange={onChange}
-              />
-            ))}
-          </tbody>
-        </table>
+        {props.currentActive.filter((item) => item).length > 0 ? (
+          props.currentActive.map(
+            (isActive, index) =>
+              isActive && (
+                <ListItem
+                  key={index}
+                  index={index}
+                  connections={connections}
+                  assignedNetworks={props.assignedNetworks}
+                  onChange={onChange}
+                />
+              )
+          )
+        ) : (
+          <strong>Ingen aktive nettverk tilgjengelige</strong>
+        )}
         <ButtonContainer>
           <button onClick={props.onClose}>Avbryt</button>
           <button onClick={() => props.onSave(connections)}>OK</button>
@@ -82,7 +66,7 @@ export default function Modal(props: IModalProps) {
 interface IListItemProps {
   index: number;
   assignedNetworks?: NetworkState;
-  connections: APConnection;
+  connections: Connection;
   onChange: (index: number, value: any) => void;
 }
 
@@ -112,39 +96,18 @@ const ListItem: React.FC<IListItemProps> = ({
         return "Gjestenettverk";
     }
   };
-
+  const key = index === 0 ? "ansatt" : index === 1 ? "admin" : "gjest";
   return (
-    <tr>
-      <td>
-        <input
-          type="checkbox"
-          checked={connections.enabled[index]}
-          onChange={(e) => onChange(index, { checked: e.target.checked })}
-        />
-      </td>
-      <td>
-        <strong
-          onClick={() =>
-            onChange(index, { checked: !connections.enabled[index] })
-          }
-          style={{
-            opacity: connections.enabled[index] ? "1" : "0.6",
-            cursor: "pointer",
-            userSelect: "none",
-          }}
-        >
-          {getLabel(index)}
-        </strong>
-      </td>
-      <td>
-        <input
-          type="text"
-          value={connections.networks[index]}
-          style={{ opacity: connections.enabled[index] ? "1" : "0.6" }}
-          onChange={(e) => onChange(index, { network: e.target.value })}
-        />
-      </td>
-    </tr>
+    <label>
+      <input
+        type="radio"
+        name="wifiinput"
+        checked={connections[index]}
+        onChange={(e) => onChange(index, e.target.checked)}
+      />
+      <NetworkIcon src={getIcon(index)} alt="Ikon for nettverk" />
+      {getLabel(index)}
+    </label>
   );
 };
 
@@ -195,31 +158,25 @@ const ModalContainer = styled.div`
   flex-direction: column;
   font-size: 0.8rem;
   color: var(--color-blue);
-  h3 {
-    margin: 0;
-    font-size: 1.4em;
-  }
   label {
     display: flex;
+    cursor: pointer;
     align-items: center;
+    user-select: none;
     margin-bottom: var(--margin-xs);
-    width: 100%;
-  }
-  input[type="checkbox"] {
-    margin-right: var(--margin-s);
-    margin: 0 auto;
-  }
-  input[type="text"] {
-    max-width: 2ch;
-    border: 2px solid var(--color-light-blue);
-    border-radius: 5px;
-    font-weight: bold;
-    color: var(--color-blue);
-    text-align: center;
-  }
-  td,
-  th {
-    padding: 3px;
-    text-align: center;
+    input[type="checkbox"] {
+      margin-right: var(--margin-s);
+    }
+    input[type="text"] {
+      max-width: 2ch;
+      border: 2px solid var(--color-light-blue);
+      border-radius: 5px;
+      margin: 0 0.5rem;
+      font-weight: bold;
+      color: var(--color-blue);
+      text-align: center;
+      user-select: none;
+      pointer-events: none;
+    }
   }
 `;
