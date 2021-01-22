@@ -328,11 +328,24 @@ const Sun = styled(BGElement)`
       opacity: 0.5;
     }
   }
+  @keyframes sunAnim2 {
+    0%,
+    100% {
+      transform: translate(50px, 0px) rotate(0deg);
+      opacity: 1;
+    }
+    50% {
+      transform: translate(50px, 0px) rotate(30deg);
+      opacity: 0.5;
+    }
+  }
   @media screen and (max-width: 1100px) {
     transform: translate(50px, 0px);
+    animation-name: sunAnim2;
   }
   @media (max-width: 950px), (max-height: 800px) {
     transform: translate(-10px, -300px);
+    animation: none !important;
   }
 `;
 
