@@ -5,6 +5,7 @@ import WifiIMG from "../../../assets/symbols/Wifi_Connection.svg";
 import CloseIMG from "../../../assets/symbols/close.svg";
 import NextIMG from "../../../assets/symbols/next.svg";
 import PreviousIMG from "../../../assets/symbols/previous.svg";
+import VLANex1NN from "../../../assets/examples/VLAN_box_Nynorsk.svg";
 import VLANex1 from "../../../assets/examples/VLAN_box_1.svg";
 import VLANex2 from "../../../assets/examples/VLAN_box_2.svg";
 import WiresEx1 from "../../../assets/examples/wire_connector_1.svg";
@@ -95,7 +96,7 @@ const Help: React.FC<Props> = ({ onClose, isNN }) => {
               </>
             )}
             <img
-              src={VLANex1}
+              src={isNN ? VLANex1NN : VLANex1}
               alt="Eksempel"
               style={{ marginBottom: "var(--margin-s)", maxWidth: "250px" }}
             />

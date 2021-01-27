@@ -1,0 +1,88 @@
+<svg id="VLAN_box_Nynorsk" xmlns="http://www.w3.org/2000/svg" width="304" height="144" viewBox="0 0 304 144">
+  <defs>
+    <style>
+      .cls-1, .cls-7 {
+        fill: #fff;
+        stroke-width: 3px;
+      }
+
+      .cls-1 {
+        stroke: #20588f;
+      }
+
+      .cls-2, .cls-3, .cls-4 {
+        fill: #20588f;
+      }
+
+      .cls-2, .cls-3 {
+        font-size: 18px;
+      }
+
+      .cls-2 {
+        font-family: SourceSansPro-Regular, Source Sans Pro;
+      }
+
+      .cls-3 {
+        font-family: SourceSansPro-Bold, Source Sans Pro;
+        font-weight: 700;
+      }
+
+      .cls-5 {
+        fill: #729f8b;
+      }
+
+      .cls-6 {
+        fill: #eb9c56;
+      }
+
+      .cls-7 {
+        stroke: #deebf6;
+      }
+
+      .cls-8 {
+        stroke: none;
+      }
+
+      .cls-9 {
+        fill: none;
+      }
+    </style>
+  </defs>
+  <g id="Rectangle_101" data-name="Rectangle 101" class="cls-1">
+    <rect class="cls-8" width="304" height="144" rx="15"/>
+    <rect class="cls-9" x="1.5" y="1.5" width="301" height="141" rx="13.5"/>
+  </g>
+  <text id="_-_Tilsett_nettverk_" data-name="- Tilsett nettverk " class="cls-2" transform="translate(153 41)"><tspan x="0" y="0">- Tilsett nettverk </tspan></text>
+  <text id="VLAN" class="cls-3" transform="translate(57 42)"><tspan x="0" y="0">VLAN</tspan></text>
+  <text id="VLAN-2" data-name="VLAN" class="cls-3" transform="translate(57 79)"><tspan x="0" y="0">VLAN</tspan></text>
+  <text id="VLAN-3" data-name="VLAN" class="cls-3" transform="translate(57 115)"><tspan x="0" y="0">VLAN</tspan></text>
+  <text id="_-_Drift_nettverk_" data-name="- Drift nettverk " class="cls-2" transform="translate(153 77)"><tspan x="0" y="0">- Drift nettverk </tspan></text>
+  <text id="_-_Gjestenettverk_" data-name="- Gjestenettverk " class="cls-2" transform="translate(153 114)"><tspan x="0" y="0">- Gjestenettverk </tspan></text>
+  <g id="VLAN2_Admin_Network" transform="translate(23 64)">
+    <rect id="Rectangle_71" data-name="Rectangle 71" class="cls-4" width="15" height="15" rx="1"/>
+  </g>
+  <g id="VLAN1_Employee_Network" transform="translate(23 29)">
+    <circle id="Ellipse_36" data-name="Ellipse 36" class="cls-5" cx="7.5" cy="7.5" r="7.5"/>
+  </g>
+  <g id="VLAN3_Guest_Network" transform="translate(23 100)">
+    <path id="Polygon_7" data-name="Polygon 7" class="cls-6" d="M6.606,1.789a1,1,0,0,1,1.789,0l5.882,11.764A1,1,0,0,1,13.382,15H1.618a1,1,0,0,1-.894-1.447Z"/>
+  </g>
+  <g id="Input_field" data-name="Input field" transform="translate(109 24)">
+    <g id="Rectangle_79" data-name="Rectangle 79" class="cls-7">
+      <rect class="cls-8" width="34" height="25" rx="3"/>
+      <rect class="cls-9" x="1.5" y="1.5" width="31" height="22" rx="1.5"/>
+    </g>
+  </g>
+  <g id="Input_field-2" data-name="Input field" transform="translate(109 61)">
+    <g id="Rectangle_79-2" data-name="Rectangle 79" class="cls-7">
+      <rect class="cls-8" width="34" height="25" rx="3"/>
+      <rect class="cls-9" x="1.5" y="1.5" width="31" height="22" rx="1.5"/>
+    </g>
+  </g>
+  <g id="Input_field-3" data-name="Input field" transform="translate(109 96)">
+    <g id="Rectangle_79-3" data-name="Rectangle 79" class="cls-7">
+      <rect class="cls-8" width="34" height="25" rx="3"/>
+      <rect class="cls-9" x="1.5" y="1.5" width="31" height="22" rx="1.5"/>
+    </g>
+  </g>
+</svg>
