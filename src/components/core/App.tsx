@@ -1145,6 +1145,7 @@ function App() {
                 ? !expertModeStarted || areNetworksConfigured()
                 : currentTask !== 1
             }
+            isNN={isNyNorsk}
           />
           <TaskWindow
             currentTask={currentTask}
@@ -1344,6 +1345,7 @@ function App() {
                 <Laptop
                   buildingStyles={buildingStyles}
                   faded={fadedItems.includes("ansatt-tradlost")}
+                  isNN={isNyNorsk}
                   pos={{
                     bottom: 75,
                     left: 87,
@@ -1353,6 +1355,7 @@ function App() {
                 <Laptop
                   buildingStyles={buildingStyles}
                   faded={fadedItems.includes("gjest-tradlost")}
+                  isNN={isNyNorsk}
                   hasPhone={true}
                   active={getLineActive("gjest-tradlost")}
                   pos={{
@@ -1405,6 +1408,7 @@ function App() {
                   id={4}
                   buildingStyles={buildingStyles}
                   faded={fadedItems.includes("ansatt-gruppe")}
+                  isNN={isNyNorsk}
                   active={getLineActive("ansatt-gruppe")}
                   pos={{
                     bottom: 5,

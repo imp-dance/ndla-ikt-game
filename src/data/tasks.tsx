@@ -64,7 +64,7 @@ export const tasks: Task[] = [
       ),
       completed: (
         <F>
-          <strong>Riktig!</strong> <span className="icon-green">✔</span> Gå til
+          <strong>Rett!</strong> <span className="icon-green">✔</span> Gå til
           neste oppgåve.
         </F>
       ),
@@ -94,7 +94,7 @@ export const tasks: Task[] = [
         <F>
           Konfigurer korrekt VLAN samband frå <strong>Ruter</strong>, via{" "}
           <strong>Svitsj 1</strong> og <strong>Svitsj 2</strong> til{" "}
-          <strong>Ansatt Gruppe</strong>. Hugs at du samtidig må utvida{" "}
+          <strong>Tilsett Gruppe</strong>. Hugs at du samtidig må utvide{" "}
           <strong>Drift nettverk</strong> til <strong>Svitsj 2</strong>.
         </F>
       ),
@@ -127,13 +127,13 @@ export const tasks: Task[] = [
       initial: (
         <F>
           Konfigurer korrekt VLAN mot <strong>Server</strong>, slik at både{" "}
-          <strong>tilsette</strong> og <strong>drift</strong> får tilgang.
+          <strong>tilsett</strong> og <strong>drift</strong> får tilgang.
         </F>
       ),
       completed: (
         <F>
-          <strong>Heilt riktig!</strong> <span className="icon-green">✔</span>{" "}
-          Gå til neste oppgåve.
+          <strong>Heilt rett!</strong> <span className="icon-green">✔</span> Gå
+          til neste oppgåve.
         </F>
       ),
     },
@@ -146,7 +146,6 @@ export const tasks: Task[] = [
         <F>
           Konfigurer <strong>Konsulent Gruppe</strong> og skaff disse tilgang
           til <strong>Gjestenettverk</strong>.
-          <br />
           <br />
           Husk at du samtidig må gi <strong>Drift nettverk</strong> tilgang til{" "}
           <strong>Svitsj 3</strong>.
@@ -165,8 +164,7 @@ export const tasks: Task[] = [
           Konfigurer <strong>Konsulent Gruppe</strong> og skaff desse tilgang
           til <strong>Gjestenettverk</strong>.
           <br />
-          <br />
-          Hugs at du samtidig må gi <strong>Drift nettverk</strong> tilgang til{" "}
+          Hugs at du samtidig må gje <strong>Drift nettverk</strong> tilgang til{" "}
           <strong>Svitsj 3</strong>.
         </F>
       ),
@@ -186,7 +184,6 @@ export const tasks: Task[] = [
         <F>
           Kople til <strong>Aksesspunkt</strong> mot alle VLAN.
           <br />
-          <br />
           Opprett <strong>Ansatt-</strong> og <strong>Gjest</strong> trådløst{" "}
           nettverk og tildel disse passende VLAN ved å trykke på{" "}
           <strong>trådløs ikonet</strong> over <strong>Aksesspunkt</strong>.
@@ -203,7 +200,6 @@ export const tasks: Task[] = [
         <F>
           Kopl til <strong>Aksesspunkt</strong> mot alle VLAN.
           <br />
-          <br />
           Opprett <strong>Tilsett-</strong> og <strong>Gjest</strong> trådlaust{" "}
           nettverk og tildel desse passande VLAN ved å trykka på{" "}
           <strong>trådlaus ikonet</strong> over <strong>Aksesspunkt</strong>.
@@ -211,7 +207,7 @@ export const tasks: Task[] = [
       ),
       completed: (
         <F>
-          <strong>Helt riktig!</strong> <span className="icon-green">✔</span>
+          <strong>Helt rett!</strong> <span className="icon-green">✔</span>
         </F>
       ),
     },

@@ -44,26 +44,26 @@ const Help: React.FC<Props> = ({ onClose, isNN }) => {
                 <p>
                   VLAN er ein teknikk for å{" "}
                   <strong>
-                    dela opp eit fysisk nettverk i fleire logiske nettverk
+                    dele opp eit fysisk nettverk i fleire logiske nettverk
                   </strong>
-                  . Dette blir brukt for å kontrollera kva einingane skal få
+                  . Dette blir brukt for å kontrollere kva einingane skal få
                   tilgang til i nettverket .
                 </p>
                 <p>
-                  Vi har allerde sett opp tre tenkte nettverk:{" "}
-                  <strong>Ansatt-, Drift- og Gjestenettverk</strong>.<br />
+                  Vi har allereie sett opp tre tenkte nettverk:{" "}
+                  <strong>Tilsett-, Drift- og Gjestenettverk</strong>.<br />
                   Når nummerering er tildelt vil all konfigurering gjerast ved å
-                  klikka på følgjande aktive ikon:
+                  klikke på følgjande aktive ikon:
                 </p>
                 <Flex>
-                  <div>Kablet nettverk: </div>
+                  <div>Kabla nettverk: </div>
                   <img src={ConnectorIMG} alt="Kablet nettverk symbol" />
                   <div>Trådlaust nettverk: </div>
                   <img src={WifiIMG} alt="Trådløst nettverk symbol" />
                 </Flex>
                 <p>
-                  Kvart ikon vil gi valmoglegheit for kva nettverk du ønsker å
-                  nytta for denne porten.
+                  Kvart ikon vil gje deg høve til å velje kva nettverk du ønsker
+                  å nytte for denne porten.
                 </p>
               </>
             ) : (
@@ -107,7 +107,7 @@ const Help: React.FC<Props> = ({ onClose, isNN }) => {
               <strong>{isNN ? "Sambandslogikk" : "Forbindelseslogikk"}</strong>
             </p>
             <Flex>
-              {isNN ? "Døme" : "Eksempel"} under viser for drift nettverk:{" "}
+              {isNN ? "Dømet" : "Eksempel"} under viser for Drift nettverk:{" "}
               <img src={VLANex2} alt="Eksempel" />{" "}
             </Flex>
             <Flex className="konfimages">
@@ -133,9 +133,9 @@ const Help: React.FC<Props> = ({ onClose, isNN }) => {
                 </p>
                 <p>
                   Vi nyttar <strong>stipla linje</strong> for alle samband som{" "}
-                  <strong>IKKJE er konfigurerte riktig</strong>.<br />
+                  <strong>IKKJE er konfigurerte rett</strong>.<br />
                   Vi nyttar <strong>heltrukket linje</strong> for alle samband
-                  som er konfigurerte riktig.
+                  som er konfigurerte rett.
                 </p>
               </>
             ) : (
@@ -176,6 +176,7 @@ const Container = styled.div`
   right: 0;
   background: #deebf6f2;
   z-index: 200;
+  min-height: 640px;
 `;
 
 const PageNum = styled.footer`
@@ -185,6 +186,7 @@ const PageNum = styled.footer`
   align-items: center;
   font-weight: bold;
   font-size: 1.2em;
+  margin-top: auto;
   span,
   button:disabled {
     opacity: 0.6;
@@ -212,11 +214,20 @@ const Main = styled.div`
   transform: translate(-50%, -50%);
   text-align: center;
   font-size: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 640px;
   @media (max-height: 700px) and (max-width: 770px) {
     transform: translate(-50%, 0px);
     top: var(--margin-xl);
     font-size: 1rem;
     max-width: 650px;
+    min-height: 580px !important;
+    h2 {
+      font-size: 2rem !important;
+    }
   }
   width: 80%;
   max-width: 700px;

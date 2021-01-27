@@ -10,6 +10,7 @@ type Props = {
   onChange: (newVal: State) => void;
   disabled?: boolean;
   faded?: boolean;
+  isNN?: boolean;
 };
 
 export type State = {
@@ -24,6 +25,7 @@ const AssignNetworks: React.FC<Props> = ({
   onChange: onValuesUpdate,
   disabled,
   faded,
+  isNN,
 }) => {
   const [state, setState] = useState<State>({
     admin: "",
@@ -94,7 +96,7 @@ const AssignNetworks: React.FC<Props> = ({
             disabled={disabled}
             className={multipleSame("ansatt") ? "wrong" : ""}
           />
-          - Ansatt nettverk
+          - {isNN ? "Tilsett" : "Ansatt"} nettverk
         </li>
         <li>
           <NetworkIcon src={VLAN2} alt="VLAN 2 Ikon" />

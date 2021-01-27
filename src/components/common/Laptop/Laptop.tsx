@@ -6,6 +6,8 @@ import { Pos } from "../../../types/common";
 import LaptopIMG from "../../../assets/symbols/Laptop.svg";
 import LabelAnsatt from "../../../assets/labels/ansatt_tradlost_label.svg";
 import LabelGjest from "../../../assets/labels/gjest_tradlost_label.svg";
+import LabelGjestNN from "../../../assets/labels/gjest_tradlaust.svg";
+import LabelAnsattNN from "../../../assets/labels/tilsett_tradlaust.svg";
 import MobileIMG from "../../../assets/symbols/Mobile.svg";
 import Lines, { Line } from "../Lines/Lines";
 
@@ -15,6 +17,7 @@ type Props = {
   faded?: boolean;
   active?: boolean;
   hasPhone?: boolean;
+  isNN?: boolean;
 };
 
 const PC: React.FC<Props> = ({
@@ -23,9 +26,12 @@ const PC: React.FC<Props> = ({
   faded,
   active,
   hasPhone,
+  isNN,
 }) => {
   const [isActive, setActive] = React.useState(active);
-  const labelImg = hasPhone ? LabelGjest : LabelAnsatt;
+  let gjestLabel = isNN ? LabelGjestNN : LabelGjest;
+  let ansattLabel = isNN ? LabelAnsattNN : LabelAnsatt;
+  const labelImg = hasPhone ? gjestLabel : ansattLabel;
 
   React.useEffect(() => {
     if (!isActive && active) {

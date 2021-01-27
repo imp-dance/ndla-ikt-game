@@ -6,6 +6,7 @@ import SmallTreeIMG from "../../../assets/background/tree_1.svg";
 import LargeTreeIMG from "../../../assets/background/tree_2.svg";
 import MediumTreeIMG from "../../../assets/background/tree_3.svg";
 import BirdIMG from "../../../assets/background/Bird.svg";
+import BirdIMG2 from "../../../assets/background/Bird_2.svg";
 import WindIMG from "../../../assets/background/Wind.svg";
 import SunIMG from "../../../assets/background/Sun.svg";
 import SmallCircleIMG from "../../../assets/background/Circle_Small.svg";
@@ -25,7 +26,6 @@ const Background: React.FC<Props> = ({ disabled }) => {
       <Cloud1 src={Cloud1IMG} role="presentation" />
       <Tree1 src={SmallTreeIMG} role="presentation" />
       <Tree2 src={LargeTreeIMG} role="presentation" />
-      <Bird src={BirdIMG} role="presentation" />
       <Circle
         pos={{
           bottom: "22%",
@@ -123,7 +123,46 @@ const Background: React.FC<Props> = ({ disabled }) => {
       <Cloud2 src={Cloud2IMG} role="presentation" />
       <Cloud3 src={Cloud2IMG} role="presentation" />
       <Sun src={SunIMG} role="presentation" />
+      <Bird />
     </BGContainer>
+  );
+};
+
+const Bird: React.FC = () => {
+  const [src, setSrc] = React.useState(BirdIMG);
+  React.useEffect(() => {
+    let mounted = true;
+    const BLINK_SPEED = 200;
+    const REPEAT_DELAY = 5000;
+    const blinkBird = () => {
+      if (mounted) {
+        setSrc(BirdIMG2);
+        setTimeout(() => {
+          setSrc(BirdIMG);
+          setTimeout(() => {
+            setSrc(BirdIMG2);
+            setTimeout(() => {
+              setSrc(BirdIMG);
+            }, BLINK_SPEED);
+          }, BLINK_SPEED);
+        }, BLINK_SPEED);
+      }
+    };
+    if (src === BirdIMG) {
+      setTimeout(() => {
+        blinkBird();
+      }, REPEAT_DELAY);
+    }
+    return () => {
+      mounted = false;
+    };
+  }, [src]);
+  return (
+    <StyledBird
+      className={src === BirdIMG2 ? "flying" : ""}
+      src={src}
+      role="presentation"
+    />
   );
 };
 
@@ -182,10 +221,24 @@ const Cloud1 = styled(BGElement)`
   top: 25%;
   left: 4%;
   transition: transform 0.6s ease-in-out;
+  animation: windMove 12s ease-in infinite alternate;
+  @keyframes windMove {
+    0% {
+      transform: translate(0px, 0px);
+    }
+    50% {
+      transform: translate(28px, 0px);
+    }
+    100% {
+      transform: translate(0px, 0px);
+    }
+  }
   @media screen and (max-width: 1600px) {
+    animation: none;
     transform: translate(-500px, -10px);
   }
   @media (max-height: 800px) {
+    animation: none;
     transform: translate(-500px, -10px);
   }
 `;
@@ -229,13 +282,17 @@ const Tree4 = styled(BGElement)`
   }
 `;
 
-const Bird = styled(BGElement)`
+const StyledBird = styled(BGElement)`
   position: absolute;
   bottom: calc(40px + 175px);
   left: 2%;
   transition: transform 0.6s ease-in-out;
+  &.flying {
+    transform: translate(0px, -10px) rotate(3deg);
+  }
   @media screen and (max-width: 1400px) {
-    transform: translate(-300px, -10px);
+    transform: translate(-300px, -10px) !important;
+    animation: none !important;
   }
 `;
 
@@ -244,7 +301,7 @@ const Wind1 = styled(BGElement)`
   bottom: 45%;
   left: 2%;
   transition: transform 0.6s ease-in;
-  animation: windMove1 17s ease-in infinite alternate;
+  animation: windMove1 12s ease-in infinite alternate;
   @keyframes windMove1 {
     0% {
       transform: translate(0px, 0px);
@@ -258,8 +315,9 @@ const Wind1 = styled(BGElement)`
   }
   @media screen and (max-width: 1380px) {
     transform: translate(-300px, -10px);
+    animation: none;
   }
-  @media screen and (max-width: 1500px) {
+  @media screen and (max-width: 1200px) {
     transform: translate(-300px, -10px);
     animation: none;
   }
@@ -270,7 +328,7 @@ const Wind3 = styled(BGElement)`
   left: 35%;
   top: 19%;
   transition: transform 0.6s ease-in;
-  animation: windMove10 25s ease infinite alternate;
+  animation: windMove10 12s ease infinite alternate;
   @keyframes windMove10 {
     0% {
       transform: translate(0px, 0px);
@@ -293,7 +351,7 @@ const Wind2 = styled(BGElement)`
   bottom: 40%;
   right: 4%;
   transition: transform 0.6s ease-in;
-  animation: windMove3 17s ease-in infinite alternate;
+  animation: windMove3 12s ease-in infinite alternate;
   @keyframes windMove3 {
     0% {
       transform: translate(0px, 0px);
@@ -377,13 +435,13 @@ const Cloud3 = styled(BGElement)`
   top: 23%;
   right: 10%;
   transition: transform 0.6s ease-in;
-  animation: windMove 10s ease-in infinite alternate;
-  @keyframes windMove {
+  animation: windMove9 10s ease-in infinite alternate;
+  @keyframes windMove9 {
     0% {
       transform: translate(0px, 0px);
     }
     50% {
-      transform: translate(5px, 0px);
+      transform: translate(18px, 0px);
     }
     100% {
       transform: translate(0px, 0px);

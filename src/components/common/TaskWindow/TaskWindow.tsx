@@ -137,7 +137,7 @@ const TaskWindow: React.FC<Props> = ({
             ) : (
               <p>
                 {isNN
-                  ? "Konfigurer heile nettverket utan hjelp. Sjå kor raskt du kan gjera dette"
+                  ? "Konfigurer heile nettverket utan hjelp. Sjå kor raskt du kan gjere dette"
                   : "Konfigurer hele nettverket uten hjelp. Se hvor raskt du kan gjøre dette."}
               </p>
             )}

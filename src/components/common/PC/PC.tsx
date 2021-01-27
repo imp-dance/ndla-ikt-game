@@ -9,6 +9,7 @@ import PCLabelDrift from "../../../assets/labels/drift_pc_label.svg";
 import PCLabelAnsatt from "../../../assets/labels/ansatt_tradlost_label.svg";
 import PCLabelGjest from "../../../assets/labels/gjest_tradlost_label.svg";
 import PCLabelAGroup from "../../../assets/labels/ansatt_gruppe_label.svg";
+import PCLabelAGroupNN from "../../../assets/labels/tilsett_gruppe.svg";
 import PCLabelKGroup from "../../../assets/labels/konsulent_gruppe_label.svg";
 
 type Props = {
@@ -17,15 +18,23 @@ type Props = {
   id: number;
   faded?: boolean;
   active?: boolean;
+  isNN?: boolean;
 };
 
-const PC: React.FC<Props> = ({ pos, buildingStyles, id, faded, active }) => {
+const PC: React.FC<Props> = ({
+  pos,
+  buildingStyles,
+  id,
+  faded,
+  active,
+  isNN,
+}) => {
   const [isActive, setActive] = React.useState(active);
   const labels = [
     PCLabelAnsatt,
     PCLabelDrift,
     PCLabelGjest,
-    PCLabelAGroup,
+    isNN ? PCLabelAGroupNN : PCLabelAGroup,
     PCLabelKGroup,
   ];
   const getWidth = (id: number) => {

@@ -14,13 +14,13 @@ export function MainMenu(props: IMainMenuProps) {
       <h1>Velkommen</h1>
       <h3>
         {props.isNN
-          ? "Simuleringen vil gi ei forståing for korleis VLAN skal konfigurerast i eit tenkt nettverk."
+          ? "Simuleringa vil gje ei forståing for korleis du skal konfigurere VLAN i eit tenkt nettverk."
           : "Simuleringen vil gi en forståelse for hvordan VLAN skal konfigureres i et tenkt nettverk."}
       </h3>
       <p>
         {props.isNN ? (
           <>
-            Me tilrår alle å trykka <strong>Oppgåve</strong> først for å få ei
+            Me tilrår alle å trykke <strong>Oppgåve</strong> først for å få ei
             trinnvis innføring med 6 korte oppgåver.
           </>
         ) : (
@@ -33,8 +33,8 @@ export function MainMenu(props: IMainMenuProps) {
       <p>
         {props.isNN ? (
           <>
-            Vel <strong>Ekspertkonfigurasjon</strong> dersom du ønsker å testa
-            simuleringen utan hjelp.
+            Vel <strong>Ekspertkonfigurasjon</strong> dersom du ønsker å teste
+            simuleringa utan hjelp.
           </>
         ) : (
           <>
