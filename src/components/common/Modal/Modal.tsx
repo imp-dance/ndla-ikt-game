@@ -16,6 +16,7 @@ export interface IModalProps {
   onSave: (newValues: Connection) => void;
   onClose: () => void;
   assignedNetworks?: NetworkState;
+  isNN?: boolean;
 }
 
 export default function Modal(props: IModalProps) {
@@ -44,6 +45,7 @@ export default function Modal(props: IModalProps) {
             connections={connections}
             assignedNetworks={props.assignedNetworks}
             onChange={onChange}
+            isNN={props.isNN}
           />
         ))}
         <ButtonContainer>
@@ -60,6 +62,7 @@ interface IListItemProps {
   assignedNetworks?: NetworkState;
   connections: Connection;
   onChange: (index: number, value: any) => void;
+  isNN?: boolean;
 }
 
 const ListItem: React.FC<IListItemProps> = ({
@@ -67,6 +70,7 @@ const ListItem: React.FC<IListItemProps> = ({
   connections,
   assignedNetworks,
   onChange,
+  isNN,
 }) => {
   const getIcon = (index: number) => {
     switch (index) {
@@ -81,7 +85,7 @@ const ListItem: React.FC<IListItemProps> = ({
   const getLabel = (index: number) => {
     switch (index) {
       case 0:
-        return "Ansatt nettverk";
+        return isNN ? "Tilsett nettverk" : "Ansatt nettverk";
       case 1:
         return "Drift nettverk";
       case 2:

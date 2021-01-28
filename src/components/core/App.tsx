@@ -118,7 +118,7 @@ function App() {
   const [finishedTime, setFinishedTime] = useState<number>();
   const [expertModeStarted, setExpertModeStarted] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);
-  const [isNyNorsk, setNyNorsk] = useState(true);
+  const [isNyNorsk] = useState(true);
 
   const resetTask = () => {
     const state = resetStates[`${currentTask}`];
@@ -142,6 +142,10 @@ function App() {
         bottomRight: state["svitsj3"].bottomRight,
         bottomLeft: state["svitsj3"].bottomLeft,
       },
+    });
+    setAPState({
+      enabled: [false, false, false],
+      networks: ["", "", ""],
     });
   };
 
@@ -409,6 +413,10 @@ function App() {
         [false, true, true],
         (connectionState["svitsj2"] as any).bottomRight as any[]
       );
+      const switch2Condition3 = arraysEqual(
+        [true, true, true],
+        (connectionState["svitsj2"] as any).topRight as any[]
+      );
       const switch3Condition = arraysEqual(
         [false, true, true],
         (connectionState["svitsj3"] as any).topLeft as any[]
@@ -456,6 +464,7 @@ function App() {
         switch1Condition3 &&
         switch2Condition1 &&
         switch2Condition2 &&
+        switch2Condition3 &&
         switch3Condition &&
         ansattGruppeCondition &&
         serverCondition &&
@@ -474,7 +483,7 @@ function App() {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentTask, connectionState]);
+  }, [currentTask, connectionState, apState]);
 
   const completeExpertMode = () => {
     if (!finishedTime) {
@@ -584,7 +593,11 @@ function App() {
         return ruterCondition && switch1Condition1;
       }
       if (id === "drift-pc") {
-        return ruterCondition && switch1Condition1 && driftCondition;
+        return (
+          driftCondition &&
+          (connectionState["svitsj1"] as any).topRight[1] &&
+          (connectionState.ruter as any)[1]
+        );
       }
       if (id === "svitsj1.bottomRight") {
         return ruterCondition && switch1Condition1 && switch1Condition2;
@@ -642,6 +655,9 @@ function App() {
         [true, true, true],
         connectionState.ruter as any[]
       );
+      const ruterConditionB =
+        (connectionState["ruter"] as any)[0] &&
+        (connectionState["ruter"] as any)[1];
       const driftCondition = arraysEqual(
         [false, true, false],
         (connectionState["svitsj1"] as any).bottomLeft as any[]
@@ -650,14 +666,23 @@ function App() {
         [true, true, true],
         (connectionState["svitsj1"] as any).topRight as any[]
       );
+      const switch1Condition1b =
+        (connectionState["svitsj1"] as any).topRight[0] &&
+        (connectionState["svitsj1"] as any).topRight[1];
       const switch1Condition2 = arraysEqual(
         [true, true, true],
         (connectionState["svitsj1"] as any).bottomRight as any[]
       );
+      const switch1Condition2b =
+        (connectionState["svitsj1"] as any).bottomRight[0] &&
+        (connectionState["svitsj1"] as any).bottomRight[1];
       const switch2Condition1 = arraysEqual(
         [true, true, true],
         (connectionState["svitsj2"] as any).topLeft as any[]
       );
+      const switch2Condition1b =
+        (connectionState["svitsj1"] as any).topRight[0] &&
+        (connectionState["svitsj1"] as any).topRight[1];
       const switch2Condition2 = arraysEqual(
         [false, true, true],
         (connectionState["svitsj2"] as any).bottomRight as any[]
@@ -689,7 +714,7 @@ function App() {
         return ruterCondition && switch1Condition1;
       }
       if (id === "drift-pc") {
-        return ruterCondition && switch1Condition1 && driftCondition;
+        return ruterConditionB && switch1Condition1b && driftCondition;
       }
       if (id === "svitsj1.bottomRight") {
         return ruterCondition && switch1Condition1 && switch1Condition2;
@@ -715,20 +740,26 @@ function App() {
       }
       if (id === "ansatt-gruppe") {
         return (
-          ruterCondition &&
-          switch1Condition1 &&
-          switch1Condition2 &&
-          switch2Condition1 &&
+          ruterConditionB &&
+          switch1Condition1b &&
+          switch1Condition2b &&
+          switch2Condition1b &&
           ansattGruppeCondition
         );
       }
       if (id === "svitsj1.topLeft") {
-        return ruterCondition && switch1Condition1 && switch1Condition3;
+        return ruterConditionB && switch1Condition1b && switch1Condition3;
       }
       if (id === "server") {
+        console.log(
+          ruterConditionB,
+          switch1Condition1b,
+          switch1Condition3,
+          serverCondition
+        );
         return (
-          ruterCondition &&
-          switch1Condition1 &&
+          ruterConditionB &&
+          switch1Condition1b &&
           switch1Condition3 &&
           serverCondition
         );
@@ -769,7 +800,7 @@ function App() {
         (connectionState["svitsj2"] as any).bottomRight as any[]
       );
       const switch2Condition3 = arraysEqual(
-        [true, false, true],
+        [true, true, true],
         (connectionState["svitsj2"] as any).topRight as any[]
       );
       const switch3Condition = arraysEqual(
@@ -1174,9 +1205,7 @@ function App() {
       )}
       {!menuOpen && (
         <Building
-          disabled={
-            expertMode ? !expertModeStarted || !areNetworksConfigured() : false
-          }
+          disabled={false}
           content={(buildingStyles: React.CSSProperties) => (
             <F>
               <F>
@@ -1479,6 +1508,7 @@ function App() {
           onClose={() => setModalOpen(false)}
           value={getConnection(modalID)}
           currentID={modalID}
+          isNN={isNyNorsk}
         />
       )}
       {wifiModalID && getConnection(wifiModalID) && (

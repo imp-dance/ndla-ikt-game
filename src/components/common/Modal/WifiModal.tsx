@@ -17,6 +17,7 @@ export interface IModalProps {
   onClose: () => void;
   assignedNetworks?: NetworkState;
   currentActive: Connection;
+  isNN?: boolean;
 }
 
 export default function WifiModal(props: IModalProps) {
@@ -48,6 +49,7 @@ export default function WifiModal(props: IModalProps) {
                   connections={connections}
                   assignedNetworks={props.assignedNetworks}
                   onChange={onChange}
+                  isNN={props.isNN}
                 />
               )
           )
@@ -68,6 +70,7 @@ interface IListItemProps {
   assignedNetworks?: NetworkState;
   connections: Connection;
   onChange: (index: number, value: any) => void;
+  isNN?: boolean;
 }
 
 const ListItem: React.FC<IListItemProps> = ({
@@ -75,6 +78,7 @@ const ListItem: React.FC<IListItemProps> = ({
   connections,
   assignedNetworks,
   onChange,
+  isNN,
 }) => {
   const getIcon = (index: number) => {
     switch (index) {
@@ -89,14 +93,13 @@ const ListItem: React.FC<IListItemProps> = ({
   const getLabel = (index: number) => {
     switch (index) {
       case 0:
-        return "Ansatt nettverk";
+        return isNN ? "Tilsett trådlaust" : "Ansatt trådløst";
       case 1:
-        return "Drift nettverk";
+        return `Drift ${isNN ? "trådlaust" : "trådløst"}`;
       case 2:
-        return "Gjestenettverk";
+        return `Gjest ${isNN ? "trådlaust" : "trådløst"}`;
     }
   };
-  const key = index === 0 ? "ansatt" : index === 1 ? "admin" : "gjest";
   return (
     <label>
       <input

@@ -35,6 +35,7 @@ const SwitchToServer: React.FC<Props> = ({
         <Lines>
           <Line active={active && active[1]} horizontal faded={faded} />
           <Line active={active && active[0]} horizontal faded={faded} />
+          <Line active={true} horizontal faded={faded} />
         </Lines>
       </LineContainer>
     </DisplayWires>
@@ -51,7 +52,11 @@ const LineContainer = styled.div`
     }
     &:nth-child(2) {
       right: 100%;
-      width: calc(calc(var(--bWidth) / 100) * 7.3);
+      width: calc(calc(var(--bWidth) / 100) * 3);
+    }
+    &:nth-child(3) {
+      right: calc(100% + calc(calc(var(--bWidth) / 100) * 4.5));
+      width: calc(calc(var(--bWidth) / 100) * 3);
     }
   }
 `;

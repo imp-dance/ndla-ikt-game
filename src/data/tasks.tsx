@@ -18,7 +18,14 @@ export const tasks: Task[] = [
     number: 1,
     title: "Oppgavene",
     label: {
-      initial: "Sett VLAN nummer på alle tre nettverkene i simuleringen.",
+      initial: (
+        <F>
+          Sett VLAN nummer på alle tre nettverkene i simuleringen.
+          <br />
+          <br />
+          Trykk på ikonet oppe i høgre hjørne for hjelp.
+        </F>
+      ),
       completed: (
         <F>
           <strong>Flott!</strong> <span className="icon-green">✔</span> Gå til
@@ -27,7 +34,14 @@ export const tasks: Task[] = [
       ),
     },
     labelNN: {
-      initial: "Sett VLAN nummer på alle tre nettverka i simuleringen.",
+      initial: (
+        <F>
+          Sett VLAN nummer på alle tre nettverka i simuleringen.
+          <br />
+          <br />
+          Trykk på ikonet oppe i høgre hjørne for hjelp.
+        </F>
+      ),
       completed: (
         <F>
           <strong>Flott!</strong> <span className="icon-green">✔</span> Gå til
@@ -45,6 +59,9 @@ export const tasks: Task[] = [
           Lag gyldig forbindelse mellom <strong>Ruter</strong> via{" "}
           <strong>Svitsj 1</strong> til <strong>Drift PC</strong>. Kun{" "}
           <strong>Drift nettverk</strong> skal foreløpig ha tilgang.
+          <br />
+          Husk at Drift alltid må ha tilgang til Svitsjene for å kunne
+          konfigurere disse riktig
         </F>
       ),
       completed: (
@@ -60,6 +77,9 @@ export const tasks: Task[] = [
           Lag gyldig samband mellom <strong>Ruter</strong> via{" "}
           <strong>Svitsj 1</strong> til <strong>Drift PC</strong>. Berre{" "}
           <strong>Drift nettverk</strong> skal førebels ha tilgang.
+          <br />
+          Husk at Drift alltid må ha tilgang til Svitsjene for å kunne
+          konfigurere disse riktig
         </F>
       ),
       completed: (

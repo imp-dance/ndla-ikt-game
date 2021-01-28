@@ -1,10 +1,6 @@
 import * as React from "react";
 
-import VLAN1 from "../../../assets/symbols/VLAN1_Employee_Network.svg";
-import VLAN2 from "../../../assets/symbols/VLAN2_Admin_Network.svg";
-import VLAN3 from "../../../assets/symbols/VLAN3_Guest_Network.svg";
 import { State as NetworkState } from "../AssignNetworks/AssignNetworks";
-import NetworkIcon from "../NetworkIcon/NetworkIcon";
 import styled from "styled-components";
 import zIndexes from "../../../styles/zIndexes";
 
@@ -15,6 +11,7 @@ export interface IModalProps {
   onSave: (newValues: APConnection) => void;
   onClose: () => void;
   assignedNetworks?: NetworkState;
+  isNN?: boolean;
 }
 
 type APConnection = {
@@ -54,7 +51,7 @@ export default function Modal(props: IModalProps) {
           <thead>
             <tr>
               <th>Aktiver</th>
-              <th>Nettverksnavn</th>
+              <th>Nettverksnavn / SSID</th>
               <th>VLAN</th>
             </tr>
           </thead>
@@ -66,6 +63,7 @@ export default function Modal(props: IModalProps) {
                 connections={connections}
                 assignedNetworks={props.assignedNetworks}
                 onChange={onChange}
+                isNN={props.isNN}
               />
             ))}
           </tbody>
@@ -84,6 +82,7 @@ interface IListItemProps {
   assignedNetworks?: NetworkState;
   connections: APConnection;
   onChange: (index: number, value: any) => void;
+  isNN?: boolean;
 }
 
 const ListItem: React.FC<IListItemProps> = ({
@@ -91,25 +90,16 @@ const ListItem: React.FC<IListItemProps> = ({
   connections,
   assignedNetworks,
   onChange,
+  isNN,
 }) => {
-  const getIcon = (index: number) => {
-    switch (index) {
-      case 0:
-        return VLAN1;
-      case 1:
-        return VLAN2;
-      case 2:
-        return VLAN3;
-    }
-  };
   const getLabel = (index: number) => {
     switch (index) {
       case 0:
-        return "Ansatt nettverk";
+        return isNN ? "Tilsett trådlaust" : "Ansatt trådløst";
       case 1:
-        return "Drift nettverk";
+        return `Drift ${isNN ? "trådlaust" : "trådløst"}`;
       case 2:
-        return "Gjestenettverk";
+        return `Gjest ${isNN ? "trådlaust" : "trådløst"}`;
     }
   };
 
