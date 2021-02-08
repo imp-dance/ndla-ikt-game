@@ -89,7 +89,7 @@ const ListItem: React.FC<IListItemProps> = ({
       case 1:
         return "Drift nettverk";
       case 2:
-        return "Gjestenettverk";
+        return "Gjest nettverk";
     }
   };
   const key = index === 0 ? "ansatt" : index === 1 ? "admin" : "gjest";

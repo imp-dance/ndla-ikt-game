@@ -20,7 +20,7 @@ export const tasks: Task[] = [
     label: {
       initial: (
         <F>
-          Sett VLAN nummer på alle tre nettverkene i simuleringen.
+          Sett VLAN-nummer på alle tre nettverkene i simuleringen.
           <br />
           <br />
           Trykk på ikonet oppe i høgre hjørne for hjelp.
@@ -36,7 +36,7 @@ export const tasks: Task[] = [
     labelNN: {
       initial: (
         <F>
-          Sett VLAN nummer på alle tre nettverka i simuleringen.
+          Set VLAN-nummer på alle tre nettverka i simuleringa.
           <br />
           <br />
           Trykk på ikonet oppe i høgre hjørne for hjelp.
@@ -56,12 +56,9 @@ export const tasks: Task[] = [
     label: {
       initial: (
         <F>
-          Lag gyldig forbindelse mellom <strong>Ruter</strong> via{" "}
-          <strong>Svitsj 1</strong> til <strong>Drift PC</strong>. Kun{" "}
-          <strong>Drift nettverk</strong> skal foreløpig ha tilgang.
-          <br />
-          Husk at Drift alltid må ha tilgang til Svitsjene for å kunne
-          konfigurere disse riktig
+          Sett opp en <strong>VLAN-forbindelse</strong> for det logiske
+          nettverket <strong>Drift nettverk</strong> mellom{" "}
+          <strong>Ruter</strong> og <strong>Drift PC</strong>
         </F>
       ),
       completed: (
@@ -74,12 +71,9 @@ export const tasks: Task[] = [
     labelNN: {
       initial: (
         <F>
-          Lag gyldig samband mellom <strong>Ruter</strong> via{" "}
-          <strong>Svitsj 1</strong> til <strong>Drift PC</strong>. Berre{" "}
-          <strong>Drift nettverk</strong> skal førebels ha tilgang.
-          <br />
-          Husk at Drift alltid må ha tilgang til Svitsjene for å kunne
-          konfigurere disse riktig
+          Set opp eit <strong>VLAN-samband</strong> for det logiske nettverket{" "}
+          <strong>Drift nettverk</strong> mellom <strong>Ruter</strong> og{" "}
+          <strong>Drift PC</strong>.
         </F>
       ),
       completed: (
@@ -96,10 +90,13 @@ export const tasks: Task[] = [
     label: {
       initial: (
         <F>
-          Konfigurer korrekt VLAN forbindelse fra <strong>Ruter</strong>, via{" "}
-          <strong>Svitsj 1</strong> og <strong>Svitsj 2</strong> til{" "}
-          <strong>Ansatt Gruppe</strong>. Husk at du samtidig må utvide{" "}
-          <strong>Drift nettverk</strong> til <strong>Svitsj 2</strong>.
+          Koble opp det logiske nettverket <strong>Ansatt nettverk</strong> fra{" "}
+          <strong>Ruter</strong> til <strong>Ansatt gruppe</strong> via{" "}
+          <strong>Svitsj 1</strong> og <strong>Svitsj 2</strong>.
+          <br />
+          Gi også <strong>Svitsj 2</strong> tilgang til{" "}
+          <strong>Drift nettverk</strong> slik at enheten kan styres via dette
+          nettverket.
         </F>
       ),
       completed: (
@@ -112,10 +109,13 @@ export const tasks: Task[] = [
     labelNN: {
       initial: (
         <F>
-          Konfigurer korrekt VLAN samband frå <strong>Ruter</strong>, via{" "}
-          <strong>Svitsj 1</strong> og <strong>Svitsj 2</strong> til{" "}
-          <strong>Tilsett Gruppe</strong>. Hugs at du samtidig må utvide{" "}
-          <strong>Drift nettverk</strong> til <strong>Svitsj 2</strong>.
+          Kople opp det logiske nettverket <strong>Tilsett nettverk</strong> frå{" "}
+          <strong>Ruter</strong> til <strong>Tilsett gruppe</strong> via{" "}
+          <strong>Svitsj 1</strong> og <strong>Svitsj 2</strong>.
+          <br />
+          Gi også <strong>Svitsj 2</strong> tilgang til{" "}
+          <strong>Drift nettverk</strong> slik at eininga kan styrast via dette
+          nettverket.
         </F>
       ),
       completed: (
@@ -133,7 +133,8 @@ export const tasks: Task[] = [
       initial: (
         <F>
           Konfigurer korrekt VLAN mot <strong>Server</strong>, slik at både{" "}
-          <strong>ansatte</strong> og <strong>drift</strong> får tilgang.
+          <strong>Ansatt gruppe</strong> og <strong>Drift gruppe</strong> får
+          tilgang.
         </F>
       ),
       completed: (
@@ -147,7 +148,8 @@ export const tasks: Task[] = [
       initial: (
         <F>
           Konfigurer korrekt VLAN mot <strong>Server</strong>, slik at både{" "}
-          <strong>tilsett</strong> og <strong>drift</strong> får tilgang.
+          <strong>Tilsett gruppe</strong> og <strong>Drift gruppe</strong> får
+          tilgang.
         </F>
       ),
       completed: (
@@ -164,8 +166,8 @@ export const tasks: Task[] = [
     label: {
       initial: (
         <F>
-          Konfigurer <strong>Konsulent Gruppe</strong> og skaff disse tilgang
-          til <strong>Gjestenettverk</strong>.
+          Konfigurer <strong>Konsulent Gruppe</strong> og skaff gruppa tilgang
+          til <strong>Gjest nettverk</strong>.
           <br />
           Husk at du samtidig må gi <strong>Drift nettverk</strong> tilgang til{" "}
           <strong>Svitsj 3</strong>.
@@ -181,11 +183,11 @@ export const tasks: Task[] = [
     labelNN: {
       initial: (
         <F>
-          Konfigurer <strong>Konsulent Gruppe</strong> og skaff desse tilgang
-          til <strong>Gjestenettverk</strong>.
+          Konfigurer <strong>Konsulent Gruppe</strong> og skaff gruppa tilgang
+          til <strong>Gjest nettverk</strong>.
           <br />
-          Hugs at du samtidig må gje <strong>Drift nettverk</strong> tilgang til{" "}
-          <strong>Svitsj 3</strong>.
+          Hugs at du samstundes må gi <strong>Drift nettverk</strong> tilgang
+          til <strong>Svitsj 3</strong>.
         </F>
       ),
       completed: (
@@ -202,11 +204,12 @@ export const tasks: Task[] = [
     label: {
       initial: (
         <F>
-          Kople til <strong>Aksesspunkt</strong> mot alle VLAN.
+          Koble til <strong>Aksesspunkt</strong> mot alle VLAN.
           <br />
-          Opprett <strong>Ansatt-</strong> og <strong>Gjest</strong> trådløst{" "}
-          nettverk og tildel disse passende VLAN ved å trykke på{" "}
-          <strong>trådløs ikonet</strong> over <strong>Aksesspunkt</strong>.
+          Opprett nettverkene <strong>Ansatt trådløst</strong> og{" "}
+          <strong>Gjest trådløst</strong> og tildel dem passende VLAN ved å
+          trykke på <strong>trådløs-ikonet</strong> over{" "}
+          <strong>Aksesspunkt</strong>.
         </F>
       ),
       completed: (
@@ -218,11 +221,12 @@ export const tasks: Task[] = [
     labelNN: {
       initial: (
         <F>
-          Kopl til <strong>Aksesspunkt</strong> mot alle VLAN.
+          Kople til <strong>Aksesspunkt</strong> mot alle VLAN.
           <br />
-          Opprett <strong>Tilsett-</strong> og <strong>Gjest</strong> trådlaust{" "}
-          nettverk og tildel desse passande VLAN ved å trykka på{" "}
-          <strong>trådlaus ikonet</strong> over <strong>Aksesspunkt</strong>.
+          Opprett nettverka <strong>Tilsett trådlaust</strong> og{" "}
+          <strong>Gjest trådlaust</strong>
+          og tildel dei passande VLAN ved å trykke på{" "}
+          <strong>trådlaus-ikonet</strong> over <strong>Aksesspunkt</strong>.
         </F>
       ),
       completed: (

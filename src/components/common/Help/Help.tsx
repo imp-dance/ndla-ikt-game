@@ -47,14 +47,17 @@ const Help: React.FC<Props> = ({ onClose, isNN }) => {
                   <strong>
                     dele opp eit fysisk nettverk i fleire logiske nettverk
                   </strong>
-                  . Dette blir brukt for å kontrollere kva einingane skal få
-                  tilgang til i nettverket .
+                  . Vi bruker VLAN for å kontrollere kva einingane skal få
+                  tilgang til i nettverket.
                 </p>
                 <p>
-                  Vi har allereie sett opp tre tenkte nettverk:{" "}
-                  <strong>Tilsett-, Drift- og Gjestenettverk</strong>.<br />
-                  Når nummerering er tildelt vil all konfigurering gjerast ved å
-                  klikke på følgjande aktive ikon:
+                  Vi har satt opp tre tenkte logiske nettverk:{" "}
+                  <strong>
+                    Tilsett nettverk, Drift nettverk og Gjest nettverk
+                  </strong>
+                  .<br />
+                  Når du har nummerert nettverka, konfigurerer du dei ved å
+                  klikke på desse aktive ikona:
                 </p>
                 <Flex>
                   <div>Kabla nettverk: </div>
@@ -63,8 +66,8 @@ const Help: React.FC<Props> = ({ onClose, isNN }) => {
                   <img src={WifiIMG} alt="Trådløst nettverk symbol" />
                 </Flex>
                 <p>
-                  Kvart ikon vil gje deg høve til å velje kva nettverk du ønsker
-                  å nytte for denne porten.
+                  Begge ikona let deg velje nettverket du vil bruke for denne
+                  porten.
                 </p>
               </>
             ) : (
@@ -74,13 +77,15 @@ const Help: React.FC<Props> = ({ onClose, isNN }) => {
                   <strong>
                     dele opp et fysisk nettverk i flere logiske nettverk
                   </strong>
-                  . Dette brukes for å kontrollere hva enhetene skal få tilgang
-                  til i nettverket .
+                  . Vi bruker VLAN for å kontrollere hva enhetene skal få
+                  tilgang til i nettverket.
                 </p>
                 <p>
-                  Vi har allerde satt opp tre tenkte nettverk:{" "}
-                  <strong>Ansatt-, Drift- og Gjestnettverk</strong>.<br />
-                  Når nummerering er tildelt vil all konfigurering gjøres ved å
+                  Vi har satt opp tre tenkte logiske nettverk:{" "}
+                  <strong>Ansatt nettverk, Drift nettverk</strong> og{" "}
+                  <strong> Gjest nettverk</strong>
+                  .<br />
+                  Når du har nummerert nettverkene, konfigurerer du dem ved å
                   klikke på følgende aktive ikoner:
                 </p>
                 <Flex>
@@ -90,8 +95,8 @@ const Help: React.FC<Props> = ({ onClose, isNN }) => {
                   <img src={WifiIMG} alt="Trådløst nettverk symbol" />
                 </Flex>
                 <p>
-                  Hvert ikon vil gi valgmulighet for hvilket nettverk du ønsker
-                  å benytte for denne porten.
+                  Begge ikonene lar deg velge nettverket du vil bruke for denne
+                  porten.
                 </p>
               </>
             )}
@@ -105,10 +110,10 @@ const Help: React.FC<Props> = ({ onClose, isNN }) => {
         {pageNum === 2 && (
           <>
             <p>
-              <strong>{isNN ? "Sambandslogikk" : "Forbindelseslogikk"}</strong>
+              <strong>Konfigureringsstatus</strong>
             </p>
             <Flex>
-              {isNN ? "Dømet" : "Eksempel"} under viser for Drift nettverk:{" "}
+              {isNN ? "Døma" : "Eksemplene"} under viser for Drift nettverk:{" "}
               <img src={VLANex2} alt="Eksempel" />{" "}
             </Flex>
             <Flex className="konfimages">
@@ -133,9 +138,9 @@ const Help: React.FC<Props> = ({ onClose, isNN }) => {
                   <strong>Linjetypar</strong>
                 </p>
                 <p>
-                  Vi nyttar <strong>stipla linje</strong> for alle samband som{" "}
+                  Vi bruker <strong>stipla linje</strong> for alle sambanda som{" "}
                   <strong>IKKJE er konfigurerte rett</strong>.<br />
-                  Vi nyttar <strong>heltrukket linje</strong> for alle samband
+                  Vi nyttar <strong>heltrukket linje</strong> for alle sambanda
                   som er konfigurerte rett.
                 </p>
               </>
@@ -145,11 +150,11 @@ const Help: React.FC<Props> = ({ onClose, isNN }) => {
                   <strong>Linjetyper</strong>
                 </p>
                 <p>
-                  Vi benytter <strong>stiplet linje</strong> for alle
-                  forbindelser som <strong>IKKE er konfigurert riktig</strong>.
+                  Vi bruker <strong>stiplet linje</strong> for alle forbindelser
+                  som <strong>IKKE er konfigurert riktig</strong>.
                   <br />
                   Vi benytter <strong>heltrukket linje</strong> for alle
-                  forbindelser som er konfigurert riktig.
+                  forbindelser som er <strong>konfigurert riktig</strong>.
                 </p>
               </>
             )}

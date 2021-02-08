@@ -34,6 +34,7 @@ import Laptop from "../common/Laptop/Laptop";
 import MainMenu from "../common/MainMenu/MainMenu";
 import Help from "../common/Help/Help";
 import resetStates from "../../data/resetStates";
+import { Finished } from "../common/Finished/Finished";
 
 type ConnectionState = {
   [key: string]: Connection | SwitchConnection;
@@ -118,7 +119,8 @@ function App() {
   const [finishedTime, setFinishedTime] = useState<number>();
   const [expertModeStarted, setExpertModeStarted] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);
-  const [isNyNorsk] = useState(true);
+  const [showFinishScreen, setShowFinishScreen] = useState(false);
+  const [isNyNorsk] = useState(false);
 
   const resetTask = () => {
     const state = resetStates[`${currentTask}`];
@@ -448,6 +450,10 @@ function App() {
       ) {
         accessCondition2 = true;
       }
+      const accessCondition3 = arraysEqual(
+        [true, false, true],
+        apState.enabled
+      );
       const ansattTradCondition = arraysEqual(
         [true, false, false],
         connectionState["ansatt-tradlost"] as any
@@ -471,6 +477,7 @@ function App() {
         konsulentGruppeCondition &&
         accessCondition &&
         accessCondition2 &&
+        accessCondition3 &&
         ansattTradCondition &&
         guestTradCondition
       ) {
@@ -483,7 +490,7 @@ function App() {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentTask, connectionState, apState]);
+  }, [currentTask, connectionState, apState, parsedAPState]);
 
   const completeExpertMode = () => {
     if (!finishedTime) {
@@ -751,12 +758,6 @@ function App() {
         return ruterConditionB && switch1Condition1b && switch1Condition3;
       }
       if (id === "server") {
-        console.log(
-          ruterConditionB,
-          switch1Condition1b,
-          switch1Condition3,
-          serverCondition
-        );
         return (
           ruterConditionB &&
           switch1Condition1b &&
@@ -834,6 +835,10 @@ function App() {
       ) {
         accessCondition2 = true;
       }
+      const accessCondition3 = arraysEqual(
+        [true, false, true],
+        apState.enabled
+      );
       const ansattTradCondition = arraysEqual(
         [true, false, false],
         connectionState["ansatt-tradlost"] as any
@@ -877,7 +882,8 @@ function App() {
           switch2Condition1 &&
           switch2Condition3 &&
           accessCondition &&
-          accessCondition2
+          accessCondition2 &&
+          accessCondition3
         );
       }
       if (id === "ansatt-tradlost") {
@@ -888,6 +894,7 @@ function App() {
           switch2Condition3 &&
           accessCondition &&
           accessCondition2 &&
+          accessCondition3 &&
           ansattTradCondition
         );
       }
@@ -899,6 +906,7 @@ function App() {
           switch2Condition3 &&
           accessCondition &&
           accessCondition2 &&
+          accessCondition3 &&
           guestTradCondition
         );
       }
@@ -991,6 +999,7 @@ function App() {
     setCompletedTasks([]);
     setExpertModeStarted(false);
     setFinishedTime(undefined);
+    setShowFinishScreen(false);
     timer.reset();
   };
 
@@ -1074,7 +1083,6 @@ function App() {
           // Disconnect on computers as well.
           let existingAnsatt = getConnection("ansatt-tradlost") as Connection;
           let existingGuest = getConnection("gjest-tradlost") as Connection;
-          console.log(existingAnsatt, existingGuest);
           if (existingAnsatt[index]) {
             existingAnsatt[index] = false;
             updateConnection("ansatt-tradlost", existingAnsatt as Connection);
@@ -1159,6 +1167,21 @@ function App() {
   return (
     <div className="App" ref={appRef}>
       {helpOpen && <Help onClose={() => setHelpOpen(false)} isNN={isNyNorsk} />}
+      {!expertMode &&
+        currentTask === 6 &&
+        completedTasks.includes(6) &&
+        showFinishScreen && (
+          <Finished
+            onExpertMode={() => {
+              setCurrentTask(1);
+              resetState();
+              goToMenu();
+              startTask(true);
+            }}
+            onMenu={() => goToMenu()}
+            isNN={isNyNorsk}
+          />
+        )}
       <Loader images={images} onLoadFinished={() => setLoading(false)} />
       <Background
         disabled={
@@ -1177,6 +1200,13 @@ function App() {
                 : currentTask !== 1
             }
             isNN={isNyNorsk}
+            values={
+              assignedNetworks ?? {
+                admin: "",
+                ansatt: "",
+                gjest: "",
+              }
+            }
           />
           <TaskWindow
             currentTask={currentTask}
@@ -1187,6 +1217,7 @@ function App() {
             expertMode={expertMode}
             time={timer.time}
             startExpertMode={() => setExpertModeStarted(true)}
+            onShowFinishScreen={() => setShowFinishScreen(true)}
             expertModeStarted={expertModeStarted}
             finishedTime={finishedTime}
             onHelp={() => setHelpOpen(true)}
@@ -1205,7 +1236,9 @@ function App() {
       )}
       {!menuOpen && (
         <Building
-          disabled={false}
+          disabled={
+            expertMode ? !expertModeStarted || !areNetworksConfigured() : false
+          }
           content={(buildingStyles: React.CSSProperties) => (
             <F>
               <F>
@@ -1347,8 +1380,8 @@ function App() {
                   buildingStyles={buildingStyles}
                   faded={fadedItems.includes("aksesspunkt")}
                   pos={{
-                    left: 64.7,
-                    bottom: 56.5,
+                    left: 64.55,
+                    bottom: 56,
                   }}
                 />
                 <APToAnsatt
@@ -1529,7 +1562,7 @@ function App() {
           onClose={() => setWifiInputModalOpen(false)}
           value={getConnection(wifiInputModalID)}
           currentID={wifiInputModalID}
-          currentActive={parsedAPState as any}
+          currentActive={apState.enabled as Connection}
         />
       )}
     </div>

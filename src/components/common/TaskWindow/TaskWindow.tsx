@@ -14,6 +14,7 @@ type Props = {
   onHelp: () => void;
   onHome: () => void;
   onReset: () => void;
+  onShowFinishScreen: () => void;
   taskCompleted: boolean;
   expertMode?: boolean;
   startExpertMode: () => void;
@@ -36,6 +37,7 @@ const TaskWindow: React.FC<Props> = ({
   expertModeStarted,
   time,
   finishedTime,
+  onShowFinishScreen,
   isNN,
 }) => {
   const [task, setTask] = useState<Task>();
@@ -94,12 +96,12 @@ const TaskWindow: React.FC<Props> = ({
                     } as React.CSSProperties
                   }
                 >
-                  Reset
+                  Nullstill
                 </Button>
               )}
               {taskNumber === 6 ? (
-                <Button onClick={onHome} disabled={!taskCompleted}>
-                  Avslutt
+                <Button onClick={onShowFinishScreen} disabled={!taskCompleted}>
+                  Fullfør
                 </Button>
               ) : (
                 <Button disabled={!taskCompleted} onClick={onNextTask}>
@@ -119,13 +121,15 @@ const TaskWindow: React.FC<Props> = ({
                 <p>
                   <strong>Imponerende!</strong>{" "}
                   <span className="icon-green">✔</span> Du har konfigurert
-                  nettverket {isNN ? "heilt" : "helt"} riktig{" "}
-                  {isNN ? "utan" : "uten"} hjelp i det hele tatt.
+                  nettverket riktig og {isNN ? "heilt" : "helt"}
+                  {isNN ? "utan" : "uten"} hjelp.
                 </p>
                 <p>
-                  {isNN ? "Di" : "Din"} tid:{" "}
+                  {isNN ? "Din tid:" : "Tida di:"}
                   <strong>
-                    <u>{finishedTime} sekunder</u>
+                    <u>
+                      {finishedTime} sekund{!isNN && "er"}
+                    </u>
                   </strong>
                   .
                 </p>
@@ -137,8 +141,8 @@ const TaskWindow: React.FC<Props> = ({
             ) : (
               <p>
                 {isNN
-                  ? "Konfigurer heile nettverket utan hjelp. Sjå kor raskt du kan gjere dette"
-                  : "Konfigurer hele nettverket uten hjelp. Se hvor raskt du kan gjøre dette."}
+                  ? "Konfigurer heile nettverket utan hjelp. Sjekk kor raskt du kan gjere dette!"
+                  : "Konfigurer hele nettverket uten hjelp. Sjekk hvor raskt du kan gjøre dette!"}
               </p>
             )}
           </TaskLabel>
@@ -149,7 +153,7 @@ const TaskWindow: React.FC<Props> = ({
             </TaskAmount>
             <NextTaskContainer>
               {finishedTime ? (
-                <Button onClick={onPrevTask}>Avslutt</Button>
+                <Button onClick={onHome}>Avslutt</Button>
               ) : (
                 <Button disabled={expertModeStarted} onClick={startExpertMode}>
                   Start konfigurering

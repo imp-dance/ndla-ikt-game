@@ -30,11 +30,11 @@ const DisplayWires: React.FC<Props> = ({
     Ledningstatus in:
     Ansatt nettverk: ${input[0] ? "på" : "av"}.
     Admin nettverk: ${input[1] ? "på" : "av"}.
-    Gjestenettverk: ${input[2] ? "på" : "av"}.
+    Gjest nettverk: ${input[2] ? "på" : "av"}.
     Ledningstatus ut:
     Ansatt nettverk: ${output[0] ? "på" : "av"}.
     Admin nettverk: ${output[1] ? "på" : "av"}.
-    Gjestenettverk: ${output[2] ? "på" : "av"}.
+    Gjest nettverk: ${output[2] ? "på" : "av"}.
   `;
 
   const [ansattInn, adminInn, gjestInn] = input;

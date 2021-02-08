@@ -26,7 +26,7 @@ const AccessPoint: React.FC<Props> = ({ pos, buildingStyles, faded }) => {
 
 const StyledAccessPoint = styled.div<Pos>`
   position: absolute;
-  width: calc(calc(var(--bWidth) / 100) * 3.5);
+  width: calc(calc(var(--bWidth) / 100) * 3.9);
   bottom: calc(calc(var(--bHeight) / 100) * ${(props) => props.bottom});
   left: ${(props) =>
     props.left ? `calc(calc(var(--bWidth) / 100) * ${props.left})` : `auto`};

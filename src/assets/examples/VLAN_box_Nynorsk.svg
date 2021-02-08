@@ -57,7 +57,7 @@
   <text id="VLAN-2" data-name="VLAN" class="cls-3" transform="translate(57 79)"><tspan x="0" y="0">VLAN</tspan></text>
   <text id="VLAN-3" data-name="VLAN" class="cls-3" transform="translate(57 115)"><tspan x="0" y="0">VLAN</tspan></text>
   <text id="_-_Drift_nettverk_" data-name="- Drift nettverk " class="cls-2" transform="translate(153 77)"><tspan x="0" y="0">- Drift nettverk </tspan></text>
-  <text id="_-_Gjestenettverk_" data-name="- Gjestenettverk " class="cls-2" transform="translate(153 114)"><tspan x="0" y="0">- Gjestenettverk </tspan></text>
+  <text id="_-_Gjest nettverk_" data-name="- Gjest nettverk " class="cls-2" transform="translate(153 114)"><tspan x="0" y="0">- Gjest nettverk </tspan></text>
   <g id="VLAN2_Admin_Network" transform="translate(23 64)">
     <rect id="Rectangle_71" data-name="Rectangle 71" class="cls-4" width="15" height="15" rx="1"/>
   </g>

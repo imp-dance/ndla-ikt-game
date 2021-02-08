@@ -11,34 +11,34 @@ export interface IMainMenuProps {
 export function MainMenu(props: IMainMenuProps) {
   return (
     <StyledMainMenu>
-      <h1>Velkommen</h1>
+      <h1>VLAN-simulering</h1>
       <h3>
         {props.isNN
-          ? "Simuleringa vil gje ei forståing for korleis du skal konfigurere VLAN i eit tenkt nettverk."
-          : "Simuleringen vil gi en forståelse for hvordan VLAN skal konfigureres i et tenkt nettverk."}
+          ? "Denne simuleringa let deg setje opp VLAN i eit tenkt bedriftsnettverk."
+          : "Denne simuleringen lar deg sette opp VLAN i et tenkt bedriftsnettverk."}
       </h3>
       <p>
         {props.isNN ? (
           <>
-            Me tilrår alle å trykke <strong>Oppgåve</strong> først for å få ei
-            trinnvis innføring med 6 korte oppgåver.
+            Vel <strong>Oppgåver</strong> for å få ei trinnvis innføring gjennom
+            seks korte oppgåver. Førstegongsbrukarar bør starte her.
           </>
         ) : (
           <>
-            Vi anbefaler alle å trykke <strong>Oppgave</strong> først for å få
-            en trinnvis innføring med 6 korte oppgaver.
+            Velg <strong>Oppgaver</strong> for å få en trinnvis innføring
+            gjennom seks korte oppgaver. Førstegangsbrukere bør starte her.
           </>
         )}
       </p>
       <p>
         {props.isNN ? (
           <>
-            Vel <strong>Ekspertkonfigurasjon</strong> dersom du ønsker å teste
+            Vel <strong>Ekspertkonfigurasjon</strong> dersom du vil teste
             simuleringa utan hjelp.
           </>
         ) : (
           <>
-            Velg <strong>Ekspertkonfigurasjon</strong> dersom du ønsker å teste
+            Velg <strong>Ekspertkonfigurasjon</strong> dersom du vil teste
             simuleringen uten hjelp.
           </>
         )}
@@ -46,7 +46,7 @@ export function MainMenu(props: IMainMenuProps) {
       <p>Lykke til!</p>
       <footer>
         <Button onClick={props.onOppgave}>
-          {props.isNN ? "Oppgåve" : "Oppgave"}
+          {props.isNN ? "Oppgåver" : "Oppgaver"}
         </Button>
         <Button onClick={props.onEkspert}>Ekspertkonfigurasjon</Button>
       </footer>

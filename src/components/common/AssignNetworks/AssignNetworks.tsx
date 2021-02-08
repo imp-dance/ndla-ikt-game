@@ -5,12 +5,14 @@ import VLAN1 from "../../../assets/symbols/VLAN1_Employee_Network.svg";
 import VLAN2 from "../../../assets/symbols/VLAN2_Admin_Network.svg";
 import VLAN3 from "../../../assets/symbols/VLAN3_Guest_Network.svg";
 import NetworkIcon from "../NetworkIcon/NetworkIcon";
+import isEqual from "lodash.isequal";
 
 type Props = {
   onChange: (newVal: State) => void;
   disabled?: boolean;
   faded?: boolean;
   isNN?: boolean;
+  values: State;
 };
 
 export type State = {
@@ -26,12 +28,9 @@ const AssignNetworks: React.FC<Props> = ({
   disabled,
   faded,
   isNN,
+  values,
 }) => {
-  const [state, setState] = useState<State>({
-    admin: "",
-    ansatt: "",
-    gjest: "",
-  });
+  const [state, setState] = useState<State>(values);
 
   const validateNumber = (input: string) => {
     const validCharacters = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
@@ -63,6 +62,12 @@ const AssignNetworks: React.FC<Props> = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
+
+  useEffect(() => {
+    if (!isEqual(values, state)) {
+      setState(values);
+    }
+  }, [values]);
 
   const multipleSame = (key: StateKey) => {
     const value = state[key];
@@ -120,7 +125,7 @@ const AssignNetworks: React.FC<Props> = ({
             disabled={disabled}
             className={multipleSame("gjest") ? "wrong" : ""}
           />
-          - Gjestenettverk
+          - Gjest nettverk
         </li>
       </ul>
     </Container>
